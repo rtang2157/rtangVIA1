@@ -3,7 +3,7 @@
     <Source>
       <DataSource type="HDFSSource">
         <property enums="props=HDFS Server Properties,url=HDFS Server URL,resource=HDFS Resource," description="The type of the HDFS server information" label="HDFS Server Info" type="string" value="props" name="serverInfo" desc="The type of the HDFS server information"/>
-        <property controlName="serverInfo" contorlValue="props" optional="true" description="The host name of HDFS server" label="HDFS Server" type="string" name="server" desc="The host name of HDFS server" value="10.101.7.117"/>
+        <property controlName="serverInfo" contorlValue="props" optional="true" description="The host name of HDFS server" label="HDFS Server" type="string" name="server" desc="The host name of HDFS server" value="10.101.3.187"/>
         <property controlName="serverInfo" contorlValue="props" optional="true" description="The port of HDFS server" label="Port" type="string" name="port" desc="The port of HDFS server" value="9000"/>
         <property controlName="serverInfo" contorlValue="url" optional="true" description="The URL of the HDFS file. Like: hdfs://server:port" label="HDFS File URL" type="string" name="url" desc="The URL of the HDFS file. Like: hdfs://server:port"/>
         <property enumSource="rest:/app/event_store/pub/resource?op=listResourceRecords" controlName="serverInfo" contorlValue="resource" optional="true" description="The HDFS resource name" label="HDFS Resource" type="string" name="resource" desc="The HDFS resource name" value=""/>
