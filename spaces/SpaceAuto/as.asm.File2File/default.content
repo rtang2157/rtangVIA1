@@ -1,0 +1,107 @@
+<ActivityStreamModel description="" name="File2File" timezone="Asia/Krasnoyarsk" daylight="false" live="true">
+  <ModelInfo validated="true">
+    <Source>
+      <DataSource type="FileSource">
+        <property desc="The log4j main log file path" label="File Path" name="file" type="string" value="%VTBA_HOME%\file.txt"/>
+        <property desc="The log4j rollover file name pattern. It is a wildcard pattern that supports ��*�� and ��?��. If it is not defined, it will be the file name suffixed with *, by default." label="Rollover File Pattern" name="rolloverPattern" optional="true" type="string" value=""/>
+        <property desc="The event delimiter type. It supports line delimiter and multiple line delimited by start and end tag." enums="line=Line,multiline=Multi lines with Start/End," hidden="true" label="Delimiter Type" name="delimiterType" type="string" value="line"/>
+        <property desc="The delimiter start tag" hidden="true" label="Delimiter Start" name="delimiterStart" optional="true" type="string"/>
+        <property desc="The delimiter end tag" hidden="true" label="Delimiter End" name="delimiterEnd" optional="true" type="string"/>
+        <property desc="If it is set to true, the first line event of the file will be ignored" label="Ignore First Line" name="ignoreFirstLine" optional="true" type="boolean" value="false"/>
+        <property constraints="encoding" desc="The file encoding" label="File Encoding" name="fileEncoding" optional="true" type="string" value="utf-8"/>
+      </DataSource>
+      <Filter type="expression">
+        <property name="filter-operation" type="string" value="RegExp"/>
+        <property name="filter-argument" type="string" value=""/>
+      </Filter>
+    <Samples type="acquire">
+      <Sample name="" label="* Source Definition" payloadId="SOURCE" mimeType="txt">
+        <Param name="file" label="undefined" value="sample###txt###0" type="file"/>
+      </Sample>
+    </Samples>
+      <Parser name="Access Log">
+        <Component type="RegexpStringToXMLConverter" category="converter">
+          <properties>
+            <property desc="Specify whether to adjust the Datetime if daylight savings time is in effect" optional="true" label="Daylight savings" type="boolean" name="daylight" hidden="true" value="false"/>
+            <property desc="Timezone setting for the Datetime field" optional="true" label="Timezone" type="string" value="Asia/Krasnoyarsk" name="timezone" hidden="true"/>
+            <property value="([^\s]*) ([^\s]*) ([^\s]*) \[(.*)\] &quot;([A-Z]+) ([^\s]*) ([^\s]*)&quot; (\d*) (\d*) &quot;([^\s]*)&quot; &quot;(.*)&quot;" name="expression" type="string" label="Expression" desc="The regular expression to capture fields."/>
+            <property value="IP,Identd,User,Timestamp,Method,URI,HTTP,Code,Size,From,Client" name="fieldNames" type="string" label="Field Names" desc="The name list of fields." constraints="([a-zA-Z][a-zA-Z0-9_]*,)*([a-zA-Z][a-zA-Z0-9_]*)?"/>
+            <property hidden="true" desc="Specify whether to consider the first row as a header." type="boolean" value="false" name="headerRow" label="Header Row"/>
+          </properties>
+        </Component>
+        <Mapping type="auto" namespace="http://as" root="SourceEvent" prefix="n">
+          <group id="declare namespace n=&quot;http://as&quot;; /n:root" label="root/" name="root">
+            <field id="declare namespace n=&quot;http://as&quot;; /n:root/IP" label="IP" name="IP" value="192.168.0.2" type="string"/>
+            <field id="declare namespace n=&quot;http://as&quot;; /n:root/Identd" label="Identd" name="Identd" value="local" type="string"/>
+            <field id="declare namespace n=&quot;http://as&quot;; /n:root/User" label="User" name="User" value="rtang" type="integer"/>
+            <field id="declare namespace n=&quot;http://as&quot;; /n:root/Timestamp" label="Timestamp" name="Timestamp" value="wwfa" type="string"/>
+            <field id="declare namespace n=&quot;http://as&quot;; /n:root/Method" label="Method" name="Method" value="A" type="string"/>
+            <field id="declare namespace n=&quot;http://as&quot;; /n:root/URI" label="URI" name="URI" value="uri" type="string"/>
+            <field id="declare namespace n=&quot;http://as&quot;; /n:root/HTTP" label="HTTP" name="HTTP" value="http" type="string"/>
+            <field id="declare namespace n=&quot;http://as&quot;; /n:root/Code" label="Code" name="Code" value="15" type="integer"/>
+            <field id="declare namespace n=&quot;http://as&quot;; /n:root/Size" label="Size" name="Size" value="100" type="integer"/>
+            <field id="declare namespace n=&quot;http://as&quot;; /n:root/From" label="From" name="From" value="bj" type="string"/>
+            <field id="declare namespace n=&quot;http://as&quot;; /n:root/Client" label="Client" name="Client" value="client1" type="string"/>
+          </group>
+        </Mapping>
+      </Parser>
+    </Source>
+    <MappingPaths>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root" label="root/"/>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root/IP" label="IP"/>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root/Identd" label="Identd"/>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root/User" label="User"/>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root/Timestamp" label="Timestamp"/>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root/Method" label="Method"/>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root/URI" label="URI"/>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root/HTTP" label="HTTP"/>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root/Code" label="Code"/>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root/Size" label="Size"/>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root/From" label="From"/>
+     <path value="declare namespace n=&quot;http://as&quot;; /n:root/Client" label="Client"/>
+    </MappingPaths>
+    <GlobalProperties>
+    </GlobalProperties>
+    <DeletedNamespaces>
+    </DeletedNamespaces>
+    <UserSchemas>
+    </UserSchemas>
+        <View name="View1" desc="">
+        <Rule type="PerEvent"/>
+        <Filters type="expression" relation="AND">
+            <Filter op="NE/S" arg1="declare namespace n=&quot;http://as&quot;; /n:root/Method" arg2="A"/>
+        </Filters>
+        <Mapping output="xml" type="auto">
+        </Mapping>
+        <Targets>
+           <Target name="Target1" type="FileTarget">
+             <property desc="The file and path name of the target." label="File Path" name="file" type="string" value="%VTBA_HOME%\StreamBuildFile\FileTarget.txt"/>
+             <property constraints="encoding" desc="The file encoding. The default is utf-8." label="File Encoding" name="fileEncoding" optional="true" type="string" value="gb2312"/>
+             <property desc="The event type. Only string is supported." enums="string,xml,json,tuple," hidden="true" label="Event Type" name="eventType" optional="true" type="string"/>
+             <property desc="The file rollover pattern. It can be DATE (default) or SIZE." enumDyn="true" enums="DATE,SIZE," label="Rollover Pattern" name="rolloverPattern" optional="true" type="string" value="DATE"/>
+             <property desc="The file rollover pattern for DATE. The default value is &apos;.&apos;yyyy-MM-dd&apos;.log&apos;. It is ignored for rollover pattern SIZE." label="Date Pattern" name="datePattern" optional="true" type="string"/>
+             <property constraints="min=1024, max=10485760, step=1024" desc="The maximum file size in byte of rollover pattern SIZE. The default value is 5242880 (5MB). It is ignored for rollover pattern DATE." label="Max File Size" name="maxFileSize" numberType="int" optional="true" type="number"/>
+             <property constraints="min=1, max=100, step=1" desc="The maximum number of backup files. The default value is 5." label="Max Backup Index" name="maxBackupIndex" numberType="int" optional="true" type="number"/>
+             <property desc="The log4j pattern to write message into file. The default value is %m%n." label="Conversion Pattern" name="conversionPattern" optional="true" type="string"/>
+             <property label="Remove wrapper" name="remove_event_wrapper" type="boolean" value="false"/>
+             <Mapping output="xml" type="auto" input="xml">
+             </Mapping>
+           </Target>
+        </Targets>
+    </View>
+    <DeploymentSetting>
+      <ServerTag value=""/>
+      <QOS value="0"/>
+      <AdvancedProperties>
+        <property dataflow_throttling_policy="slowdown" enable_monitor="true" componentName="AS_Source_Source" dataflow_eps_limit="-1" poll_rate="1000" batch_time="-1" batch_size="1" componentGroup="Source" componentCategory="source" modelComponentType="FileSource" componentType="FileSource"/>
+        <property dataflow_throttling_policy="slowdown" enable_monitor="true" componentName="AS_Source_Converter" dataflow_eps_limit="-1" buffer_size="1000" concurrency="0" componentGroup="" componentCategory="converter" modelComponentType="RegexpStringToXMLConverter" componentType="RegexpStringToXMLConverter"/>
+        <property dataflow_throttling_policy="slowdown" enable_monitor="true" componentName="AS_Views_View1_Filters" dataflow_eps_limit="-1" buffer_size="1000" entry="View1" concurrency="0" componentGroup="View1" componentCategory="filter" modelComponentType="XMLFilter" componentType="XMLFilter"/>
+        <property dataflow_throttling_policy="slowdown" enable_monitor="true" componentName="AS_Views_View1_Targets_Target1_Target" dataflow_eps_limit="-1" buffer_size="1000" entry="View1/Target1" batch_time="-1" batch_size="1" componentGroup="" componentCategory="target" modelComponentType="FileTarget" componentType="Target1/FileTarget"/>
+      </AdvancedProperties>
+      <ExceptionCondition act="skip" logException="true" logEvent="true">
+        <Source retry="5" delay="5" timeunit="second"/>
+        <Target retry="5" delay="5" timeunit="second"/>
+      </ExceptionCondition>
+    </DeploymentSetting>
+  </ModelInfo>
+</ActivityStreamModel>

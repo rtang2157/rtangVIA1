@@ -1,0 +1,3 @@
+192.168.0.2 local rtang [wwfa] "A uri http" 15 100 "bj" "client1"
+192.168.0.2 local cele [wwfa] "B uri http" 15 100 "bj" "client2"
+192.168.0.2 local ztong [wwfa] "C uri http" 15 100 "bj" "client3"
