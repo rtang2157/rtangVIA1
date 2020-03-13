@@ -1,0 +1,68 @@
+<parameters>
+  <parameter id="mail.smtp.host" label="Mail transport server host" value="" type="string" group="email" groupLabel="Email Settings" groupOrder="0"/>
+  <parameter id="mail.smtp.port" label="Mail transport server port" value="" type="string" group="email"/>
+  <parameter id="mail.smtp.username" label="Mail transport server username" value="" type="string" group="email"/>
+  <parameter id="mail.smtp.password" label="Mail transport server password" value="" type="password" group="email"/>
+  <parameter id="mail.header.sender" label="Mail header sender" value="Vitria" type="string" group="email"/>
+  <parameter id="mail.smtp.auth" label="Authentication required" value="true" type="boolean" group="email"/>
+  <parameter id="proxySet" label="Enable Proxy" value="false" type="boolean" group="email"/>
+  <parameter id="socksProxyHost" label="Socks proxy host" value="" type="string" group="email"/>
+  <parameter id="socksProxyPort" label="Socks proxy port" value="" type="string" group="email"/>
+  <parameter id="mail.smtp.socketFactory.class" type="string" value="javax.net.ssl.SSLSocketFactory" label="Socket factory class" group="email"/>
+  <parameter id="mail.smtp.socketFactory.port" type="string" value="465" label="Socket factory port" group="email"/>
+  <parameter id="mail.transport.protocol" type="string" value="smtp" label="Transport protocol" group="email"/>
+  <parameter id="mail.subject.template" type="string" value="${username} shared a dashboard " label="Email subject" group="email"/>
+  <parameter id="mail.other.settings" type="string" editorType="textArea" value="" label="Other settings" group="email"/>
+  <parameter id="share.disabled" label="Disable space and share for normal users" value="false" type="boolean" group="space" groupLabel="Space Settings" groupOrder="1"/>
+  <parameter id="app.model.sharing.disable" type="boolean" value="false" label="Disable sharing to everyone" group="space"/>
+  <parameter id="app.model.organized.by.space" type="boolean" value="true" label="Enable space in model URL" group="space" hidden="true"/>
+  <parameter id="ui.url" label="Vitria VIA URL" value="http://localhost:8080/vitria-oi" type="string" group="rest" groupLabel="REST Settings" groupOrder="2"/>
+  <parameter id="rest.client.user" label="The built-in user for internal REST call" value="vtbaadmin" type="string" group="rest"/>
+  <parameter id="rest.client.password" label="Password of built-in user of REST call" value="&lt;vJLr!Ogi7dbKhovHLf!XWBbTLh9&gt;" type="password" group="rest"/>
+  <parameter id="search.max.models" label="Max models with occurrence" value="200" type="string" group="search" groupLabel="Searching Settings"/>
+  <parameter id="search.max.occurs.per.model" label="Max occurrences per model" value="50" type="string" group="search"/>
+  <parameter id="compression.mobile" label="Package uncompressed code in mobile package" value="false" type="boolean" group="themes" groupLabel="Theme Settings" groupOrder="3"/>
+  <parameter id="customization.enable" label="Enable theme/locale customization" value="true" type="boolean" group="themes"/>
+  <parameter id="theme.default" label="Default theme name" value="default" type="string" group="themes"/>
+  <parameter id="locale.default" label="Default locale name" value="en_us" type="string" group="themes"/>
+  <parameter id="sso.saml.enable" label="Enable SSO" value="false" type="boolean" group="sso_saml" groupLabel="SSO Settings for SAML" groupOrder="4"/>
+  <parameter id="sso.saml.issuer.id" label="Issuer ID" value="" type="string" group="sso_saml"/>
+  <parameter id="sso.saml.identity.provider.url" label="Identity provider URL" value="" type="string" group="sso_saml"/>
+  <parameter id="sso.saml.identity.logout.request.url" label="Identity logout Request URL" value="" type="string" group="sso_saml"/>
+  <parameter id="sso.saml.identity.logout.response.url" label="Identity logout Response URL" value="" type="string" group="sso_saml"/>
+  <parameter id="sso.saml.keystore.location" label="Keystore location" value="" type="string" group="sso_saml"/>
+  <parameter id="sso.saml.keystore.password" label="Keystore password" value="" type="password" group="sso_saml"/>
+  <parameter id="sso.saml.keystore.alias.name" label="Alias name" value="" type="string" group="sso_saml"/>
+  <parameter id="sso.saml.keystore.alias.password" label="Alias password" value="" type="password" group="sso_saml"/>
+  <parameter id="sso.saml.strip.email.dimain" label="Strip email domains in username" value="" type="string" group="sso_saml"/>
+  <parameter id="recover.password.url" label="URL of recovering password" value="resetpwd/validateuser.html" type="string" group="others" groupLabel="Others" groupOrder="5"/>
+  <parameter id="default.browser.title" label="Browser title in Launchpad" value="Vitria VIA Home" type="string" group="others"/>
+  <parameter id="model.name.as.browser.title" label="Show model name as browser title" value="true" type="boolean" group="others"/>
+  <parameter id="autorefresh.interval" label="Interval of auto-refresh (ms)" value="3500" type="int" group="others"/>
+  <parameter id="tracking.code" label="Tracking code" value="" type="string" group="others"/>
+  <parameter id="compression.enable" label="Load compressed js code" value="true" type="boolean" group="others"/>
+  <parameter id="dsr.replay" label="Enable Digital Stream Recorder in Dashboard" value="false" type="boolean" group="others"/>
+  <parameter id="min.refresh.interval" label="Min interval of between refresh (ms)" value="2000" type="int" group="others"/>
+  <parameter id="dashboard.datagrid.exportCSV.delimiter" label="Export CSV Delimiter Field" value="," type="string" group="others"/>
+  <parameter id="user.data.path" label="User Data Path" value="${VTBA_HOME}/userdata" type="string" group="others"/>
+  <parameter id="pre.release.features" label="Pre-Release Features" value="false" type="boolean" group="others"/>
+  <parameter id="Dashboard.interfaceQuery.disable" label="Disable Dashboard interface query" value="false" type="boolean" group="others"/>
+  <parameter id="launchpad.timestamp.format" label="Launchpad Timestamp Format" value="MM/dd/yyyy" type="string" group="others"/>
+  <parameter id="encrypt.username.in.url" label="Encrypt username in URL" value="true" type="boolean" group="others"/>
+  <parameter id="collab.use.web.socket" label="Use WebSocket for Collaborative Communication" value="false" type="boolean" group="others"/>
+  <parameter id="remote.console.use.web.socket" label="Use WebSocket for Remote Console" value="false" type="boolean" group="others"/>
+  <parameter id="model.import.size.limit" label="Max payload size at model import (MB)" value="10" type="int" unit="MB" group="others"/>
+  <parameter id="mobile.space.only" label="Show only @mobile space on mobile devices" value="false" type="boolean" group="others"/>
+  <parameter value="true" groupLabel="Version Setting" group="version" type="boolean" label="Enable Version Control" id="version.manager.enabled"/>
+  <parameter value="false" id="version.repo.autocommit" label="Auto-commit Model Change" type="boolean" group="version"/>
+  <parameter id="version.repo.update.frequency" label="Auto-Refresh of Local Repository (s)" value="300" type="int" constraints="min=30" group="version"/>
+  <parameter id="version.require.timeout" label="Require Lock Timout (s)" value="30" type="int" constraints="min=1" group="version"/>
+  <parameter id="version.wait.refresh.timeout" label="Wait Refresh Timeout (s)" value="60" type="int" constraints="min=1" group="version"/>
+  <parameter value="Git" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Repository Type" id="version.repo.type"/>
+  <parameter value="https://github.com/rtang2157/rtangVIA1.git" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Repository URL" id="version.repo.url"/>
+  <parameter value="master" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Working branch" id="version.repo.working.branch"/>
+  <parameter value="rtang2157" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Repository Username" id="version.repo.user"/>
+  <parameter value="&lt;z5mCKDtmMAYn!ZvuD8KMlP7V9e9Gda&gt;" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="password" label="Repository Password" id="version.repo.password"/>
+  <parameter id="deprecate.hamburger.navigator" label="Deprecate hamburger model navigator" value="true" type="boolean" group="deprecated" groupLabel="Deprecated Features"/>
+  <parameter id="launchpad.plugin.key" label="URL key for landing page" value="s" type="string" group="landing" groupLabel="Landing Page"/>
+</parameters>
