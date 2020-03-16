@@ -1,0 +1,16 @@
+<ActivityStreamModel description="" name="StreamTest2" timezone="Asia/Shanghai" daylight="false" is_init="false">
+  <ModelInfo validated="false">
+    <DataSource category="undefined">
+    </DataSource>
+    <Samples>
+    </Samples>
+    <DeletedNamespaces>
+    </DeletedNamespaces>
+    <UserSchemas>
+    </UserSchemas>
+    <Views>
+    </Views>
+    <Markups>
+    </Markups>
+  </ModelInfo>
+</ActivityStreamModel>
