@@ -53,8 +53,8 @@
   <parameter id="remote.console.use.web.socket" label="Use WebSocket for Remote Console" value="false" type="boolean" group="others"/>
   <parameter id="model.import.size.limit" label="Max payload size at model import (MB)" value="10" type="int" unit="MB" group="others"/>
   <parameter id="mobile.space.only" label="Show only @mobile space on mobile devices" value="false" type="boolean" group="others"/>
-  <parameter value="false" id="version.manager.enabled" label="Enable Version Control" type="boolean" group="version" groupLabel="Version Setting"/>
-  <parameter value="true" group="version" type="boolean" label="Auto-commit Model Change" id="version.repo.autocommit"/>
+  <parameter value="true" groupLabel="Version Setting" group="version" type="boolean" label="Enable Version Control" id="version.manager.enabled"/>
+  <parameter value="false" id="version.repo.autocommit" label="Auto-commit Model Change" type="boolean" group="version"/>
   <parameter id="version.repo.update.frequency" label="Auto-Refresh of Local Repository (s)" value="300" type="int" constraints="min=30" group="version"/>
   <parameter id="version.require.timeout" label="Require Lock Timout (s)" value="30" type="int" constraints="min=1" group="version"/>
   <parameter id="version.wait.refresh.timeout" label="Wait Refresh Timeout (s)" value="60" type="int" constraints="min=1" group="version"/>
@@ -62,7 +62,7 @@
   <parameter value="https://github.com/rtang2157/rtangVIA1.git" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Repository URL" id="version.repo.url"/>
   <parameter value="master" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Working branch" id="version.repo.working.branch"/>
   <parameter value="rtang2157" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Repository Username" id="version.repo.user"/>
-  <parameter value="&lt;z5mCKDtmMAYn!ZvuD8KMlP7V9e9Gda&gt;" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="password" label="Repository Password" id="version.repo.password"/>
+  <parameter value="&lt;NYAQwjXKfIWBeJM5YU2f@UjtiQ8c@1yDDf9&gt;" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="password" label="Repository Password" id="version.repo.password"/>
   <parameter id="deprecate.hamburger.navigator" label="Deprecate hamburger model navigator" value="true" type="boolean" group="deprecated" groupLabel="Deprecated Features"/>
   <parameter id="launchpad.plugin.key" label="URL key for landing page" value="s" type="string" group="landing" groupLabel="Landing Page"/>
 </parameters>
