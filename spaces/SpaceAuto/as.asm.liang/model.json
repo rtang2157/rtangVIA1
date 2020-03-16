@@ -3,7 +3,7 @@
     "fileref": "ModelContentFile0",
     "name": "default"
   }],
-  "lastDate": "1584340659079",
+  "lastDate": "1584341213361",
   "owner": "vtbaadmin",
   "properties": {
     "_RESOURCE_Description": "",
@@ -12,8 +12,10 @@
     "com.vitria.as.references": "#",
     "com.vitria.as.samples": "#",
     "com.vitria.as.size": "0",
-    "live": "false",
-    "modelStatus": "invalid",
-    "name": "liang"
+    "live": "true",
+    "modelStatus": "valid",
+    "module_deps": "file",
+    "name": "liang",
+    "sourceType": "FileSource"
   }
 }
