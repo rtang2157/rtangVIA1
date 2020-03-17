@@ -2,7 +2,7 @@
   <ModelInfo validated="true">
     <Source>
       <DataSource type="FileSource">
-        <property label="File Path" type="string" name="file" desc="The log4j main log file path"/>
+        <property label="File Path" type="string" name="file" desc="The log4j main log file path" value="/home/qa/rtang/cq.csv"/>
         <property optional="true" label="Rollover File Pattern" type="string" name="rolloverPattern" desc="The log4j rollover file name pattern. It can be a wildcard pattern that supports &apos;*&apos; and &apos;?&apos; or a regular expression. If it is not defined, it will be the file name suffixed with * (wildcard) or .* (regular expression)"/>
         <property optional="true" label="Pattern Is Regex" type="boolean" value="false" name="isRegex" desc="By default, the rollover file pattern is wildcard. If it is set to true, the rollover file pattern is regular expression"/>
         <property optional="true" label="Ignore First Line" type="boolean" value="false" name="ignoreFirstLine" desc="If it is set to true, the first line event of the file will be ignored"/>
@@ -30,6 +30,9 @@
         <property name="filter-argument" type="string" value=""/>
       </Filter>
     <Samples type="acquire">
+      <Sample name="" label="* Source Definition" payloadId="SOURCE" fileName="vt1584428838125" mimeType="txt">
+        <Param name="file" label="undefined" value="sample###txt###0" type="file"/>
+      </Sample>
     </Samples>
     </Source>
     <GlobalProperties><![CDATA[
