@@ -1,0 +1,46 @@
+<ActivityStreamModel description="" name="Sb1" timezone="Asia/Shanghai" daylight="false" live="true">
+  <ModelInfo validated="true">
+    <Source>
+      <DataSource type="FeedSource">
+        <property constraints="feed" label="Feed Name" type="string" name="feedName" desc="The name of the feed to subscribe events from" value="/prj/apps/drd/projects/DataResourceWS$Deployment/Feed"/>
+        <property enums="SUBSCRIBE_ONLY=Subscribe,REPLAY_EVENT_ARCHIVE=Playback,REPLAY_EVENT_ARCHIVE_AND_SUBSCRIBE=Playback and Subscribe," label="Subscriber Mode" type="string" value="SUBSCRIBE_ONLY" name="subscriberMode" desc="Possible values: SUBSCRIBE_ONLY, REPLAY_EVENT_ARCHIVE, REPLAY_EVENT_ARCHIVE_AND_SUBSCRIBE, Specify whether to reply to events from the feed archive."/>
+        <property constraints="input(inputType:radio,data:all=All Events;count=# Events;time_relative=Time Interval;time_absolute=Time Range)" controlName="subscriberMode" contorlValue="REPLAY_EVENT_ARCHIVE,REPLAY_EVENT_ARCHIVE_AND_SUBSCRIBE" optional="true" label="Playback Policy" type="string" value="all" name="playbackPolicy" desc="Playback Policy"/>
+        <property controlName="playbackPolicy" contorlValue="count" optional="true" label="Event Count" type="number" value="0" name="archiveReplaySize" desc="When subscriber mode is replay_event_archive_and_subscribe, this property specifies how many events will be replayed from the archive." numberType="int"/>
+        <property constraints="range(rangeType:timeInterval,interval:relative,hideHelp:true,min:1,max:1000)" controlName="playbackPolicy" contorlValue="time_relative" optional="true" label="Time Interval" type="string" value="1/SECONDS" name="timeInterval" desc="A relative time interval, e.g last 5 minutes, last 5 hours."/>
+        <property constraints="range(rangeType:timeInterval,interval:absolute)" controlName="playbackPolicy" contorlValue="time_absolute" optional="true" label="Start DateTime" type="string" name="timeRange" desc="A time range specified by start time and end time."/>
+        <property label="Durable" type="boolean" value="false" name="durable" desc="Specifies whether the subscriber is a durable subscriber"/>
+        <property optional="true" label="Max Inactive Time" type="number" value="300" name="maxInactiveTime" desc="The max inactive time before the subscriber is dropped. Required when the subscriber is durable." numberType="int"/>
+        <property hidden="true" label="Transactional" type="boolean" value="true" name="is_transactional" desc=""/>
+      </DataSource>
+      <Filter type="expression">
+        <property name="filter-operation" type="string" value="RegExp"/>
+        <property name="filter-argument" type="string" value=""/>
+      </Filter>
+    <Samples type="acquire">
+    </Samples>
+    </Source>
+    <GlobalProperties><![CDATA[
+[]
+    ]]>
+    </GlobalProperties>
+    <DeletedNamespaces>
+    </DeletedNamespaces>
+    <UserSchemas>
+    </UserSchemas>
+    <DeploymentSetting>
+      <ServerTag value=""/>
+      <DataSource value="/vitria/m3o/datasource/DefaultDomain/defaultds"/>
+      <QOS value="0"/>
+      <AdvancedProperties>
+        <property componentType="FeedSource" batch_size="1000" dataflow_throttling_policy="slowdown" batch_time="200" modelComponentType="FeedSource" componentGroup="Source" componentCategory="source" componentName="AS_Source_Source" enable_monitor="true" dataflow_eps_limit="-1" poll_rate="1000"/>
+      </AdvancedProperties>
+      <ExceptionCondition act="skip" logException="true" logEvent="true">
+        <Source retry="5" delay="5" timeunit="second"/>
+        <Target retry="5" delay="5" timeunit="second"/>
+      </ExceptionCondition>
+    <Binding><![CDATA[
+{}
+    ]]></Binding>
+    </DeploymentSetting>
+  </ModelInfo>
+</ActivityStreamModel>

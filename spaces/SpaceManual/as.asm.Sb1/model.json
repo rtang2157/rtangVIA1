@@ -1,0 +1,21 @@
+{
+  "contents": [{
+    "fileref": "ModelContentFile0",
+    "name": "default"
+  }],
+  "lastDate": "1584425978100",
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "asm",
+    "__references__": "",
+    "com.vitria.as.references": "#",
+    "com.vitria.as.samples": "#",
+    "com.vitria.as.size": "0",
+    "live": "true",
+    "modelStatus": "valid",
+    "module_deps": "feed",
+    "name": "Sb1",
+    "sourceType": "FeedSource"
+  }
+}
