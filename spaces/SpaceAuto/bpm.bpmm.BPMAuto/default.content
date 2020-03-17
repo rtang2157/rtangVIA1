@@ -1,6 +1,26 @@
 <BpmAppModel description="Description of New Model 0" name="BPMAuto" is_init="false">
   <ModelInfo validated="true">
     <Models>
+      <Model name="event1" id="95d6aa05-7f85-4be4-8abe-728193af388d" type="event" version="3" path="">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"name":"_EMFEventContext","attachmentAllowed":false,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventContext"},{"name":"NewVariable1","attachmentAllowed":false,"type":"boolean","label":""}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"name":"NewVariable1","label":"","isFolder":false,"parent":null,"category":"built-inType","idx":0,"uiName":"NewVariable1","hasChildren":false,"typeName":"boolean"}]]]></Data>
+          </Content>
+        </Contents>
+        <References>
+        </References>
+        <Properties>
+          <Property name="vtui:category" value="Event"/>
+          <Property name="useParameter" value="false"/>
+          <Property name="schema.property.supportqualified" value="true"/>
+          <Property name="_modelType" value="schema.event"/>
+          <Property name="_public" value="false"/>
+          <Property name="_tr__variables" value="{http://schema.vitria.com/model}EMFEventContext{XSDELEMENT}"/>
+        </Properties>
+      </Model>
     </Models>
     <BuiltInModels>
       <Model name="EventSourceExceptionEvent" id="574d6b41-3e63-4a9d-8721-901cebdae765" type="event" version="1" path="Vitria/Event">
