@@ -10,7 +10,7 @@
       "name": "SOURCE"
     }
   ],
-  "lastDate": "1584336413313",
+  "lastDate": "1584503850435",
   "owner": "vtbaadmin",
   "properties": {
     "_RESOURCE_Description": "",
@@ -21,7 +21,7 @@
     "com.vitria.as.size": "0",
     "live": "true",
     "modelStatus": "valid",
-    "module_deps": "file",
+    "module_deps": "commonevent,file",
     "name": "Manual1",
     "sourceType": "FileSource"
   }

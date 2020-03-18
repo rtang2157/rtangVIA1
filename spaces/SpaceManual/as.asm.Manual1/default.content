@@ -30,10 +30,23 @@
         <property name="filter-argument" type="string" value=""/>
       </Filter>
     <Samples type="acquire">
-      <Sample name="" label="* Source Definition" payloadId="SOURCE" fileName="vt1584336407718" mimeType="txt">
+      <Sample name="" label="* Source Definition" payloadId="SOURCE" mimeType="txt">
         <Param name="file" label="undefined" value="sample###txt###0" type="file"/>
       </Sample>
     </Samples>
+      <Parser name="DelimittedStringToXMLConverter">
+        <Component type="DelimittedStringToXMLConverter" category="converter">
+          <properties>
+            <property desc="Specify whether to adjust the Datetime if daylight savings time is in effect" optional="true" label="Daylight savings" type="boolean" name="daylight" hidden="true" value="false"/>
+            <property desc="Timezone setting for the Datetime field" optional="true" label="Timezone" type="string" value="Asia/Shanghai" name="timezone" hidden="true"/>
+            <property desc="Specify whether to consider the first row as a header" label="Header Row" type="boolean" value="true" name="headerRow"/>
+            <property desc="The delimiter used to split strings into fields" enumDyn="true" enums="comma=Comma Separated,tab=Tab Delimited,,," label="Delimiter" type="string" value="comma" name="delimiter"/>
+            <property desc="Optional comma-separated list of field names." optional="true" label="Field Names" type="string" name="fieldNames" constraints="((([a-zA-Z][a-zA-Z0-9_]*)|([a-zA-Z][a-zA-Z0-9_]*:[a-zA-Z]+)),)*((([a-zA-Z][a-zA-Z0-9_]*)|([a-zA-Z][a-zA-Z0-9_]*:[a-zA-Z]+)))?" value="VITR00156480,Others,_3,Functional,Work-Around,cyou,_3,NormalQueue,_2/26/20101:19,dowang,Assigned"/>
+          </properties>
+        </Component>
+        <Mapping type="auto" namespace="http://as" root="SourceEvent" prefix="n">
+        </Mapping>
+      </Parser>
     </Source>
     <GlobalProperties><![CDATA[
 []
@@ -49,6 +62,7 @@
       <QOS value="0"/>
       <AdvancedProperties>
         <property componentType="FileSource" batch_size="1000" dataflow_throttling_policy="slowdown" batch_time="200" modelComponentType="FileSource" componentGroup="Source" componentCategory="source" componentName="AS_Source_Source" enable_monitor="true" dataflow_eps_limit="-1" poll_rate="1000"/>
+        <property componentType="DelimittedStringToXMLConverter" dataflow_throttling_policy="slowdown" buffer_size="1000" modelComponentType="DelimittedStringToXMLConverter" componentGroup="" componentCategory="converter" componentName="AS_Source_Converter" enable_monitor="true" dataflow_eps_limit="-1" concurrency="0"/>
       </AdvancedProperties>
       <ExceptionCondition act="skip" logException="true" logEvent="true">
         <Source retry="5" delay="5" timeunit="second"/>
