@@ -21,6 +21,28 @@
           <Property name="_tr__variables" value="{http://schema.vitria.com/model}EMFEventContext{XSDELEMENT}"/>
         </Properties>
       </Model>
+      <Model name="feed1" id="f2a55e79-78d4-45b1-8d49-430e00cb4cea" type="feed" version="3" path="">
+        <Contents>
+          <Content name="feed.definition">
+            <Data><![CDATA[{"kind":"LOCAL","auditLogging":"ON","maxSize":-1,"persistence":"ON","timestamp":{"type":"SYSTEM","variableRef":"","path":""},"eventArchive":{"type":"NONE"},"feedState":{"type":"NONE","isSnapshot":"false","tablename":""},"outboundSource":{"type":"NONE"},"eventSchema":{"content":"variables","name":"event1","modelRef":"_mr____ESREF"}}]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr____ESREF" value="fe3c399d-f469-4470-88ef-dac56e9b17e4"/>
+        </References>
+        <Properties>
+          <Property name="vtui:category" value="Feed"/>
+          <Property name="useParameter" value="false"/>
+          <Property name="_modelType" value="feed"/>
+          <Property name="_public" value="false"/>
+          <Property name="vtui:historic" value="true"/>
+          <Property name="vtui:outbound" value="NONE"/>
+          <Property name="vtui:kind" value="LOCAL"/>
+          <Property name="vtui:eventArchive" value="NONE"/>
+          <Property name="vtui:event" value="event1"/>
+          <Property name="vtui:feedState" value="NONE"/>
+        </Properties>
+      </Model>
     </Models>
     <BuiltInModels>
       <Model name="EventSourceExceptionEvent" id="c0c5b8c5-ffa2-4a12-8c09-cee61fe99958" type="event" version="1" path="Vitria/Event">
