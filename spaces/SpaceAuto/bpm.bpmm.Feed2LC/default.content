@@ -1,0 +1,433 @@
+<BpmAppModel description="Description of New Model 0" name="Feed2LC" is_init="false">
+  <ModelInfo validated="true">
+    <Models>
+      <Model name="LiveCollection" id="0dca17cf-bdc0-4036-acb8-4820b544f27b" type="LiveCollection" version="1" path="">
+        <Contents>
+          <Content name="lcDefinition">
+            <Data><![CDATA[<lcDefinition>
+  <eventSchema type="default" epn="ef932ada-d750-4535-ba00-8ab2cc36ccd9" queryWidget="B39F468E-6F51-C386-B212-897E79C740F8" queryName="EPN/Query" isShared="false"/>
+  <indexes/>
+</lcDefinition>]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr____LCREF" value="4a8d8e20-2560-4cc5-9739-43e62fdde171"/>
+        </References>
+        <Properties>
+          <Property name="useParameter" value="false"/>
+          <Property name="vtui:category" value="LiveCollection"/>
+          <Property name="vt:lastUser" value="vtbaadmin"/>
+          <Property name="_modelType" value="LiveCollection"/>
+          <Property name="hasTSC" value="false"/>
+        </Properties>
+      </Model>
+      <Model name="WindowEvent" id="758a1d85-05f4-48ed-8c40-256aae9e9394" type="event" version="1" path="">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"kind":"XSDELEMENT","attachmentAllowed":"false","name":"_EMFEventContext","type":"{http://schema.vitria.com/model}EMFEventContext"},{"attachmentAllowed":"false","name":"id","type":"string"},{"attachmentAllowed":"false","name":"name","type":"string"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"isFolder":false,"hasChildren":false,"name":"id","typeName":"string","uiName":"id","category":"built-inType","variableRef":"id","idx":0,"statePath":"WindowEvent/id"},{"isFolder":false,"hasChildren":false,"name":"name","typeName":"string","uiName":"name","category":"built-inType","variableRef":"name","idx":1,"statePath":"WindowEvent/name"}]]]></Data>
+          </Content>
+          <Content name="forms">
+            <Data><![CDATA[<mf:steps selectedStep="Step_1" xmlns:mf="http://form.vitria.com">
+  <mf:step id="Step_1" label="">
+    <mf:form id="Form_1398171098896" backgroundColor="16777215" backgroundAlpha="0" paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10"/>
+  </mf:step>
+</mf:steps>]]></Data>
+          </Content>
+        </Contents>
+        <References>
+        </References>
+        <Properties>
+          <Property name="schema.property.supportqualified" value="true"/>
+          <Property name="useParameter" value="false"/>
+          <Property name="_tr__variables" value="{http://schema.vitria.com/model}EMFEventContext{XSDELEMENT}"/>
+          <Property name="vtui:category" value="Event"/>
+          <Property name="vt:lastUser" value="vtbaadmin"/>
+          <Property name="_modelType" value="schema.event"/>
+        </Properties>
+      </Model>
+      <Model name="Page" id="ac2d0a38-e22e-43af-9892-a6e77d43dd03" type="page" version="1" path="">
+        <Contents>
+          <Content name="actionToolsModel">
+            <Data><![CDATA[<m3o>
+  <ruleset/>
+</m3o>]]></Data>
+          </Content>
+          <Content name="pageModel">
+            <Data><![CDATA[<widget version="v4" label="Page" type="Dashboard" backgroundColor="#ffffff">
+  <metadata>
+    <property visual="true" refreshable="true"/>
+  </metadata>
+  <inputs/>
+  <outputs/>
+  <layout name="builtin:layout-01-00" resizable="false" autoFit="true" showUserDefinedLayouts="false"/>
+  <notes/>
+  <widgets>
+    <widget uuid="7727E600-E987-CDF8-A5D1-898EB067BD1D" name="builtin:live-collection-widget" title="Live Collection" xpos="314" ypos="96" compx="127" compy="96" width="80" height="40" frame="RoundedBox" frameStyle="null" visible="Never" selectable="false" dataChangeOnly="true" refreshOnQuiesce="false">
+      <param name="livecollectionname" value="LiveCollection###8c7437e8-8649-4621-b3ff-dd004826eedd###LiveCollection###7727E600-E987-CDF8-A5D1-898EB067BD1D"/>
+    </widget>
+    <widget uuid="5F15233B-409F-86EA-5806-898F373EDD1E" name="builtin:inspector-widget" title="Inspector" xpos="395" ypos="131" compx="416" compy="97" width="200" height="150" frame="Panel" frameStyle="null" visible="Always" selectable="false" dataChangeOnly="true" refreshOnQuiesce="false"/>
+  </widgets>
+  <connection>
+    <link event="undefined">
+      <source uuid="7727E600-E987-CDF8-A5D1-898EB067BD1D" port="$result"/>
+      <target uuid="5F15233B-409F-86EA-5806-898F373EDD1E" port="$value"/>
+    </link>
+  </connection>
+</widget>]]></Data>
+          </Content>
+          <Content name="actionRulesModel">
+            <Data><![CDATA[<m3o>
+  <ruleset/>
+</m3o>]]></Data>
+          </Content>
+          <Content name="snapshot">
+            <Data><![CDATA[ff360884-20d4-4c97-8076-f72a7f2d1279]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="7727E600-E987-CDF8-A5D1-898EB067BD1D" value="0dca17cf-bdc0-4036-acb8-4820b544f27b"/>
+        </References>
+        <Properties>
+          <Property name="useParameter" value="false"/>
+          <Property name="refresh" value="true"/>
+          <Property name="vtui:category" value="Page"/>
+          <Property name="vt:lastUser" value="vtbaadmin"/>
+          <Property name="embed" value="false"/>
+          <Property name="_modelType" value="page"/>
+        </Properties>
+      </Model>
+      <Model name="WindowFeed" id="55d411d4-4118-4b87-9193-281fc3ab5be9" type="feed" version="1" path="">
+        <Contents>
+          <Content name="feed.definition">
+            <Data><![CDATA[{"eventArchive":{"type":"NONE"},"eventSchema":{"modelRef":"_mr____ESREF","name":"WindowEvent","content":"variables"},"kind":"LOCAL","outboundSource":{"type":"NONE"},"persistence":"ON","auditLogging":"ON","maxSize":-1,"timestamp":{"path":"","type":"SYSTEM","variableRef":""},"feedState":{"isTimebound":false,"attributesInWb":[],"type":"NONE","tablename":"","isSnapshot":false}}]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr____ESREF" value="758a1d85-05f4-48ed-8c40-256aae9e9394"/>
+        </References>
+        <Properties>
+          <Property name="vtui:kind" value="LOCAL"/>
+          <Property name="vtui:historic" value="false"/>
+          <Property name="vtui:event" value="WindowEvent"/>
+          <Property name="vtui:feedState" value="NONE"/>
+          <Property name="useParameter" value="false"/>
+          <Property name="vtui:outbound" value="NONE"/>
+          <Property name="vtui:category" value="Feed"/>
+          <Property name="vt:lastUser" value="vtbaadmin"/>
+          <Property name="_modelType" value="feed"/>
+          <Property name="vtui:eventArchive" value="NONE"/>
+        </Properties>
+      </Model>
+      <Model name="EPN" id="4a8d8e20-2560-4cc5-9739-43e62fdde171" type="EPN" version="1" path="">
+        <Contents>
+          <Content name="openQueryModel">
+            <Data><![CDATA[<epn:component name="EPN" durable="false" isTemplate="false" checkpoint="false" version="2" xmlns:epn="http://epn.vitria.com/model">
+  <properties>
+    <non-durable/>
+  </properties>
+  <stream name="FEFDA664-4B9B-DF12-754C-897E6BB72F81-Out">
+    <inputbinding>
+      <feed name="WindowFeed"/>
+      <virtualEvent interval="1 Second" maxDelay="1 Second"/>
+    </inputbinding>
+  </stream>
+  <stream name="B39F468E-6F51-C386-B212-897E79C740F8-Out">
+    <outputbinding>
+      <liveCollection removeEmptyGroups="false" path="LiveCollection"/>
+    </outputbinding>
+  </stream>
+  <query saveContext="false" title="Query" port="Live Collection" name="B39F468E-6F51-C386-B212-897E79C740F8">
+    <xquery><![CDATA[declare namespace p1_ns1 = "http://schema.vitria.com/Event/WindowEvent";
+declare option outputstream "B39F468E-6F51-C386-B212-897E79C740F8-Out";
+declare option qs:checkpoint "off";
+declare output (1 as dom:element*);
+(: End of Generated Header :)
+for $fv1 in qs:stream('FEFDA664-4B9B-DF12-754C-897E6BB72F81-Out')
+
+group by
+    $fv1/p1_ns1:id
+
+return
+    <Event>
+        <id>{fn:string($fv1/p1_ns1:id)}</id>
+        <name>{fn:string($fv1/p1_ns1:name)}</name>
+    </Event>
+
+output
+    changes]CdAtAeNd]></xquery>
+  </query>
+</epn:component>]]></Data>
+          </Content>
+          <Content name="pageModel">
+            <Data><![CDATA[<widget version="v4" label="EPN" type="Dashboard" backgroundColor="#ffffff" durable="false" durableMaxInactiveTime="1H" checkpoint="false" isTemplate="false">
+  <metadata>
+    <property visual="false" refreshable="false"/>
+  </metadata>
+  <inputs/>
+  <outputs/>
+  <layout name="#NULL"/>
+  <notes/>
+  <widgets>
+    <widget uuid="FEFDA664-4B9B-DF12-754C-897E6BB72F81" name="builtin:com-vitria-epn-core-feed" title="Feed" xpos="424.5" ypos="141.5" compx="175" compy="117" width="80" height="40" frame="RoundedBox" frameStyle="null" visible="Never" selectable="false" dataChangeOnly="true" refreshOnQuiesce="false">
+      <param name="feedName" value="WindowFeed###ead2ab90-ab5e-46a4-bd7b-36a9cc2f2cb9######/home/vtbaadmin/Feed2LC/WindowFeed###NONE###NONE###false"/>
+      <param name="streamName" value="streamWindowFeed@${project.instance.name}{1S}{1S}{null}{}"/>
+      <param name="subMode" value="SUBSCRIBE"/>
+      <param name="playback" value="all"/>
+      <param name="playbackCount" value="10"/>
+      <param name="playbackDuration" value="P10N"/>
+      <param name="virtualEventSettings" value="true"/>
+      <param name="virtualEventInterval" value="P1S"/>
+      <param name="maxEventDelay" value="P1S"/>
+      <param name="keepLateEvent" value="false"/>
+      <param name="backlogSettings" value="false"/>
+      <param name="backlogHighThreshold" value="10000"/>
+      <param name="backlogLowThreshold" value="5000"/>
+      <param name="backlogMaxException" value="false"/>
+      <param name="rateLimiterSettings" value="false"/>
+      <param name="maxEventRate" value="3000"/>
+    </widget>
+    <widget uuid="B39F468E-6F51-C386-B212-897E79C740F8" name="builtin:com-vitria-epn-core-query" title="Query" xpos="444.5" ypos="161.5" compx="384" compy="116" width="200" height="150" frame="Panel" frameStyle="null" visible="Never" selectable="false" dataChangeOnly="true" refreshOnQuiesce="false">
+      <embedded>
+        <source><![CDATA[
+<query version="1.4">
+  <block type="PRAGMA"/>
+  <block type="FUNCTIONS"/>
+  <block type="FOR">
+    <node variable="$fv1" port="p1" window="unbounded"/>
+  </block>
+  <block type="LET"/>
+  <block type="WHERE"/>
+  <block type="ORDER-BY"/>
+  <block type="GROUP-BY">
+    <node path="$fv1/p1_ns1:id"/>
+  </block>
+  <block type="RETURN">
+    <node name="Event" type="element">
+      <node name="id" type="element" cast="string" value="$fv1/p1_ns1:id"/>
+      <node name="name" type="element" value="$fv1/p1_ns1:name" cast="string"/>
+    </node>
+  </block>
+  <block type="OUTPUT">
+    <node option="changes" every="false" interval="10" unit="second"/>
+  </block>
+</query>
+]CdAtAeNd]></source>
+        <execute><![CDATA[declare namespace p1_ns1 = "http://schema.vitria.com/Event/WindowEvent";
+declare option outputstream "{out}";
+declare option qs:checkpoint "{checkpoint}";
+declare output (1 as dom:element*);
+(: End of Generated Header :)
+for $fv1 in qs:stream('{p1}')
+
+group by
+    $fv1/p1_ns1:id
+
+return
+    <Event>
+        <id>{fn:string($fv1/p1_ns1:id)}</id>
+        <name>{fn:string($fv1/p1_ns1:name)}</name>
+    </Event>
+
+output
+    changes
+]CdAtAeNd]></execute>
+        <sample><![CDATA[
+<Event>
+  <id __vitria__type="string"/>
+  <name __vitria__type="string"/>
+</Event>
+]CdAtAeNd]></sample>
+      </embedded>
+      <param name="$dynamic-input-ports" value="p1:P1"/>
+      <param name="enableTSC" value="false"/>
+      <param name="tscInterval" value="30 second"/>
+      <param name="tscRange" value="1 hour"/>
+    </widget>
+    <widget uuid="B25A1225-336A-304A-8655-897E967DA9F9" name="builtin:com-vitria-epn-core-livecollection" title="Live Collection" xpos="464.5" ypos="181.5" compx="580.5" compy="119.5" width="40" height="40" frame="RoundedBox" frameStyle="null" visible="Never" selectable="false" dataChangeOnly="true" refreshOnQuiesce="false">
+      <param name="liveCollection" value="[[isInternal||false]][[lcPath||/home/vtbaadmin/Feed2LC/LiveCollection]][[lcName||LiveCollection]][[lcID||a118778f-598f-40ea-959d-034749bea52f]]"/>
+    </widget>
+  </widgets>
+  <connection>
+    <link event="undefined">
+      <source uuid="FEFDA664-4B9B-DF12-754C-897E6BB72F81" port="source"/>
+      <target uuid="B39F468E-6F51-C386-B212-897E79C740F8" port="@p1"/>
+    </link>
+    <link event="undefined">
+      <source uuid="B39F468E-6F51-C386-B212-897E79C740F8" port="out"/>
+      <target uuid="B25A1225-336A-304A-8655-897E967DA9F9" port="query"/>
+    </link>
+  </connection>
+</widget>]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_home_vtbaadmin_Feed2LC_LiveCollection" value="0dca17cf-bdc0-4036-acb8-4820b544f27b"/>
+          <Reference name="_home_vtbaadmin_Feed2LC_WindowFeed" value="55d411d4-4118-4b87-9193-281fc3ab5be9"/>
+        </References>
+        <Properties>
+          <Property name="isAdhoc" value="false"/>
+          <Property name="useParameter" value="true"/>
+          <Property name="isTemplate" value="false"/>
+          <Property name="refresh" value="true"/>
+          <Property name="vtui:category" value="EPN"/>
+          <Property name="vt:lastUser" value="vtbaadmin"/>
+          <Property name="embed" value="false"/>
+          <Property name="_modelType" value="EPN"/>
+        </Properties>
+      </Model>
+    </Models>
+    <BuiltInModels>
+      <Model name="EventSourceExceptionEvent" id="c2eccf82-97ce-41b4-82e3-d54f67f3f805" type="event" version="1" path="Vitria/Event">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"name":"_EMFEventContext","attachmentAllowed":false,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventContext"},{"name":"Header","attachmentAllowed":true,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventHeader"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"nodeType":"group","templateID":"http://schema.vitria.com/model?element=EMFEventHeader","uiIsExpanded":"true","typeKind":"XSDELEMENT","schemaRevision":"2","storageType":"SHREDDED","name":"Header","namespace":"http://schema.vitria.com/model","typeName":"EMFEventHeader","typeNamespace":"http://schema.vitria.com/model","children":[{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"EventSpace","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":2,"parent":1,"hasChildren":false},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"EventCode","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":3,"parent":1,"hasChildren":false},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"ExternalID","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":4,"parent":1,"hasChildren":false},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"Timestamp","typeName":"dateTime","xsdBuiltinType":"dateTime","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":5,"parent":1,"hasChildren":false}],"idx":1,"uiName":"Header","label":"Header","attachment":true,"parent":null,"hasChildren":true},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"EventSpace","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":2,"parent":1,"hasChildren":false,"variableRef":"Header","statePath":"EventSourceExceptionEvent/Header/EventSpace","spath":"declare namespace tns=&quot;http://schema.vitria.com/model&quot;;/tns:EMFEventHeader/EventSpace"},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"EventCode","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":3,"parent":1,"hasChildren":false,"variableRef":"Header","statePath":"EventSourceExceptionEvent/Header/EventCode","spath":"declare namespace tns=&quot;http://schema.vitria.com/model&quot;;/tns:EMFEventHeader/EventCode"},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"ExternalID","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":4,"parent":1,"hasChildren":false,"variableRef":"Header","statePath":"EventSourceExceptionEvent/Header/ExternalID","spath":"declare namespace tns=&quot;http://schema.vitria.com/model&quot;;/tns:EMFEventHeader/ExternalID"},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"Timestamp","typeName":"dateTime","xsdBuiltinType":"dateTime","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":5,"parent":1,"hasChildren":false,"variableRef":"Header","statePath":"EventSourceExceptionEvent/Header/Timestamp","spath":"declare namespace tns=&quot;http://schema.vitria.com/model&quot;;/tns:EMFEventHeader/Timestamp"}]]]></Data>
+          </Content>
+        </Contents>
+        <References>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="Untyped" id="4a2fc1be-66d9-4e96-8056-f3991914473f" type="event" version="1" path="Vitria/Event">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"name":"_EMFEventContext","attachmentAllowed":false,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventContext"},{"name":"anyType","attachmentAllowed":false,"type":"anyType"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"nodeType":"field","uiIsExpanded":"true","typeKind":"SIMPLE","name":"anyType","typeName":"anyType","xsdBuiltinType":"anyType","isSimpleType":"true","idx":0,"parent":null,"hasChildren":false,"statePath":"ev1/anyType","category":"built-inType"}]]]></Data>
+          </Content>
+        </Contents>
+        <References>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="EventSourceExceptionFeed" id="6ee0932f-ba9f-439a-8137-4eaa00e9c076" type="feed" version="1" path="Vitria/Feed">
+        <Contents>
+          <Content name="feed.definition">
+            <Data><![CDATA[{"kind":"NONE","auditLogging":"ON","maxSize":-1,"persistence":"ON","timestamp":{"type":"SYSTEM","variableRef":"","path":""},"eventArchive":{"type":"NONE"},"feedState":{"type":"NONE","isSnapshot":"false","tablename":""},"outboundSource":{"type":"NONE"},"eventSchema":{"content":"variables","name":"Vitria/Event/EventSourceExceptionEvent","modelRef":"_mr____ESREF"}}]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr____ESREF" value="c2eccf82-97ce-41b4-82e3-d54f67f3f805"/>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="Exception" id="a8895e52-f6b6-4ebd-8b62-4faaefa34524" type="exception" version="1" path="Vitria/Exception">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"name":"category","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"},{"name":"code","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"},{"name":"message","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"name":"category","label":"category","isFolder":false,"parent":null,"category":"built-inType","idx":0,"uiName":"category","hasChildren":false,"typeName":"string"},{"name":"code","label":"code","isFolder":false,"parent":null,"category":"built-inType","idx":1,"uiName":"code","hasChildren":false,"typeName":"string"},{"name":"message","label":"message","isFolder":false,"parent":null,"category":"built-inType","idx":2,"uiName":"message","hasChildren":false,"typeName":"string"}]]]></Data>
+          </Content>
+        </Contents>
+        <References>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="BusinessException" id="b650efa5-ffbb-434c-8a76-78c7e64d2267" type="exception" version="1" path="Vitria/Exception">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr__parent" value="a8895e52-f6b6-4ebd-8b62-4faaefa34524"/>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="SystemException" id="dc8ffa21-c723-4bfb-835b-40512ec49db5" type="exception" version="1" path="Vitria/Exception">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr__parent" value="a8895e52-f6b6-4ebd-8b62-4faaefa34524"/>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="SQLException" id="6ec918e6-4b44-4216-8a8d-b1fe05f03d28" type="exception" version="1" path="Vitria/Exception">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"name":"errorCode","type":"int","typeName":"int","uri":"http://www.w3.org/2001/XMLSchema"},{"name":"sqlState","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"name":"errorCode","label":"errorCode","isFolder":false,"parent":null,"category":"built-inType","idx":0,"uiName":"errorCode","hasChildren":false,"typeName":"int"},{"name":"sqlState","label":"sqlState","isFolder":false,"parent":null,"category":"built-inType","idx":1,"uiName":"sqlState","hasChildren":false,"typeName":"string"}]]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr__parent" value="dc8ffa21-c723-4bfb-835b-40512ec49db5"/>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="FeedException" id="6287c17b-90ca-4fef-8982-f9f7b9634440" type="exception" version="1" path="Vitria/Exception">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr__parent" value="dc8ffa21-c723-4bfb-835b-40512ec49db5"/>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="Compensation" id="638647a6-27b2-49fa-8f0a-04f0e44e9214" type="compensation" version="1" path="Vitria/Compensation">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"name":"category","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"},{"name":"code","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"},{"name":"message","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"name":"category","label":"category","isFolder":false,"parent":null,"category":"built-inType","idx":0,"uiName":"category","hasChildren":false,"typeName":"string"},{"name":"code","label":"code","isFolder":false,"parent":null,"category":"built-inType","idx":1,"uiName":"code","hasChildren":false,"typeName":"string"},{"name":"message","label":"message","isFolder":false,"parent":null,"category":"built-inType","idx":2,"uiName":"message","hasChildren":false,"typeName":"string"}]]]></Data>
+          </Content>
+        </Contents>
+        <References>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+    </BuiltInModels>
+    <Deployments>
+        <Data><![CDATA[[{"timerConnectorSettings":{"pollrate":1,"batchSize":1,"concurrency":10},"defaultListId":1,"references":[],"resource":"<resourceSettings xmlns=\"http://schema.vitria.com\"/>\n","connectorSettings":{"pollrate":30,"batchSize":5,"concurrency":1},"label":"Deployment","workgroups":"<workgroupMapping xmlns:common=\"http://common.vitria.com/model\" xmlns=\"http://workflow.vitria.com/model\"/>","eventsource":"<resources xmlns=\"http://schema.vitria.com\"/>\n","serverSettings":{"newCorrelation":"false","auditLevel":"bpmnonly","retryCount":3,"runtimeValidation":"false","traceLevel":6,"persistLevel":"normal","autoPurge":"false","autoStart":"false","JMXMonitoring":"true"},"_serviceClientSettings":[{"serviceURI":"","localAddress":"http://kirkwood:8080","name":"","id":"0e4aac83-76ab-4454-8f76-1a3f75f1c53f"}],"threadPoolSettings":{"keepAliveTime":30,"coreSize":16,"maxSize":48},"projectResourceSettings":{"feedServerDSJNDI":"","HDFSSource":"","m3oServerDSJNDI":""},"name":"Deployment","id":"46510574-86da-46b2-ad56-f32ed4309d70","sharedfeeds":[],"parameters":[]}]]]></Data>
+    </Deployments>
+    <Classpath>
+        <Data><![CDATA[{"libs":{"_jars":[]},"libs4Osgi":{"_jars":[]}}]]></Data>
+    </Classpath>
+    <Parameters>
+        <Data><![CDATA[[]]]></Data>
+    </Parameters>
+    <UserRole>
+        <Data><![CDATA[<?xml version="1.0" encoding="UTF-8"?><BusinessEnvironment product_version="6.1.0.0" name="/home/vtbaadmin/Feed2LC" ID="1290585b-5d0c-44a9-8ae6-99e57a0c6424">
+<staticroles/>
+<repousersstatic/>
+<repogroupsstatic/>
+</BusinessEnvironment>
+]]></Data>
+    </UserRole>
+    <Notification>
+        <Data><![CDATA[{"schema":"","detail":""}]]></Data>
+    </Notification>
+  </ModelInfo>
+</BpmAppModel>
