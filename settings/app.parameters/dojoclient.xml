@@ -62,7 +62,7 @@
   <parameter value="https://github.com/rtang2157/rtangVIA1.git" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Repository URL" id="version.repo.url"/>
   <parameter value="origin/v1.0" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Working branch" id="version.repo.working.branch"/>
   <parameter value="rtang2157" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Repository Username" id="version.repo.user"/>
-  <parameter value="&lt;vYdRynwgA9p9WmOq0wGnNpJf7i7T49ZfWqB&gt;" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="password" label="Repository Password" id="version.repo.password"/>
+  <parameter value="&lt;m7jG7CZnvAmGfxIptP82!J4VcFfnAzUCYlh&gt;" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="password" label="Repository Password" id="version.repo.password"/>
   <parameter id="deprecate.hamburger.navigator" label="Deprecate hamburger model navigator" value="true" type="boolean" group="deprecated" groupLabel="Deprecated Features"/>
   <parameter id="launchpad.plugin.key" label="URL key for landing page" value="s" type="string" group="landing" groupLabel="Landing Page"/>
 </parameters>
