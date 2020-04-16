@@ -18,7 +18,7 @@
     <HelpContent><![CDATA[]]></HelpContent>
       <PageProperties>
       </PageProperties>
-      <Layout type="10" numRow="25" numCol="31" count="6" templateType ="16" screenHeight ="NaN" renderType ="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:0,&quot;title&quot;:&quot;Main Tile&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:25,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:1,&quot;title&quot;:&quot;Tile1&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:49,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:2,&quot;title&quot;:&quot;Tile2&quot;},{&quot;data_col&quot;:61,&quot;data_row&quot;:1,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:3,&quot;title&quot;:&quot;Tile3&quot;},{&quot;data_col&quot;:61,&quot;data_row&quot;:25,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:4,&quot;title&quot;:&quot;Tile4&quot;},{&quot;data_col&quot;:61,&quot;data_row&quot;:49,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:5,&quot;title&quot;:&quot;Tile5&quot;}]" unitSize= "null" viewRows="72" viewCols="120"/>
+      <Layout type="10" numRow="25" numCol="31" count="6" templateType ="16" screenHeight ="NaN" renderType ="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:0,&quot;title&quot;:&quot;Main Tile&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:25,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:1,&quot;title&quot;:&quot;Tile1&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:49,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:2,&quot;title&quot;:&quot;Tile2&quot;},{&quot;data_col&quot;:61,&quot;data_row&quot;:1,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:3,&quot;title&quot;:&quot;Tile3&quot;},{&quot;data_col&quot;:61,&quot;data_row&quot;:25,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:4,&quot;title&quot;:&quot;Tile4&quot;},{&quot;data_col&quot;:61,&quot;data_row&quot;:49,&quot;data_sizex&quot;:60,&quot;data_sizey&quot;:24,&quot;id&quot;:5,&quot;title&quot;:&quot;Tile5&quot;}]" unitSize= "undefined" viewRows="72" viewCols="120"/>
       <Tile name="Main Tile" title="Main Tile" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="null" advancedDisable="false" allowFullscreen="false">
         <DataSource category="ProjectResource" id="/apps/drd/projects/DataResourceWS$Deployment#Feed" name="Feed" label="Feed" type="feed" project="/apps/drd/projects/DataResourceWS$Deployment" untyped="false" modelURL="/prj/apps/drd/projects/DataResourceWS$Deployment/Feed">
   <Param name="resultsize" label="resultsize" value="" binding="" type="int"/>
@@ -91,17 +91,36 @@
           <Property name="autoSelectFirst" value="disable"/>
         </DataViewer>
       </Tile>
-      <Tile name="Tile3" title="Tile3" desc="" hideEmptyTile="undefined" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false">
-        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)">
+      <Tile name="Tile3" title="Tile3" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false">
+        <DataSource category="ProjectResource" id="/apps/drd/projects/DataResourceWS$Deployment#Feed" name="Feed" label="Feed" type="feed" project="/apps/drd/projects/DataResourceWS$Deployment" untyped="false" modelURL="/prj/apps/drd/projects/DataResourceWS$Deployment/Feed">
+  <Param name="resultsize" label="resultsize" value="" binding="" type="int"/>
+  <Field name="anyType" label="anyType" type="anyType" isDimension="false" isMeasure="false" interp="{1}anyType/{1}Event/ResultSet/Event/"/>
 </DataSource>
           <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+        </DataViewer>
       </Tile>
-      <Tile name="Tile4" title="Tile4" desc="" hideEmptyTile="undefined" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false">
+      <Tile name="Tile4" title="Tile4" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false">
       </Tile>
-      <Tile name="Tile5" title="Tile5" desc="" hideEmptyTile="undefined" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false">
+      <Tile name="Tile5" title="Tile5" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="undefined" advancedDisable="undefined" allowFullscreen="false">
       </Tile>
     </Page>
-    <DataFlow showFooter="undefined">
+    <DataFlow showFooter="true">
       <Version type="Aggregate" version="1"/>
       <Version type="Columns" version="1"/>
       <Version type="DynPivot" version="1"/>
