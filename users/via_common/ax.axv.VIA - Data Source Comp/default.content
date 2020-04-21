@@ -1,0 +1,675 @@
+<AnalyticsExplorerView description="" name="VIA - Data Source Comp" is_init="false">
+  <ModelInfo validated="true" nextPageId="2">
+    <GlobalDSRSetting enabled="false">
+    </GlobalDSRSetting>
+    <GlobalProperties>
+    </GlobalProperties>
+    <GlobalThemeSetting>
+        <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+        <TileOpacity opacity="0.8"/>
+        <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+        <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"></TabNavSetting>
+    <DWRSetting disable="false"></DWRSetting>
+    <CustomCSSSetting ><![CDATA[@import '/vitria-oi/rest/app/dbp/user/via_common/dbpm/VIA - Common/VIA-CSS';
+
+.app .smallTile .tileContainer.actionbar {
+    margin-top: -7px;
+    margin-left: -3px;
+    padding: 0px;
+    height: 58px !important;
+}
+]]></CustomCSSSetting>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="">
+    <HelpContent><![CDATA[]]></HelpContent>
+    <PageFrameContent><![CDATA[<table style="width:100%;height:100%;background-color:white;padding-bottom:3px;" border="0">
+<tbody>
+    <tr style="vertical-align:middle;">
+        <td style="width:100%;height:23px;" data-vitria-type="tile" data-vitria-tile-name="Tile1"></td>
+    </tr>
+    <tr>
+        <td style="width:100%;height:100%;" data-vitria-type="layout"></td>
+    </tr>
+</tbody>
+</table> 
+]]></PageFrameContent>
+      <PageProperties>
+      </PageProperties>
+      <Layout type="10" numRow="37" numCol="33" count="3" templateType ="21" screenHeight ="900" renderType ="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:32,&quot;data_sizey&quot;:36,&quot;id&quot;:0},{&quot;data_col&quot;:33,&quot;data_row&quot;:1,&quot;data_sizex&quot;:88,&quot;data_sizey&quot;:72,&quot;id&quot;:1},{&quot;data_col&quot;:1,&quot;data_row&quot;:37,&quot;data_sizex&quot;:32,&quot;data_sizey&quot;:36,&quot;id&quot;:2}]" unitSize= "{&quot;x&quot;:5.583333333333333,&quot;y&quot;:5.597222222222222}" viewRows="72" viewCols="120"/>
+      <Tile name="DataSourceList" title="Data Source List" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="via-scroller" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:23" name="axflow:localstore:node:23" label="Data Sources" type="#ScriptDataStore">
+  <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+  <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+  <Field name="name" label="Name" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="url" label="URL" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="desc" label="Description" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="behavior" label="Behavior" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="class" label="Class" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="username" label="User Name" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="password" label="Password" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="jndiName" label="JNDI Name" type="string" isDimension="false" isMeasure="false"/>
+</DataSource>
+          <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true,&quot;display&quot;:&quot;true&quot;,&quot;style&quot;:{&quot;width&quot;:20}},{&quot;name&quot;:&quot;url&quot;,&quot;label&quot;:&quot;URL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;isKeyField&quot;:false,&quot;style&quot;:{&quot;width&quot;:70}},{&quot;name&quot;:&quot;desc&quot;,&quot;label&quot;:&quot;Description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;behavior&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true,&quot;display&quot;:&quot;true&quot;,&quot;isKeyField&quot;:false,&quot;style&quot;:{&quot;width&quot;:10}},{&quot;name&quot;:&quot;class&quot;,&quot;label&quot;:&quot;Class&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;username&quot;,&quot;label&quot;:&quot;User Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;isKeyField&quot;:false},{&quot;name&quot;:&quot;jndiName&quot;,&quot;label&quot;:&quot;JNDI Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:8,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;isKeyField&quot;:false}]"/>
+          <Ports>
+          </Ports>
+        </DataViewer>
+      </Tile>
+      <Tile name="Database Query" title="Database Query" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="true">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:30" name="axflow:localstore:node:30" label="Selected DataSource" type="#ScriptDataStore">
+  <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+  <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+  <Field name="name" label="Name" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="label" label="Label" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="value" label="Value" type="string" isDimension="false" isMeasure="false"/>
+</DataSource>
+          <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Data Source Plugin/Database Query&quot;}"/>
+          <Ports>
+          </Ports>
+        </DataViewer>
+      </Tile>
+      <Tile name="Detail" title="Detail" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="via-scroller" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:30" name="axflow:localstore:node:30" label="Selected DataSource" type="#ScriptDataStore">
+  <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+  <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+  <Field name="name" label="Name" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="label" label="Label" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="value" label="Value" type="string" isDimension="false" isMeasure="false"/>
+</DataSource>
+          <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="disable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:20,&quot;backgroundColor&quot;:&quot;#d5d7d7&quot;}},{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:80}}]"/>
+          <Ports>
+          </Ports>
+        </DataViewer>
+      </Tile>
+      <frame_tile name="toolbar" title="toolbar" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="actionbar" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:28" name="axflow:localstore:node:28" label="ActionBar Data" type="#ScriptDataStore">
+  <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+  <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+  <Field name="value" label="Value" type="string" isDimension="false" isMeasure="false"/>
+  <Field name="disable" label="Disable" type="boolean" isDimension="false" isMeasure="false"/>
+</DataSource>
+          <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/user/via_common/dbpm/VIA - Common/Action Bar&quot;,&quot;model&quot;:&quot;{\n\t\&quot;menubar\&quot;: [{\n\t\t\&quot;label\&quot;: \&quot;Data Source\&quot;,\n\t\t\&quot;value\&quot;: \&quot;datasource\&quot;,\n\t\t\&quot;items\&quot;: [{\n\t\t\t\&quot;label\&quot;: \&quot;Create\&quot;,\n\t\t\t\&quot;value\&quot;: \&quot;create\&quot;\n\t\t},\n\t\t{\n\t\t\t\&quot;label\&quot;: \&quot;Update\&quot;,\n\t\t\t\&quot;value\&quot;: \&quot;update\&quot;\n\t\t},\n\t\t{\n\t\t\t\&quot;label\&quot;: \&quot;Delete\&quot;,\n\t\t\t\&quot;value\&quot;: \&quot;delete\&quot;\n\t\t},\n\t\t{\n\t\t\t\&quot;label\&quot;: \&quot;Refresh\&quot;,\n\t\t\t\&quot;value\&quot;: \&quot;refresh\&quot;\n\t\t}]\n\t}]\n}&quot;}"/>
+          <Ports>
+          </Ports>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Stores>
+      </Stores>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id='node:9' type='UserScript' label='Script 2' _undefined_title='' originHeight='100' width='120' height='117' x='460' y='120' >
+<dynIn id='din:0' type='event[]' label='Action' evaluate='always' _isArray='true' >
+</dynIn>
+<dynIn id='din:1' type='event[]' label='Selection' evaluate='always' _isArray='true' >
+</dynIn>
+<dynOut id='dout:0' type='any' label='Update' propagate='always' _isArray='true' >
+</dynOut>
+<dynOut id='dout:1' type='event[]' label='Selected' propagate='always' _isArray='true' >
+</dynOut>
+</Item>
+
+      <Item id='node:20' type='Tile' label='ActionBar' _undefined_title='' _undefined_originHeight='' width='120' height='160' x='240' y='120' >
+</Item>
+
+      <Item id='node:22' type='UserScript' label='Script 3' _undefined_title='' originHeight='100' width='100' height='100' x='660' y='120' >
+<dynIn id='din:0' type='any' label='In(0)' evaluate='always' _isArray='true' >
+</dynIn>
+<dynOut id='dout:0' type='event[]' label='Out(0)' propagate='always' _isArray='true' >
+</dynOut>
+</Item>
+
+      <Item id='node:23' type='LocalStore' label='Data Sources' _undefined_title='' _undefined_originHeight='' width='120' height='160' x='840' y='120' >
+</Item>
+
+      <Item id='node:25' type='Tile' label='DataSource List' _undefined_title='' _undefined_originHeight='' width='120' height='160' x='240' y='300' >
+</Item>
+
+      <Item id='node:27' type='UserScript' label='Script 4' _undefined_title='' originHeight='100' width='100' height='100' x='453' y='460' >
+<dynIn id='din:0' type='event[]' label='In(0)' evaluate='always' _isArray='true' >
+</dynIn>
+<dynOut id='dout:0' type='event[]' label='Disable' propagate='always' _isArray='true' >
+</dynOut>
+</Item>
+
+      <Item id='node:28' type='LocalStore' label='ActionBar Data' _undefined_title='' _undefined_originHeight='' width='120' height='160' x='672' y='460' >
+</Item>
+
+      <Item id='node:30' type='LocalStore' label='Selected DataSource' _undefined_title='' _undefined_originHeight='' width='130' height='177' x='837' y='286' >
+</Item>
+
+      <Link srcId='node:22' srcPort='dout:0' tgtId='node:23' tgtPort='in:0' >
+</Link>
+
+      <Link srcId='node:20' srcPort='out:0' tgtId='node:9' tgtPort='din:0' >
+</Link>
+
+      <Link srcId='node:9' srcPort='dout:0' tgtId='node:22' tgtPort='din:0' >
+</Link>
+
+      <Link srcId='node:25' srcPort='out:0' tgtId='node:9' tgtPort='din:1' >
+</Link>
+
+      <Link srcId='node:25' srcPort='out:0' tgtId='node:27' tgtPort='din:0' >
+</Link>
+
+      <Link srcId='node:27' srcPort='dout:0' tgtId='node:28' tgtPort='in:0' >
+</Link>
+
+      <Link srcId='node:9' srcPort='dout:1' tgtId='node:30' tgtPort='in:0' >
+</Link>
+
+      <Input key='node:9/cfg:inPorts/default' value='[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Action&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]' >
+</Input>
+
+      <Input key='node:9/cfg:model/default' value='&quot;var DataSourcePlugin = Plugin(\&quot;DataSource\&quot;);\n\nif (port == \&quot;din:0\&quot;) {\n    var action = getInput(\&quot;din:0\&quot;);\n    var selection = getInput(\&quot;din:1\&quot;);\n    if (action != null &amp;&amp; action.length == 1) {\n        action = action[0];\n        switch (action.value) {\n            case \&quot;datasource/create\&quot;:\n                DataSourcePlugin.doUpdateDataSource(\&quot;\&quot;, \&quot;\&quot;, \&quot;\&quot;, \&quot;\&quot;, \&quot;\&quot;, function(result) {\n                    if (result.status == \&quot;OK\&quot;) {\n                        alert(result.value.message);\n                        setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n                    }\n                    else {\n                        alert(result.error);\n                    }\n                });\n                break;\n            case \&quot;datasource/update\&quot;:\n                if (selection != null &amp;&amp; selection.length == 1) {\n                    var name = selection[0][\&quot;name\&quot;];\n                    var url = selection[0][\&quot;url\&quot;];\n                    var username = selection[0][\&quot;username\&quot;];\n                    var password = selection[0][\&quot;password\&quot;];\n                    var behavior = selection[0][\&quot;behavior\&quot;];\n                    DataSourcePlugin.doUpdateDataSource(name, url, username, password, behavior, function(result) {\n                        if (result.status == \&quot;OK\&quot;) {\n                            alert(result.value.message);\n                            setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n                        }\n                        else {\n                            alert(result.error);\n                        }\n                    });\n                }\n                break;\n            case \&quot;datasource/delete\&quot;:\n                if (selection != null &amp;&amp; selection.length == 1) {\n                    var name = selection[0][\&quot;name\&quot;];\n                    var url = selection[0][\&quot;url\&quot;];\n                    DataSourcePlugin.doDeleteDataSource(name, url, function(result) {\n                        if (result.status == \&quot;OK\&quot;) {\n                            alert(result.value.message);\n                            setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n                        }\n                        else {\n                            alert(result.error);\n                        }\n                    });\n                }\n                break;\n            case \&quot;datasource/refresh\&quot;:\n                setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n                break;\n        }\n    }\n}\nelse if (port == \&quot;din:1\&quot;) {\n    var selection = getInput(\&quot;din:1\&quot;) || [];\n    var schema = getInputSchema(\&quot;din:1\&quot;);\n    var detail = [];\n    if (selection.length == 1) {\n        for (var i=0; i&lt;schema.length; i++) {\n            detail.push({\n                name  : schema[i].name,\n                label : schema[i].label,\n                value : selection[0][schema[i].name]\n            });\n        }\n    }\n    setOutput(\&quot;dout:1\&quot;, detail);\n}\n&quot;' >
+</Input>
+
+      <Input key='node:9/cfg:outPorts/default' value='[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Update&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selected&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]' >
+</Input>
+
+      <Input key='node:20/cfg:tile/default' value='[{&quot;id&quot;:&quot;ROOT#1#toolbar&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;toolbar&quot;}]' >
+</Input>
+
+      <Input key='node:22/cfg:outPorts/default' value='[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]' >
+</Input>
+
+      <Input key='node:22/cfg:model/default' value='&quot;var DataSourcePlugin = Plugin(\&quot;DataSource\&quot;);\r\n\r\nDataSourcePlugin.dsListDataSources(function(result) {\r\n    if (result != null) {\r\n        // result, if not NULL, WILL BE a wrapped status with {status, value|error}\r\n        if (result.status == \&quot;OK\&quot;) {\r\n            result.value.sort(function(a,b) {\r\n                return a.name.localeCompare(b.name);\r\n            });\r\n            setOutput(\&quot;dout:0\&quot;, result.value);\r\n        }\r\n        else {\r\n            setOutput(\&quot;dout:0\&quot;, []);\r\n        }\r\n    }\r\n});\r\n&quot;' >
+</Input>
+
+      <Input key='node:22/cfg:schema/default' value='&quot;var schema = [];\r\nschema.push({\r\n    name:\&quot;name\&quot;,\r\n    label:\&quot;Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;url\&quot;,\r\n    label:\&quot;URL\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;desc\&quot;,\r\n    label:\&quot;Description\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;behavior\&quot;,\r\n    label:\&quot;Behavior\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;class\&quot;,\r\n    label:\&quot;Class\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;username\&quot;,\r\n    label:\&quot;User Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;password\&quot;,\r\n    label:\&quot;Password\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;jndiName\&quot;,\r\n    label:\&quot;JNDI Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:0\&quot;, schema);&quot;' >
+</Input>
+
+      <Input key='node:22/cfg:inPorts/default' value='[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]' >
+</Input>
+
+      <Input key='node:25/cfg:tile/default' value='[{&quot;id&quot;:&quot;ROOT#1#DataSourceList&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;DataSourceList&quot;}]' >
+</Input>
+
+      <Input key='node:9/cfg:schema/default' value='&quot;var schema = [];\r\nschema.push({\r\n    name:\&quot;name\&quot;,\r\n    label:\&quot;Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;label\&quot;,\r\n    label:\&quot;Label\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;value\&quot;,\r\n    label:\&quot;Value\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:1\&quot;, schema);&quot;' >
+</Input>
+
+      <Input key='node:27/cfg:inPorts/default' value='[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]' >
+</Input>
+
+      <Input key='node:27/cfg:outPorts/default' value='[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Disable&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]' >
+</Input>
+
+      <Input key='node:27/cfg:schema/default' value='&quot;var schema = [];\r\nschema.push({\r\n    name:\&quot;value\&quot;,\r\n    label:\&quot;Value\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;disable\&quot;,\r\n    label:\&quot;Disable\&quot;,\r\n    type:\&quot;boolean\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:0\&quot;, schema);&quot;' >
+</Input>
+
+      <Input key='node:27/cfg:model/default' value='&quot;var DataSourcePlugin = Plugin(\&quot;DataSource\&quot;);\n\nvar selection = port == \&quot;din:0\&quot; ? getInput(\&quot;din:0\&quot;) : null;\nvar disable = selection == null || selection.length == 0;\nsetOutput(\&quot;dout:0\&quot;, [\n    { value : \&quot;datasource/update\&quot;, \&quot;disable\&quot; : disable},\n    { value : \&quot;datasource/delete\&quot;, \&quot;disable\&quot; : disable},\n]);\n&quot;' >
+</Input>
+
+      <Schema id="node:20/out:0">
+        <JSON value='{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:9/din:0">
+        <JSON value='{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:20/out:1">
+        <JSON value='{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:20/out:2">
+        <JSON value='{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:20/out:3">
+        <JSON value='{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:22/dout:0">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;url&quot;,&quot;label&quot;:&quot;URL&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;desc&quot;,&quot;label&quot;:&quot;Description&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;behavior&quot;,&quot;label&quot;:&quot;Behavior&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;class&quot;,&quot;label&quot;:&quot;Class&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;username&quot;,&quot;label&quot;:&quot;User Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Password&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;jndiName&quot;,&quot;label&quot;:&quot;JNDI Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:23/in:0">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;url&quot;,&quot;label&quot;:&quot;URL&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;desc&quot;,&quot;label&quot;:&quot;Description&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;behavior&quot;,&quot;label&quot;:&quot;Behavior&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;class&quot;,&quot;label&quot;:&quot;Class&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;username&quot;,&quot;label&quot;:&quot;User Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Password&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;jndiName&quot;,&quot;label&quot;:&quot;JNDI Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:23/out:0">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;url&quot;,&quot;label&quot;:&quot;URL&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;desc&quot;,&quot;label&quot;:&quot;Description&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;behavior&quot;,&quot;label&quot;:&quot;Behavior&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;class&quot;,&quot;label&quot;:&quot;Class&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;username&quot;,&quot;label&quot;:&quot;User Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;password&quot;,&quot;label&quot;:&quot;Password&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;jndiName&quot;,&quot;label&quot;:&quot;JNDI Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:9/dout:1">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:27/dout:0">
+        <JSON value='{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;Disable&quot;,&quot;type&quot;:&quot;boolean&quot;}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:28/in:0">
+        <JSON value='{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;Disable&quot;,&quot;type&quot;:&quot;boolean&quot;}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:28/out:0">
+        <JSON value='{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;Disable&quot;,&quot;type&quot;:&quot;boolean&quot;}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:25/out:0">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;url&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;URL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;desc&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;behavior&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Behavior&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;class&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Class&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;User Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;jndiName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;JNDI Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:9/din:1">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;url&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;URL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;desc&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;behavior&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Behavior&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;class&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Class&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;User Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;jndiName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;JNDI Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:27/din:0">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;url&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;URL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;desc&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;behavior&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Behavior&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;class&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Class&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;User Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;jndiName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;JNDI Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:25/out:1">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;url&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;URL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;desc&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;behavior&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Behavior&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;class&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Class&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;User Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;jndiName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;JNDI Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:25/out:2">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;url&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;URL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;desc&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;behavior&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Behavior&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;class&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Class&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;User Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;jndiName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;JNDI Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:25/out:3">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;url&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;URL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;desc&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;behavior&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Behavior&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;class&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Class&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;User Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;jndiName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;JNDI Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:30/in:0">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+      </Schema>
+      <Schema id="node:30/out:0">
+        <JSON value='{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;label&quot;,&quot;label&quot;:&quot;Label&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+        <JSON value='{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}' >
+</JSON>
+
+      </Schema>
+      <DynInput id="node:9">
+        <Port id='din:0' type='event[]' label='Action' evaluate='always' _isArray='true' >
+</Port>
+
+        <Port id='din:1' type='event[]' label='Selection' evaluate='always' _isArray='true' >
+</Port>
+
+      </DynInput>
+      <DynInput id="node:22">
+        <Port id='din:0' type='any' label='In(0)' evaluate='always' >
+</Port>
+
+      </DynInput>
+      <DynInput id="node:27">
+        <Port id='din:0' type='event[]' label='In(0)' evaluate='always' >
+</Port>
+
+      </DynInput>
+      <DynOutput id="node:9">
+        <Port id='dout:0' type='any' label='Update' propagate='always' >
+</Port>
+
+        <Port id='dout:1' type='event[]' label='Selected' propagate='always' >
+</Port>
+
+      </DynOutput>
+      <DynOutput id="node:22">
+        <Port id='dout:0' type='event[]' label='Out(0)' propagate='always' >
+</Port>
+
+      </DynOutput>
+      <DynOutput id="node:27">
+        <Port id='dout:0' type='event[]' label='Disable' propagate='always' >
+</Port>
+
+      </DynOutput>
+      <Version id="node:9" version="2"/>
+      <Version id="node:20" version="1"/>
+      <Version id="node:22" version="2"/>
+      <Version id="node:23" version="2"/>
+      <Version id="node:25" version="1"/>
+      <Version id="node:27" version="2"/>
+      <Version id="node:28" version="2"/>
+      <Version id="node:30" version="2"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Data Source Plugin" alias="DataSource"/>
+      <DashboardPlugin uri="/app/dbp/user/via_common/dbpm/VIA - Common" alias="Common"/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>
