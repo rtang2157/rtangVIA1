@@ -1,0 +1,15 @@
+{
+  "contents": [{
+    "fileref": "ModelContentFile0",
+    "name": "default"
+  }],
+  "lastDate": "1587447802670",
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Description of New Model 0",
+    "_RESOURCE_Type": "dbpm",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "Admin - Monitoring"
+  }
+}
