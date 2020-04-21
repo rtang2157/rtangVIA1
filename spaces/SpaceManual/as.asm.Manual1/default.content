@@ -2,7 +2,7 @@
   <ModelInfo validated="true">
     <Source>
       <DataSource type="FileSource">
-        <property label="File Path" type="string" name="file" desc="The log4j main log file path" value="/home/qa/rtang/cq2.csv"/>
+        <property label="File Path" type="string" name="file" desc="The log4j main log file path" value="/home/qa/rtang/cq1.csv"/>
         <property optional="true" label="Rollover File Pattern" type="string" name="rolloverPattern" desc="The log4j rollover file name pattern. It is a wildcard pattern that supports &apos;*&apos; and &apos;?&apos;. If it is not defined, it will be the file name suffixed with *, by default."/>
         <property optional="true" label="Ignore First Line" type="boolean" value="false" name="ignoreFirstLine" desc="If it is set to true, the first line event of the file will be ignored"/>
         <property constraints="encoding" optional="true" label="File Encoding" type="string" value="utf-8" name="fileEncoding" desc="The file encoding"/>
