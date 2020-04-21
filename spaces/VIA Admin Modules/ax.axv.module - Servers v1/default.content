@@ -1,0 +1,819 @@
+<AnalyticsExplorerView description="" name="module - Servers v1" is_init="false">
+  <ModelInfo validated="true" nextPageId="3">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="false"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[.app .smallTile .tileContainer.actionbar {
+    margin-top: -7px;
+    margin-left: -3px;
+    padding: 0px;
+    height: 58px !important;
+}
+
+.propsTile .tt.title {
+    padding: 8px !important;   
+}
+
+
+]]></CustomCSSSetting>
+    <Page id="2" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="compTemplate">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div style="width:100%;height:100%;background-color:white;" class="vertical-flex runtime-server-management">
+    <div class="horizontal-flex header" style="justify-content: space-between">
+        <div class="horizontal-flex headerTitle" style="width: 50%; height: 50px; border: none; justify-content: flex-start;">
+            <div class="headerTile-content">
+                <i class="fa fa-server"> </i> Runtime Server Management
+            </div>
+        </div>
+        <div style="width:50% ;height: 50px;border: none; background-color: transparent;" class="header" data-vitria-type="tile" data-vitria-tile-name="Tile1">
+        </div>
+    </div>
+    <div class="vertical-flex" style="width: 100%; height: calc(100% - 50px)">
+        <div class="horizontal-flex compContent" style="width: 100%; height: 100%;">
+            <div class="listPanel" style="width: 300px; height: 100%;" data-vitria-type="tile" data-vitria-tile-name="ListTile">
+            </div>
+            <div class="vertical-flex server-container" style="width: calc(100% - 300px); height: 100%;">
+                <div class="vertical-flex infoPanel" style="display: none; height: 100%; width: 100%;">
+                    <input id="tab_properties" type="radio" name="tabs" checked="true">
+                    <label for="tab_properties" style="max-width: 150px;">
+                        <i class="fa fa-tasks"> </i> Properties
+                    </label>
+                    <div class="tabPanel" id="cont_properties" style="height: calc(100% - 30px); width: calc(100% - 10px); border: none !important; padding: 10px; background-color:white;">
+                        <div style="height: 100%; width: 100%; padding: 0px;" data-vitria-type="tile" data-vitria-tile-name="Tile1">
+                        </div>
+                    </div>
+                </div>
+                <div class="tipInfo" style="font-size: 18px;color: #eaeaeb;">Please select from list to view item details...</div>
+            </div>
+        </div>
+    </div>
+</div>]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[
+/*
+.serverComp  label:before {
+  font-family: fontawesome;
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+.serverComp [for*='1']:before { font-family: FontAwesome; content: '\f1cb'; }
+.serverComp label[for*='2']:before { font-family: FontAwesome; content: '\f17d'; }
+.serverComp label[for*='3']:before { font-family: FontAwesome; content: '\f16b'; }
+.serverComp label[for*='4']:before { font-family: FontAwesome; content: '\f1a9'; }
+*/
+#tab_properties:checked ~ #cont_properties
+ {
+
+  visibility: visible;
+}
+
+.runtime-server-management .server-container {
+    justify-content: flex-start;
+}
+
+.runtime-server-management .tipInfo {
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+.runtime-server-management .headerTitle {
+    padding-left: 10px;
+}
+
+.runtime-server-management .infoPanel .tabPanel .tileHolder {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+
+]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="NaN" numCol="NaN" count="NaN" templateType="7" screenHeight="undefined" renderType="undefined" positions="[]" unitSize="undefined" viewRows="NaN" viewCols="NaN"/>
+      <frame_tile name="toolbar" title="toolbar" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="actionbar" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:28" name="axflow:localstore:node:28" label="Toolbar" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="value" label="Value" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="disable" label="Disable" type="boolean" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"0.1"}]]></TileThemeSetting>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/space/VIA Admin Modules/dbpm/Admin - Plugin/Action Bar&quot;,&quot;model&quot;:&quot;&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="Main Tile" title="Configured Servers" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:23" name="axflow:localstore:node:23" label="Server List" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="_id_" label="_id_" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="name" label="name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="type" label="type" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="status" label="status" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="providerURL" label="providerURL" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="username" label="username" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="password" label="password" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="backup" label="backup" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="failureRetryCount" label="failureRetryCount" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="timestamp" label="timestamp" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="description" label="description" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="domainName" label="domainName" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="haGroup" label="haGroup" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="logicalName" label="logicalName" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="serverType" label="serverType" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="pool" label="pool" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="registryName" label="registryName" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="serverName" label="serverName" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="tag" label="tag" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="tagSource" label="tagSource" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="isMonitoringEnabled" label="isMonitoringEnabled" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="cpu" label="cpu" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="heap" label="heap" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="heapAvailable" label="heapAvailable" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="cpuAvg" label="cpuAvg" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="heapAvg" label="heapAvg" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="heapAvailableAvg" label="heapAvailableAvg" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="cepurl" label="cepurl" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="cepmemory" label="cepmemory" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="cepbatchsize" label="cepbatchsize" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"fontSize":"18px","display":"block","color":"#2d3538"}]]></LabelStyle>
+        <Imagesrc><![CDATA[data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAtpJREFUeNrsV7trWlEYP/fmqonx0TqpxODWKYviYv8DTdulKdjNqWQQHDuIUOhixyBRS8ClS4cOpS5dOwYMOIYqDgkGjWjxUd/a73e819rSbPfEpQe++zj3cL/f9/te50iLxYJtcshsw2PjAJQ1IAYSo3qXBOmDvyckQ5Ip3hVVuSWVSh3WarXwYDB4tLW1JUY7xZvZbL4MBAKZSCRSoqm+RJO2RCIRu7q6eru9vc0sFgvb2dkRAmA8HjMykE0mE+Z2uxPJZPJESqfT4fPz88Le3h7b399nBoOBSZLERRQL9Xqd3dzcsGAw+FhpNpuHHo+HAYDJZGKg32g0cgDz+Zyj1jNV8V+Xy8UNvb29faYQ7TIUy7LMP8IN5Kei1WotAhyBcI9GI92Z2N3dhc4Himaddp9Op8VwOPycHjsXFxefisXiV54msizEHTIumnQ6HfjnEtFJ0vP5fN/L5TIPmvV1egoHAF9DhsMhq1arT7LZ7FMC4InH469brRabzWarNXoKdCvrAOAXSkNrqVQ6i0ajfAGlyyog9Rz4H/6raEhgJSag0Ol08ndOkep7vOsNgJfidQbWrVyvhpq/9AYA45S//XJfQ9N3JwP3AWAVhKh8DoeD2Ww2XqFEDmRar9dj7XZ7yQAuCDCqgO+Pjo7e0Zqfgo23ZzKZD1Rb/DwLwAAQXV9f42Pj+Pi4K9IVuVxuXKlUeN9RFGUJQEtDDNR9vVPuX20ZWfZHEIpMubsyYBWEsBp9AE0qn8+LTgBzv9//zQAuANBoNPyxWOwN6BEZAwi8brfrona/rIQ0saD+DxB+gNBKsLBtOFU/u93O+w6l/w/F6/V+o/3gK0Ql2u59FCMYDCAHBwefsSl9eHp6mqb7SwCAO0QxAPphKDa9VPQStDM+AQBsza2FQiFM9eAFPbu1xYJcUCP6P4ZCoS/Y9EiqtdrBxKQeVkQeTHAgGakHlLn0/3C6aQC/BBgAt1ZLIHFVQCEAAAAASUVORK5CYII=]]></Imagesrc>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="disable"/>
+          <Property name="borderType" value="none"/>
+          <Property name="rowSpacing" value="7"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#89c4e1"/>
+          <Property name="hoverColor" value="#89c4e1"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="columnDefaultSetting" value="{&quot;columnFont&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;14&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;color&quot;:&quot;#2d3538&quot;}}"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;Status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;isKeyField&quot;:false,&quot;renderer&quot;:{&quot;type&quot;:&quot;icon&quot;,&quot;checkDisplayField&quot;:&quot;false&quot;,&quot;labelFieldSelect&quot;:&quot;status&quot;,&quot;iconType&quot;:&quot;signal&quot;,&quot;cases&quot;:[{&quot;shape&quot;:&quot;circle&quot;,&quot;value&quot;:&quot;Stopped&quot;,&quot;color&quot;:&quot;#cd4343&quot;},{&quot;shape&quot;:&quot;circle&quot;,&quot;value&quot;:&quot;Running&quot;,&quot;color&quot;:&quot;#68ad80&quot;}]},&quot;shapeOnly&quot;:false,&quot;style&quot;:{&quot;width&quot;:13}},{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;isKeyField&quot;:true,&quot;display&quot;:&quot;true&quot;,&quot;shapeOnly&quot;:false},{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;isKeyField&quot;:true},{&quot;name&quot;:&quot;domainName&quot;,&quot;label&quot;:&quot;Domain&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;seriesTableShow&quot;:null,&quot;opened&quot;:true,&quot;isKeyField&quot;:false,&quot;display&quot;:&quot;false&quot;}]"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="Tile1" title="Server Properties" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="propsTile" parentSelect="false" advancedConfig="undefined" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:33" name="axflow:localstore:node:33" label="Server Details" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="name" label="Name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="value" label="Value" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"fontSize":"18px","display":"block","color":"#2d3538"}]]></LabelStyle>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="disable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="8"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#72b9dc"/>
+          <Property name="hoverColor" value="#72b9dc"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="columnDefaultSetting" value="{&quot;columnFont&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;14&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;color&quot;:&quot;#2d3538&quot;}}"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:175,&quot;backgroundColor&quot;:&quot;#eaeaeb&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;14&quot;,&quot;color&quot;:&quot;#2d3538&quot;,&quot;textAlign&quot;:&quot;left&quot;}},{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;style&quot;:{&quot;width&quot;:400}}]"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:9" type="UserScript" label="action handler" _undefined_title="" originHeight="100" width="120" height="177" x="285" y="9">
+        <dynIn id="din:0" type="event[]" label="Action" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any" label="Sub Menu" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Update" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:20" type="Tile" label="Toolbar" _undefined_title="" _undefined_originHeight="" width="120" height="160" x="30" y="10"/>
+      <Item id="node:22" type="UserScript" label="get servers" _undefined_title="" originHeight="100" width="140" height="117" x="506" y="9">
+        <dynIn id="din:0" type="any" label="In(0)" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="serverNumber" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:23" type="LocalStore" label="Server List" _undefined_title="" _undefined_originHeight="" width="120" height="160" x="720" y="0"/>
+      <Item id="node:25" type="Tile" label="Server List" _undefined_title="" _undefined_originHeight="" width="120" height="160" x="33" y="180"/>
+      <Item id="node:27" type="UserScript" label="set menu state" _undefined_title="" originHeight="100" width="140" height="117" x="269" y="200">
+        <dynIn id="din:0" type="event[]" label="In(0)" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Disable" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Resize Main Tile" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:28" type="LocalStore" label="Toolbar" _undefined_title="" _undefined_originHeight="" width="120" height="160" x="473" y="160"/>
+      <Item id="node:30" type="Tile" label="Tile 3" _undefined_title="" _undefined_originHeight="" width="130" height="160" x="33" y="380"/>
+      <Item id="node:32" type="UserScript" label="get server detail" _undefined_title="" originHeight="100" width="130" height="117" x="273" y="326">
+        <dynIn id="din:0" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="Properties" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:33" type="LocalStore" label="Server Details" _undefined_title="" _undefined_originHeight="" width="130" height="160" x="493" y="326"/>
+      <Item id="node:35" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="117" width="130" height="177" x="846" y="8">
+        <dynOut id="dout:0" type="json" label="baseConfig" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="locale" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:37" type="UserScript" label="localize" _undefined_title="" _undefined_originHeight="" width="140" height="177" x="728" y="251">
+        <dynIn id="din:0" type="json" label="baseConfig" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="locale" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Menu" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Sub Menu" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="Properties" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:39" type="UserScript" label="Tile Config Parser" _undefined_title="" _undefined_originHeight="" width="240" height="117" x="975" y="308">
+        <dynIn id="din:0" type="any" label="baseConfig" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Runtime Server Model" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="Server Property Model" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:41" type="UserScript" label="NotifyChange" _undefined_title="" originHeight="117" width="180" height="117" x="320" y="500">
+        <dynIn id="din:0" type="any" label="serverNumber" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="lastServerNumber" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="serverNumber" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="boolean" label="needRefresh" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:42" type="PortOut" label="Port OUT 0" _undefined_title="" originHeight="177" width="140" height="177" x="580" y="500">
+        <dynIn id="din:0" type="boolean" label="RefreshSummaryData" evaluate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:25" srcPort="out:0" tgtId="node:32" tgtPort="din:0"/>
+      <Link srcId="node:32" srcPort="dout:0" tgtId="node:33" tgtPort="in:0"/>
+      <Link srcId="node:27" srcPort="dout:0" tgtId="node:28" tgtPort="in:0"/>
+      <Link srcId="node:25" srcPort="out:0" tgtId="node:27" tgtPort="din:0"/>
+      <Link srcId="node:9" srcPort="dout:0" tgtId="node:22" tgtPort="din:0"/>
+      <Link srcId="node:22" srcPort="dout:0" tgtId="node:23" tgtPort="in:0"/>
+      <Link srcId="node:25" srcPort="out:0" tgtId="node:9" tgtPort="din:1"/>
+      <Link srcId="node:20" srcPort="out:0" tgtId="node:9" tgtPort="din:0"/>
+      <Link srcId="node:35" srcPort="dout:0" tgtId="node:37" tgtPort="din:0"/>
+      <Link srcId="node:35" srcPort="dout:1" tgtId="node:37" tgtPort="din:1"/>
+      <Link srcId="node:37" srcPort="dout:0" tgtId="node:20" tgtPort="in:0"/>
+      <Link srcId="node:37" srcPort="dout:1" tgtId="node:9" tgtPort="din:2"/>
+      <Link srcId="node:37" srcPort="dout:2" tgtId="node:32" tgtPort="din:1"/>
+      <Link srcId="node:27" srcPort="dout:1" tgtId="node:30" tgtPort="in:0"/>
+      <Link srcId="node:35" srcPort="dout:0" tgtId="node:39" tgtPort="din:0"/>
+      <Link srcId="node:39" srcPort="dout:0" tgtId="node:25" tgtPort="in:0"/>
+      <Link srcId="node:39" srcPort="dout:1" tgtId="node:30" tgtPort="in:0"/>
+      <Link srcId="node:41" srcPort="dout:1" tgtId="node:42" tgtPort="din:0"/>
+      <Link srcId="node:41" srcPort="dout:0" tgtId="node:41" tgtPort="din:1"/>
+      <Link srcId="node:22" srcPort="dout:1" tgtId="node:41" tgtPort="din:0"/>
+      <Input key="node:9/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Action&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Sub Menu&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:9/cfg:model/default" value="&quot;var subMenu = getInput(\&quot;din:2\&quot;);\nif (port == \&quot;din:0\&quot;) {\n    var action = getInput(\&quot;din:0\&quot;);\n    var selection = getInput(\&quot;din:1\&quot;);\n    if (action != null &amp;&amp; action.length == 1) {\n        var plugin = Plugin(\&quot;Admin - Server Plugin\&quot;);\n        action = action[0];\n        switch (action.value) {\n            case \&quot;server/refresh\&quot;:\n                setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n                break;\n            case \&quot;server/add\&quot;:\n                plugin.doAddServer(subMenu, function(info){\n                    deal(info, true);\n                });\n                break;\n            case \&quot;server/update\&quot;:\n                plugin.doUpdateServer(selection[0], subMenu, function(info){\n                    deal(info);\n                });\n                break;\n            case \&quot;server/delete\&quot;:\n                plugin.doDeleteServer(subMenu, selection[0][\&quot;name\&quot;], selection[0][\&quot;type\&quot;], function(info){\n                    deal(info);\n                });\n                break;\n            case \&quot;server/start\&quot;:\n                plugin.doStartServer(selection[0][\&quot;name\&quot;], function(info){\n                    deal(info);\n                });\n                break;\n            case \&quot;server/stop\&quot;:\n                plugin.doStopServer(selection[0][\&quot;name\&quot;], function(info){\n                    deal(info);\n                });\n                break;\n            case \&quot;server/restore\&quot;:\n                plugin.doRestoreServer(subMenu, selection[0][\&quot;name\&quot;], function(info){\n                    deal(info);\n                });\n                break;\n        }\n    }\n}\n\nfunction deal(info, secondRefresh) {\n    var a = JSON.parse(info);\n    if ((a.status || a.result)== \&quot;Error\&quot;) {\n        var errorMsg = a.message;\n        plugin._popup(subMenu.Error, errorMsg, null, null);\n    } else {\n        setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n        if(secondRefresh){\n            setTimeout(function(){\n                setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n            }, 6000);\n        }\n        \n    }\n}&quot;"/>
+      <Input key="node:9/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Update&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:20/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#toolbar&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;toolbar&quot;}]"/>
+      <Input key="node:22/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;serverNumber&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:22/cfg:model/default" value="&quot;var plugin = Plugin(\&quot;Admin - Plugin\&quot;);\r\nif (plugin != null) {\r\n    plugin.svListServers(function(result) {\r\n        if (result != null) {\r\n            // result, if not NULL, WILL BE a wrapped status with {status, value|error}\r\n            if (result.status == \&quot;OK\&quot;) {\r\n                setOutput(\&quot;dout:0\&quot;, result.value);\r\n                setOutput(\&quot;dout:1\&quot;, result.value.length);\r\n            }\r\n            else {\r\n                setOutput(\&quot;dout:0\&quot;, []);\r\n            }\r\n        }\r\n    });\r\n}\r\n&quot;"/>
+      <Input key="node:22/cfg:schema/default" value="&quot;var fields = \&quot;_id_,name,type,status,providerURL,username,password,backup,failureRetryCount,timestamp,description,domainName,haGroup,logicalName,serverType,pool,registryName,serverName,tag,tagSource,isMonitoringEnabled,cpu,heap,heapAvailable,cpuAvg,heapAvg,heapAvailableAvg,cepurl,cepmemory,cepbatchsize\&quot;.split(\&quot;,\&quot;);\r\nvar schema = [];\r\nfor (var i=0; i&lt;fields.length; i++) {\r\n    schema.push({\r\n        name:fields[i],\r\n        label:fields[i],\r\n        type:\&quot;string\&quot;\r\n    });\r\n}\r\nsetOutputSchema(\&quot;dout:0\&quot;, schema);&quot;"/>
+      <Input key="node:22/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:25/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#Main Tile&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Main Tile&quot;}]"/>
+      <Input key="node:9/cfg:schema/default" value="&quot;&quot;"/>
+      <Input key="node:27/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:27/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Disable&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Resize Main Tile&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:27/cfg:schema/default" value="&quot;var schema = [];\r\nschema.push({\r\n    name:\&quot;value\&quot;,\r\n    label:\&quot;Value\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;disable\&quot;,\r\n    label:\&quot;Disable\&quot;,\r\n    type:\&quot;boolean\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:0\&quot;, schema);&quot;"/>
+      <Input key="node:27/cfg:model/default" value="&quot;var selection = port == \&quot;din:0\&quot; ? getInput(\&quot;din:0\&quot;) : null;\n//var disable = selection == null || selection.length == 0;\nsetOutput(\&quot;dout:0\&quot;, [\n    { value : \&quot;server/start\&quot;, \&quot;disable\&quot; : check(selection, \&quot;server/start\&quot;)},\n    { value : \&quot;server/stop\&quot;, \&quot;disable\&quot; : check(selection, \&quot;server/stop\&quot;)},\n    { value : \&quot;server/delete\&quot;, \&quot;disable\&quot; : check(selection, \&quot;server/delete\&quot;)},\n    { value : \&quot;server/restore\&quot;, \&quot;disable\&quot; : check(selection, \&quot;server/restore\&quot;)},\n    { value : \&quot;server/update\&quot;, \&quot;disable\&quot; : check(selection, \&quot;server/update\&quot;)},\n]);\n\nif ( selection != null &amp;&amp; selection.length &gt; 0 ){\n    $(\&quot;.runtime-server-management .infoPanel\&quot;).css( \&quot;visibility\&quot; , \&quot;visible\&quot; );\n    $(\&quot;.runtime-server-management .infoPanel\&quot;).css( \&quot;display\&quot; , \&quot;\&quot; );\n    $(\&quot;.runtime-server-management .tipInfo\&quot;).css( \&quot;display\&quot; , \&quot;none\&quot; );\n    $(\&quot;#tab_properties\&quot;).prop( \&quot;checked\&quot;, true );\n    \n    setTimeout(function() {\n        setOutput(\&quot;dout:1\&quot;, {\n            tile: {\n                resize: true\n            }\n        });\n    }, 500);\n} else {\n    $(\&quot;.runtime-server-management .infoPanel\&quot;).css( \&quot;visibility\&quot; , \&quot;hidden\&quot; );\n    $(\&quot;.runtime-server-management .infoPanel\&quot;).css( \&quot;display\&quot; , \&quot;none\&quot; );\n    $(\&quot;.runtime-server-management .tipInfo\&quot;).css( \&quot;display\&quot; , \&quot;\&quot; );\n    $(\&quot;#tab_properties\&quot;).prop( \&quot;checked\&quot;, false );\n\n}\n\nfunction check(selection, action) {\n    if(selection == null || selection.length == 0){\n        return true;\n    } \n    if(selection.length == 1){\n\n        switch (action) {\n            case \&quot;server/update\&quot;:\n            case \&quot;server/delete\&quot;:\n                return false;\n                break;\n            case \&quot;server/start\&quot;:\n                    if(selection[0].serverType == \&quot;RuntimeServer\&quot;){\n                        if(selection[0].status == \&quot;Running\&quot;){\n                            return true;\n                        } else {\n                            return false;\n                        }\n                    } else {\n                        return true;\n                    }\n                break;\n            case \&quot;server/stop\&quot;:\n                if(selection[0].serverType == \&quot;RuntimeServer\&quot;){\n                    if(selection[0].status == \&quot;Stopped\&quot;){\n                        return true;\n                    } else {\n                        return false;\n                    }\n                } else {\n                    return true;\n                }\n                break;\n            case \&quot;server/restore\&quot;:\n                if(selection[0].serverType == \&quot;RuntimeServer\&quot;){\n                    return false;\n                } else {\n                    return true;\n                }\n                break;\n        }        \n    }\n    return false;\n}&quot;"/>
+      <Input key="node:30/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#Tile1&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Tile1&quot;}]"/>
+      <Input key="node:32/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portTrigger&quot;:&quot;always&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portValue&quot;:&quot;&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Properties&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:32/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:32/cfg:schema/default" value="&quot;var schema = [];\nschema.push({\n    name  : \&quot;name\&quot;,\n    label : \&quot;Name\&quot;,\n    type  : \&quot;string\&quot;\n});\nschema.push({\n    name  : \&quot;value\&quot;,\n    label : \&quot;Value\&quot;,\n    type  : \&quot;string\&quot;\n});\nsetOutputSchema(\&quot;dout:0\&quot;, schema);\n&quot;"/>
+      <Input key="node:32/cfg:model/default" value="&quot;var properties = getInput(\&quot;din:1\&quot;);\nvar fields = properties != null ? properties.fields : [];\nvar labels = properties != null ? properties.labels : [];\n\nvar info = [];\nif (port == \&quot;din:0\&quot;) {\n    var selection = getInput(\&quot;din:0\&quot;);\n    if (selection != null &amp;&amp; selection.length == 1) {\n        for (var j=0; j&lt;fields.length; j++) {\n            info.push({\n                name : labels[j],\n                value : selection[0][fields[j]]\n            });\n        }\n        info.sort(function(a,b) {\n            return a.name.localeCompare(b.name);\n        });\n    }\n}\nsetOutput(\&quot;dout:0\&quot;, info);\n&quot;"/>
+      <Input key="node:35/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;json&quot;,&quot;portLabel&quot;:&quot;baseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:37/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;json&quot;,&quot;portLabel&quot;:&quot;baseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:37/cfg:model/default" value="&quot;if (port === null){\n    return;\n}\nvar baseConfig = getInput(\&quot;din:0\&quot;);\nvar locale = getInput(\&quot;din:1\&quot;);\nif (locale === null){\n    return;\n}\nvar helperPlugin = Plugin(baseConfig.helperPluginName);\nvar serverLabel = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Servers}\&quot;);\nvar addLabel = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Add}\&quot;);\nvar deleteLabel = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Delete}\&quot;);\nvar startLabel = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Start}\&quot;);\nvar stopLabel = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Stop}\&quot;);\nvar restoreLabel = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Restore}\&quot;);\nvar refreshLabel = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Refresh}\&quot;);\nvar updateLabel = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Update}\&quot;);\n\nvar subMenu = {};\nsubMenu.Cancel = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Cancel}\&quot;);\nsubMenu.Save = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Save}\&quot;);\nsubMenu.OK = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::OK}\&quot;);\nsubMenu.SelectServerType = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::SelectServerType}\&quot;);\nsubMenu.SelectServerTypeToAdd = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::SelectServerTypeToAdd}\&quot;);\nsubMenu.ServerType = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::ServerType}\&quot;);\nsubMenu.AddServer = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::AddServer}\&quot;);\nsubMenu.ProvideServerInfo = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::ProvideServerInfo}\&quot;);\nsubMenu.Name = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Name}\&quot;);\nsubMenu.RuntimeServer = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::RuntimeServer}\&quot;);\nsubMenu.RemoveServer = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::RemoveServer}\&quot;);\nsubMenu.URL = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::URL}\&quot;);\nsubMenu.CPU = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::CPU}\&quot;);\nsubMenu.Memory = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Memory}\&quot;);\nsubMenu.CEPURL = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::CEPURL}\&quot;);\nsubMenu.CEPMemory = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::CEPMemory}\&quot;);\nsubMenu.CEPBatchSize = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::CEPBatchSize}\&quot;);\nsubMenu.DefaultPool = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::DefaultPool}\&quot;);\nsubMenu.Backup = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Backup}\&quot;);\nsubMenu.HaGroup = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::HaGroup}\&quot;);\nsubMenu.SelectTargetServer = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::SelectTargetServer}\&quot;);\nsubMenu.SelectTargetServerToRestore = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::SelectTargetServerToRestore}\&quot;);\nsubMenu.TargetServer = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::TargetServer}\&quot;);\nsubMenu.Update = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Update}\&quot;);\nsubMenu.ProvideInfoToUpdateServer = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::ProvideInfoToUpdateServer}\&quot;);\nsubMenu.Error = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::Error}\&quot;);\n\n// property\nvar fields = \&quot;name,type,status,domainName,providerURL,backup,failureRetryCount,timestamp,description,haGroup,logicalName,serverType,pool,registryName,serverName,tag,tagSource,isMonitoringEnabled,cpu,heap,heapAvailable,cpuAvg,heapAvg,heapAvailableAvg,cepurl,cepmemory,cepbatchsize\&quot;.split(\&quot;,\&quot;);\nvar labels = [];\nfor (var j=0; j&lt;fields.length; j++) {\n    var labelj =helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::\&quot; + fields[j] + \&quot;}\&quot;); \n    labels.push(labelj);\n    subMenu[fields[j]] = labelj;\n}\nsubMenu.user = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::user}\&quot;);\nsubMenu.password = helperPlugin.localize(baseConfig.locale.server, locale, \&quot;{i18n::password}\&quot;);\nvar property = {};\nproperty.fields = fields;\nproperty.labels = labels;\n\nif (port !== null) {\n    var layout = {\n        \&quot;menubar\&quot; : [{\n            \&quot;label\&quot; : serverLabel,\n            \&quot;value\&quot; : \&quot;server\&quot;,\n            \&quot;items\&quot; : [{\n                \&quot;label\&quot; : addLabel,\n                \&quot;value\&quot; : \&quot;add\&quot;\n            }, {\n                \&quot;label\&quot; : updateLabel,\n                \&quot;value\&quot; : \&quot;update\&quot;\n            }, {\n                \&quot;label\&quot; : deleteLabel,\n                \&quot;value\&quot; : \&quot;delete\&quot;\n            }, {\n                \&quot;label\&quot; : startLabel,\n                \&quot;value\&quot; : \&quot;start\&quot;\n            }, {\n                \&quot;label\&quot; : stopLabel,\n                \&quot;value\&quot; : \&quot;stop\&quot;\n            }, {\n                \&quot;label\&quot; : restoreLabel,\n                \&quot;value\&quot; : \&quot;restore\&quot;\n            }, {\n                \&quot;label\&quot; : refreshLabel,\n                \&quot;value\&quot; : \&quot;refresh\&quot;\n            }]\n    \t}]\n    };\n    setOutput(\&quot;dout:0\&quot;, {model : layout});\n    var firstLoad = getLocal(\&quot;FirstLoad\&quot;);\n    if(firstLoad !== false){\n        setLocal(\&quot;FirstLoad\&quot;, false);\n        setOutput(\&quot;dout:1\&quot;, subMenu);\n        setOutput(\&quot;dout:2\&quot;, property);\n    }\n}&quot;"/>
+      <Input key="node:37/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Menu&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Sub Menu&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Properties&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:20/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:39/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;baseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:39/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Runtime Server Model&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Server Property Model&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:39/cfg:model/default" value="&quot;var baseConfig = getInput(\&quot;din:0\&quot;);\nif(!baseConfig) return;\nvar platform = baseConfig.groups.filter(function(g){\n    return g.group === &apos;platform&apos;;\n})[0];\n\nvar runtimeServerTile = {};\nvar serverPropertyTile = {};\nif(platform != null &amp;&amp; platform.items != null){\n    var runtimeServers = platform.items.filter(function(i){\n        return i.name === &apos;runtimeServer&apos;;\n    })[0];\n    if(runtimeServers != null){\n        runtimeServerTile = runtimeServers[&apos;runtime-server-model&apos;];\n        serverPropertyTile = runtimeServers[&apos;server-property-model&apos;];\n    }\n}\n\nsetOutput(\&quot;dout:0\&quot;, runtimeServerTile);\nsetOutput(\&quot;dout:1\&quot;, serverPropertyTile);&quot;"/>
+      <Input key="node:25/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:30/in:0/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:41/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;serverNumber&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;lastServerNumber&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:41/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;serverNumber&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;needRefresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:42/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;RefreshSummaryData&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:41/cfg:model/default" value="&quot;var lastNumber = getInput(\&quot;din:1\&quot;);\nvar number = getInput(\&quot;din:0\&quot;);\nif(lastNumber != number &amp;&amp; lastNumber != null)\n    setOutput(&apos;dout:1&apos;, true);\nsetOutput(&apos;dout:0&apos;, number);\n&quot;"/>
+      <Output key="node:25/out:0/propagate" value="&quot;change&quot;"/>
+      <Output key="node:30/out:0/propagate" value="&quot;change&quot;"/>
+      <Output key="node:20/out:0/propagate" value="&quot;always&quot;"/>
+      <Schema id="node:22/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;_id_&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;providerURL&quot;,&quot;label&quot;:&quot;providerURL&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;username&quot;,&quot;label&quot;:&quot;username&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;password&quot;,&quot;label&quot;:&quot;password&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;backup&quot;,&quot;label&quot;:&quot;backup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;failureRetryCount&quot;,&quot;label&quot;:&quot;failureRetryCount&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;timestamp&quot;,&quot;label&quot;:&quot;timestamp&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainName&quot;,&quot;label&quot;:&quot;domainName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;haGroup&quot;,&quot;label&quot;:&quot;haGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;logicalName&quot;,&quot;label&quot;:&quot;logicalName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverType&quot;,&quot;label&quot;:&quot;serverType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;pool&quot;,&quot;label&quot;:&quot;pool&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;registryName&quot;,&quot;label&quot;:&quot;registryName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverName&quot;,&quot;label&quot;:&quot;serverName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tag&quot;,&quot;label&quot;:&quot;tag&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tagSource&quot;,&quot;label&quot;:&quot;tagSource&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;isMonitoringEnabled&quot;,&quot;label&quot;:&quot;isMonitoringEnabled&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpu&quot;,&quot;label&quot;:&quot;cpu&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heap&quot;,&quot;label&quot;:&quot;heap&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailable&quot;,&quot;label&quot;:&quot;heapAvailable&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpuAvg&quot;,&quot;label&quot;:&quot;cpuAvg&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvg&quot;,&quot;label&quot;:&quot;heapAvg&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailableAvg&quot;,&quot;label&quot;:&quot;heapAvailableAvg&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepurl&quot;,&quot;label&quot;:&quot;cepurl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepmemory&quot;,&quot;label&quot;:&quot;cepmemory&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepbatchsize&quot;,&quot;label&quot;:&quot;cepbatchsize&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:23/in:0">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;_id_&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;providerURL&quot;,&quot;label&quot;:&quot;providerURL&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;username&quot;,&quot;label&quot;:&quot;username&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;password&quot;,&quot;label&quot;:&quot;password&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;backup&quot;,&quot;label&quot;:&quot;backup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;failureRetryCount&quot;,&quot;label&quot;:&quot;failureRetryCount&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;timestamp&quot;,&quot;label&quot;:&quot;timestamp&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainName&quot;,&quot;label&quot;:&quot;domainName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;haGroup&quot;,&quot;label&quot;:&quot;haGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;logicalName&quot;,&quot;label&quot;:&quot;logicalName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverType&quot;,&quot;label&quot;:&quot;serverType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;pool&quot;,&quot;label&quot;:&quot;pool&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;registryName&quot;,&quot;label&quot;:&quot;registryName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverName&quot;,&quot;label&quot;:&quot;serverName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tag&quot;,&quot;label&quot;:&quot;tag&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tagSource&quot;,&quot;label&quot;:&quot;tagSource&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;isMonitoringEnabled&quot;,&quot;label&quot;:&quot;isMonitoringEnabled&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpu&quot;,&quot;label&quot;:&quot;cpu&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heap&quot;,&quot;label&quot;:&quot;heap&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailable&quot;,&quot;label&quot;:&quot;heapAvailable&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpuAvg&quot;,&quot;label&quot;:&quot;cpuAvg&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvg&quot;,&quot;label&quot;:&quot;heapAvg&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailableAvg&quot;,&quot;label&quot;:&quot;heapAvailableAvg&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepurl&quot;,&quot;label&quot;:&quot;cepurl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepmemory&quot;,&quot;label&quot;:&quot;cepmemory&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepbatchsize&quot;,&quot;label&quot;:&quot;cepbatchsize&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:23/out:0">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;label&quot;:&quot;_id_&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;providerURL&quot;,&quot;label&quot;:&quot;providerURL&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;username&quot;,&quot;label&quot;:&quot;username&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;password&quot;,&quot;label&quot;:&quot;password&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;backup&quot;,&quot;label&quot;:&quot;backup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;failureRetryCount&quot;,&quot;label&quot;:&quot;failureRetryCount&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;timestamp&quot;,&quot;label&quot;:&quot;timestamp&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainName&quot;,&quot;label&quot;:&quot;domainName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;haGroup&quot;,&quot;label&quot;:&quot;haGroup&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;logicalName&quot;,&quot;label&quot;:&quot;logicalName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverType&quot;,&quot;label&quot;:&quot;serverType&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;pool&quot;,&quot;label&quot;:&quot;pool&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;registryName&quot;,&quot;label&quot;:&quot;registryName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverName&quot;,&quot;label&quot;:&quot;serverName&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tag&quot;,&quot;label&quot;:&quot;tag&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;tagSource&quot;,&quot;label&quot;:&quot;tagSource&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;isMonitoringEnabled&quot;,&quot;label&quot;:&quot;isMonitoringEnabled&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpu&quot;,&quot;label&quot;:&quot;cpu&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heap&quot;,&quot;label&quot;:&quot;heap&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailable&quot;,&quot;label&quot;:&quot;heapAvailable&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpuAvg&quot;,&quot;label&quot;:&quot;cpuAvg&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvg&quot;,&quot;label&quot;:&quot;heapAvg&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailableAvg&quot;,&quot;label&quot;:&quot;heapAvailableAvg&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepurl&quot;,&quot;label&quot;:&quot;cepurl&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepmemory&quot;,&quot;label&quot;:&quot;cepmemory&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepbatchsize&quot;,&quot;label&quot;:&quot;cepbatchsize&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:9/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;Disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:27/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;Disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:28/in:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;Disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:28/out:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;Disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:32/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:33/in:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:33/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:25/out:0">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_id_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;providerURL&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;providerURL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;username&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;backup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;backup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;failureRetryCount&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;failureRetryCount&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;timestamp&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;timestamp&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;domainName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;haGroup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;haGroup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;logicalName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;logicalName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;pool&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;pool&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;registryName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;registryName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tag&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tag&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tagSource&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tagSource&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isMonitoringEnabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;isMonitoringEnabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpu&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpu&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heap&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heap&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailable&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailable&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpuAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpuAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailableAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailableAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepurl&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepurl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepmemory&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepmemory&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepbatchsize&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepbatchsize&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:27/din:0">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_id_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;providerURL&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;providerURL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;username&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;backup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;backup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;failureRetryCount&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;failureRetryCount&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;timestamp&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;timestamp&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;domainName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;haGroup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;haGroup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;logicalName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;logicalName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;pool&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;pool&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;registryName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;registryName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tag&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tag&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tagSource&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tagSource&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isMonitoringEnabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;isMonitoringEnabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpu&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpu&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heap&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heap&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailable&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailable&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpuAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpuAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailableAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailableAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepurl&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepurl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepmemory&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepmemory&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepbatchsize&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepbatchsize&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:25/out:1">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_id_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;providerURL&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;providerURL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;username&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;backup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;backup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;failureRetryCount&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;failureRetryCount&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;timestamp&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;timestamp&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;domainName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;haGroup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;haGroup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;logicalName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;logicalName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;pool&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;pool&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;registryName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;registryName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tag&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tag&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tagSource&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tagSource&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isMonitoringEnabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;isMonitoringEnabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpu&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpu&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heap&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heap&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailable&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailable&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpuAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpuAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailableAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailableAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepurl&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepurl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepmemory&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepmemory&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepbatchsize&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepbatchsize&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:25/out:2">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_id_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;providerURL&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;providerURL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;username&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;backup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;backup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;failureRetryCount&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;failureRetryCount&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;timestamp&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;timestamp&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;domainName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;haGroup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;haGroup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;logicalName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;logicalName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;pool&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;pool&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;registryName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;registryName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tag&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tag&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tagSource&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tagSource&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isMonitoringEnabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;isMonitoringEnabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpu&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpu&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heap&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heap&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailable&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailable&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpuAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpuAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailableAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailableAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepurl&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepurl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepmemory&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepmemory&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepbatchsize&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepbatchsize&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:25/out:3">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_id_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;providerURL&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;providerURL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;username&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;backup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;backup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;failureRetryCount&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;failureRetryCount&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;timestamp&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;timestamp&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;domainName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;haGroup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;haGroup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;logicalName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;logicalName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;pool&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;pool&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;registryName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;registryName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tag&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tag&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tagSource&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tagSource&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isMonitoringEnabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;isMonitoringEnabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpu&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpu&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heap&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heap&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailable&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailable&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpuAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpuAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailableAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailableAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepurl&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepurl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepmemory&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepmemory&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepbatchsize&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepbatchsize&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:9/din:1">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_id_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;providerURL&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;providerURL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;username&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;backup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;backup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;failureRetryCount&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;failureRetryCount&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;timestamp&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;timestamp&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;domainName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;haGroup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;haGroup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;logicalName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;logicalName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;pool&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;pool&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;registryName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;registryName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tag&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tag&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tagSource&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tagSource&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isMonitoringEnabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;isMonitoringEnabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpu&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpu&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heap&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heap&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailable&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailable&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpuAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpuAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailableAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailableAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepurl&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepurl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepmemory&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepmemory&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepbatchsize&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepbatchsize&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:32/din:0">
+        <JSON value="{&quot;name&quot;:&quot;_id_&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;_id_&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;status&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;providerURL&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;providerURL&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;username&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;username&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;password&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;password&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;backup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;backup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;failureRetryCount&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;failureRetryCount&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;timestamp&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;timestamp&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;description&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;description&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;domainName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;haGroup&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;haGroup&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;logicalName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;logicalName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverType&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverType&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;pool&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;pool&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;registryName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;registryName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;serverName&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;serverName&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tag&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tag&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;tagSource&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;tagSource&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;isMonitoringEnabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;isMonitoringEnabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpu&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpu&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heap&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heap&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailable&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailable&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cpuAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cpuAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;heapAvailableAvg&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;heapAvailableAvg&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepurl&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepurl&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepmemory&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepmemory&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;cepbatchsize&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;cepbatchsize&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:20/out:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:9/din:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:20/out:1">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:20/out:2">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:20/out:3">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:30/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:30/out:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:30/out:2">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:30/out:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <DynInput id="node:9">
+        <Port id="din:0" type="event[]" label="Action" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <Port id="din:2" type="any" label="Sub Menu" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:22">
+        <Port id="din:0" type="any" label="In(0)" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:27">
+        <Port id="din:0" type="event[]" label="In(0)" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:32">
+        <Port id="din:0" type="event[]" label="Selection" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any" label="Properties" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:37">
+        <Port id="din:0" type="json" label="baseConfig" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any" label="locale" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:39">
+        <Port id="din:0" type="any" label="baseConfig" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:41">
+        <Port id="din:0" type="any" label="serverNumber" evaluate="always"/>
+        <Port id="din:1" type="any" label="lastServerNumber" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:42">
+        <Port id="din:0" type="boolean" label="RefreshSummaryData" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:9">
+        <Port id="dout:0" type="any" label="Update" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:22">
+        <Port id="dout:0" type="event[]" label="Out(0)" propagate="always"/>
+        <Port id="dout:1" type="any" label="serverNumber" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:27">
+        <Port id="dout:0" type="event[]" label="Disable" propagate="always"/>
+        <Port id="dout:1" type="any" label="Resize Main Tile" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:32">
+        <Port id="dout:0" type="event[]" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:35">
+        <Port id="dout:0" type="json" label="baseConfig" propagate="always"/>
+        <Port id="dout:1" type="any" label="locale" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:37">
+        <Port id="dout:0" type="any" label="Menu" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any" label="Sub Menu" propagate="always" _isArray="true"/>
+        <Port id="dout:2" type="any" label="Properties" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:39">
+        <Port id="dout:0" type="any" label="Runtime Server Model" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any" label="Server Property Model" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:41">
+        <Port id="dout:0" type="any" label="serverNumber" propagate="always"/>
+        <Port id="dout:1" type="boolean" label="needRefresh" propagate="always"/>
+      </DynOutput>
+      <Version id="node:9" version="2"/>
+      <Version id="node:20" version="1"/>
+      <Version id="node:22" version="2"/>
+      <Version id="node:23" version="2"/>
+      <Version id="node:25" version="1"/>
+      <Version id="node:27" version="2"/>
+      <Version id="node:28" version="2"/>
+      <Version id="node:30" version="1"/>
+      <Version id="node:32" version="2"/>
+      <Version id="node:33" version="2"/>
+      <Version id="node:35" version="1"/>
+      <Version id="node:37" version="2"/>
+      <Version id="node:39" version="2"/>
+      <Version id="node:41" version="2"/>
+      <Version id="node:42" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/space/VIA Admin Modules/dbpm/Admin - Plugin" alias=""/>
+      <DashboardPlugin uri="/app/dbp/space/VIA Admin Modules/dbpm/Admin - Common Helper" alias=""/>
+      <DashboardPlugin uri="/app/dbp/space/VIA Admin Modules/dbpm/Admin - Server Plugin" alias=""/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>
