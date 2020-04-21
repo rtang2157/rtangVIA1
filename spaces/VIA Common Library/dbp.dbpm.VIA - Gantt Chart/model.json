@@ -1,0 +1,14 @@
+{
+  "contents": [{
+    "fileref": "ModelContentFile0",
+    "name": "default"
+  }],
+  "lastDate": "1587453112728",
+  "owner": "via_common",
+  "properties": {
+    "_RESOURCE_Description": "Example from http://bl.ocks.org/dk8996/5449641\nRequires\n- VIA - JQuery Library\n",
+    "_RESOURCE_Type": "dbpm",
+    "modelStatus": "valid",
+    "name": "VIA - Gantt Chart"
+  }
+}
