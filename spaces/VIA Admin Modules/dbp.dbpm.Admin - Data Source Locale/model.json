@@ -1,0 +1,22 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "03687b13-9e5f-4592-80a1-5553b35794dd"
+    }
+  ],
+  "lastDate": "1587447802624",
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Admin - Deployed Projects Locale",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "03687b13-9e5f-4592-80a1-5553b35794dd",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "Admin - Data Source Locale"
+  }
+}
