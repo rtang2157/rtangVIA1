@@ -1,0 +1,21 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile1",
+      "name": "3286ffe0-5a7e-4696-8231-534156cfe01a"
+    }
+  ],
+  "lastDate": "1587449592804",
+  "owner": "via_common",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "modelStatus": "valid",
+    "name": "VIA - D3 Library"
+  }
+}
