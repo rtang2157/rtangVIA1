@@ -1,0 +1,56 @@
+function addHoverDrilldownMeta(result)
+{
+    for (var i=0, n=result.length; i<n; i++) {
+        var record = result[i];
+        // add processing directives, including drilldown, to _type_ field
+        // name:value;name:value;...
+        var meta = [];
+        switch (record["Type"]) {
+            case "network":
+                meta.push("drilldown-type:trend");
+                meta.push("drilldown-view:chart");
+                break;
+            case "device":
+                if (record["Attribute"] == "mta_devicemodel") {
+                    meta.push("drilldown-type:geo");
+                }
+                else if (record["Attribute"] == "stb_devicemodel") {
+                    meta.push("drilldown-type:geo");
+                    meta.push("drilldown-view:heatmap");
+                }
+                else if (record["Attribute"] == "hsd_devicemodel") {
+                    meta.push("drilldown-type:geo");
+                    meta.push("drilldown-view:poi");
+                }
+                else {
+                    meta.push("drilldown-type:trend");
+                }
+                break;
+            case "manual_load":
+                meta.push("drilldown-type:custom");
+                meta.push("drilldown-name:xxx");
+                meta.push("hover-style:dialog");
+                meta.push("hover-width:800");
+                meta.push("hover-height:600");
+                break;
+            case "service":
+                meta.push("drilldown-type:custom");
+                break;
+            default:
+                meta.push("drilldown-type:summary");
+                break;
+        }
+        meta.push("drilldown-name:"+record["Type"]);
+        meta.push("hover-name:"+record["Type"]);
+        if (record["Type"] == "manual_load") {
+            meta.push("drilldown-label:Humpty Dumpty sat on the Wall");
+            meta.push("hover-label:Twinkle Twinkle Little Star");
+        }
+        else {
+            meta.push("drilldown-label:Detail info on "+record["Type"]+" population with id="+record["_id_"]+"'");
+        }
+        if (meta.length > 0) {
+            record["_meta_"] = meta.join(";");
+        }
+    }
+}
