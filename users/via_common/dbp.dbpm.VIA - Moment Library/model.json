@@ -1,0 +1,20 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "7e4ee15a-1b73-411e-8881-a8fa695c8f9b"
+    }
+  ],
+  "lastDate": "1587449592792",
+  "owner": "via_common",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "modelStatus": "valid",
+    "name": "VIA - Moment Library"
+  }
+}
