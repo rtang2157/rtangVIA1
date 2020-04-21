@@ -1,0 +1,16 @@
+<DashboardPluginModel description="Base configuration of admin ui solution." name="Admin - Base Config" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions/>
+    <Services/>
+    <Resources>
+      <Resource uuid="3dab9bd7-d362-41d5-895c-4739114dda9d" name="BaseConfig" type="application/json" size="16654" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

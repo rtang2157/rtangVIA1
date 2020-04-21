@@ -1,0 +1,436 @@
+{
+    "template": "/app/ax/space/VIA Admin Frame/axv/frame - Admin UI v1",
+    "locale": {
+        "frame": "/app/dbp/space/VIA Admin Modules/dbpm/Admin - Frame Locale",
+        "project": "/app/dbp/space/VIA Admin Modules/dbpm/Admin - Deployed Projects Locale",
+        "dataSource":"/app/dbp/space/VIA Admin Modules/dbpm/Admin - Data Source Locale",
+        "server": "/app/dbp/space/VIA Admin Modules/dbpm/Admin - Server Plugin",
+        "app": "/app/dbp/space/VIA Admin Modules/dbpm/Admin - Installed Apps Plugin",
+        "group": "/app/dbp/space/VIA Admin Modules/dbpm/Admin - Group Locale",
+        "user": "/app/dbp/space/VIA Admin Modules/dbpm/Admin - User Locale",
+        "serverLogs": "/app/dbp/space/VIA Admin Modules/dbpm/Admin - Server Logs Locale"
+    },
+    "locales": ["en-us"],
+    "pluginName": "Admin - Plugin",
+    "projectPluginName": "Admin - Deployed Projects Plugin",
+    "helperPluginName": "Admin - Common Helper",
+    "groups": [{
+        "group": "summary",
+        "items": [{
+            "id": 0,
+            "label": "{i18n::Summary}",
+            "type": "link",
+            "icon": "summary",
+            "requestSignature": null,
+            "domainAdmin": false,
+            "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Admin UI Summary v1"
+        }]
+    }, {
+        "group": "user",
+        "items": [{
+            "id": 1,
+            "label": "{i18n::VIA Users}",
+            "type": "function",
+            "icon": "user",
+            "name": "user",
+            "requestSignature": "doListUsers",
+            "domainAdmin": true,
+            "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Users v1",
+            "menu-model": {
+                "menubar" : [{
+                    "label" : "{i18n::User Menu}",
+                    "value" : "user",
+                    "items" : [
+                        {
+                            "label" : "{i18n::Add User}",
+                            "value" : "add"
+                        },
+                        {
+                            "label" : "{i18n::Edit User}",
+                            "value" : "edit"
+                        },
+                        {
+                            "label" : "{i18n::Unlock User}",
+                            "value" : "unlock"
+                        },
+                        {
+                            "label" : "{i18n::Delete User}",
+                            "value" : "delete"
+                        },
+                        {
+                            "label" : "{i18n::Refresh User}",
+                            "value" : "refresh"
+                        }
+                    ]
+                }
+                ]
+            },
+            "user-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            }
+        }, {
+            "id": 2,
+            "label": "{i18n::User Groups}",
+            "name": "group",
+            "type": "function",
+            "icon": "group",
+            "requestSignature": "doListGroups",
+            "domainAdmin": true,
+            "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Groups v1",
+            "menu-model": {
+                "menubar" : [{
+                    "label" : "{i18n::Group Menu}",
+                    "value" : "group",
+                    "items" : [
+                        {
+                            "label" : "{i18n::Add Group}",
+                            "value" : "add"
+                        },
+                        {
+                            "label" : "{i18n::Edit Group}",
+                            "value" : "edit"
+                        },
+                        {
+                            "label" : "{i18n::Unlock Group}",
+                            "value" : "unlock"
+                        },
+                        {
+                            "label" : "{i18n::Delete Group}",
+                            "value" : "delete"
+                        },
+                        {
+                            "label" : "Refresh",
+                            "value" : "refresh"
+                        }
+                    ]
+                },
+                {
+                    "label" : "{i18n::Group Member Menu}",
+                    "value" : "member",
+                    "items" : [
+                        {
+                            "label" : "{i18n::Add Group Member}",
+                            "value" : "add"
+                        },
+                        {
+                            "label" : "{i18n::Delete Group Member}",
+                            "value" : "delete"
+                        },
+                        {
+                            "label" : "{i18n::Refresh Group Member}",
+                            "value" : "refresh"
+                        }
+                    ]
+                }
+                ]
+            },
+            "groups-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            },
+            "members-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            }
+        }, {
+            "id": 3,
+            "label": "{i18n::User Spaces}",
+            "name" : "userSpace",
+            "type": "function",
+            "icon": "space",
+            "requestSignature": "doListSpaces",
+            "domainAdmin": false,
+            "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Spaces v1",
+            "menu-model": {
+                "menubar" : [{
+                    "label" : "{i18n::Spaces}",
+                    "value" : "space",
+                    "items" : [{
+                        "label" : "{i18n::Create}",
+                        "value" : "create"
+                    }, {
+                        "label" : "{i18n::Update}",
+                        "value" : "update"
+                    }, {
+                        "label" : "{i18n::Delete}",
+                        "value" : "delete"
+                    }, {
+                        "label" : "{i18n::Refresh}",
+                        "value" : "refresh"
+                    }]
+	            }, {
+                    "label" : "{i18n::Administrators}",
+                    "value" : "administrator",
+                    "items" : [{
+                        "label" : "{i18n::Add}",
+                        "value" : "add"
+                    }, {
+                        "label" : "{i18n::Delete}",
+                        "value" : "delete"
+                    }]
+	            }, {
+                    "label" : "{i18n::Contributors}",
+                    "value" : "contributor",
+                    "items" : [{
+                        "label" : "{i18n::Add}",
+                        "value" : "add"
+                    }, {
+                        "label" : "{i18n::Delete}",
+                        "value" : "delete"
+                    }]
+	            }, {
+                    "label" : "{i18n::Viewers}",
+                    "value" : "viewer",
+                    "items" : [{
+                        "label" : "{i18n::Add}",
+                        "value" : "add"
+                    }, {
+                        "label" : "{i18n::Delete}",
+                        "value" : "delete"
+                    }]
+	            }]
+            },
+            "administrator-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            },
+            "contributor-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            },
+            "viewer-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            },
+            "space-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            }
+        }, {
+            "id": 4,
+            "label": "{i18n::Runtime Projects}",
+            "name" : "runtimeProject",
+            "type": "function",
+            "icon": "project",
+            "requestSignature": "doListRuntimeProjects",
+            "domainAdmin": false,
+            "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Deployed Projects v1",
+            "menu-model": {
+                "menubar": [{
+                    "label": "{i18n::Runtime Projects}",
+                    "value": "project",
+                    "items": [{
+                        "label": "{i18n::Start}",
+                        "value": "start"
+                    }, {
+                        "label": "{i18n::Stop}",
+                        "value": "stop"
+                    }, {
+                        "label": "{i18n::Restart}",
+                        "value": "restart"
+                    }, {
+                        "label": "{i18n::Purge}",
+                        "value": "purge"
+                    }, {
+                        "label": "{i18n::Undeploy}",
+                        "value": "undeploy"
+                    }, {
+                        "label": "{i18n::Move}",
+                        "value": "move"
+                    }, {
+                        "label": "{i18n::Export}",
+                        "value": "export"
+                    }, {
+                        "label": "{i18n::Detail}",
+                        "value": "detail"
+                    }, {
+                        "label": "{i18n::Refresh}",
+                        "value": "refresh"
+                    }]
+                }]
+            },
+            "project-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            },
+            "items": [{
+                "label": "{i18n::Deployed Project Detail}",
+                "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Deployed Project Detail v1",
+                "items": {
+                    "general": "/app/ax/space/VIA Admin Modules/axv/module - Project General v1",
+                    "url": "/app/ax/space/VIA Admin Modules/axv/module - Project URL v1",
+                    "resource": "/app/ax/space/VIA Admin Modules/axv/module - Project Resource v1",
+                    "monitor": "/app/ax/space/VIA Admin Modules/axv/module - Project Monitor v1",
+                    "share": "/app/ax/space/VIA Admin Modules/axv/module - Project Share v1"
+                }
+            }]
+        }]
+    }, {
+        "group": "platform",
+        "items": [{
+            "id": 5,
+            "label": "{i18n::Data Sources}",
+            "name" : "dataResource",
+            "type": "service",
+            "icon": "dataSource",
+            "requestSignature": "dsListDataSources",
+            "domainAdmin": false,
+             "tabPaths" : {"dataSourceTab" : "/app/ax/space/VIA Admin Modules/axv/module - Data Source v1",
+                            "hdfsSourceTab" : "/app/ax/space/VIA Admin Modules/axv/module - HDFS Source v1",
+                            "hivePropertiesTab" : "/app/ax/space/VIA Admin Modules/axv/module - Hive Properties v1"},
+            "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Data Resource v1",
+            "datasource-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            },
+            "hivesource-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            }
+        }, {
+            "id": 6,
+            "label": "{i18n::VIA Runtime Servers}",
+            "name" : "runtimeServer",
+            "type": "service",
+            "icon": "server",
+            "requestSignature": "svListServers",
+            "domainAdmin": false,
+            "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Servers v1",
+            "menu-model": {
+                "menubar": [{
+                    "label": "{i18n::Servers}",
+                    "value": "server",
+                    "items": [{
+                        "label": "{i18n::Add}",
+                        "value": "server/add"
+                    }, {
+                        "label": "{i18n::Delete}",
+                        "value": "server/delete"
+                    }, {
+                        "label": "{i18n::Start}",
+                        "value": "server/start"
+                    }, {
+                        "label": "{i18n::Stop}",
+                        "value": "server/stop"
+                    }, {
+                        "label": "{i18n::Restore}",
+                        "value": "server/restore"
+                    }, {
+                        "label": "{i18n::Refresh}",
+                        "value": "server/refresh"
+                    }]
+                }]
+            },
+            "runtime-server-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            },
+            "server-property-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            }
+        }, {
+            "id": 7,
+            "label": "{i18n::Installed VIA Apps}",
+            "name" : "installedApp",
+            "type": "function",
+            "icon": "app",
+            "requestSignature": "doListInstallApps",
+            "domainAdmin": false,
+            "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Installed Apps v1",
+            "app-model" : {
+                "grid" : {
+                    "disableContextMenu" : true
+                }
+            }
+        }]    
+    },{
+        "group": "security",
+        "items": [{
+            "id" : 8,
+            "label": "{i18n::Security}",
+            "type": "link",
+            "icon": "security",
+            "requestSignature": null,
+            "domainAdmin": false,
+            "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Security Settings v1",
+            "menu-model": {
+                "menubar": [{
+                    "label": "{i18n::Security Settings}",
+                    "value": "security",
+                    "items": [{
+                        "label": "{i18n::Login Policy}",
+                        "value": "login"
+                    }, {
+                        "label": "{i18n::Password Policy}",
+                        "value": "password"
+                    }, {
+                        "label": "{i18n::Log Policy}",
+                        "value": "log"
+                    }, {
+                        "label": "{i18n::Encryption Policy}",
+                        "value": "encryption"
+                    }, {
+                        "label": "{i18n::Kerberos Policy}",
+                        "value": "kerberos"
+                    }, {
+                        "label": "{i18n::Refresh}",
+                        "value": "refresh"
+                    }]
+                }]
+            }
+        }, {
+            "id": 9,
+            "label": "{i18n::Security Logs}",
+            "name" : "securityLog",
+            "type": "link",
+            "icon": "securityLog",
+            "requestSignature": null,
+            "domainAdmin": false,
+            "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Security Logs v1",
+            "menu-model": {
+                "menubar" : [{
+		            "label" : "Security Logs",
+		            "value" : "logs",
+		            "items" : [{
+			            "label" : "{i18n::Purge}",
+			            "value" : "purge"
+		            }, {
+			            "label" : "{i18n::Export}",
+			            "value" : "export"
+		            }, {
+			            "label" : "{i18n::Refresh}",
+			            "value" : "refresh"
+		            }]
+	            }]
+            },
+            "security-log-model" : {
+                "grid" : {
+                    "disableContextMenu" : false
+                }
+            }
+        },{
+            "id": 10,
+            "label": "{i18n::Server Logs}",
+            "name" : "serverLog",
+            "type": "link",
+            "icon": "serverLog",
+            "requestSignature": null,
+            "domainAdmin": false,
+            "moduleURI": "/app/ax/space/VIA Admin Modules/axv/module - Server Logs v1"
+        }]
+    }]
+}
