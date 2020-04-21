@@ -1,0 +1,968 @@
+<DashboardPluginModel description="" name="VIA - Data Source Plugin" is_init="false">
+  <ModelInfo validated="true">
+    <Properties>
+    </Properties>
+    <Widgets>
+      <Widget name="Database Query" private="false">
+        <PropertyText>
+          <![CDATA[[]]]>
+        </PropertyText>
+        <CodeText segment="#doRefresh">
+          <![CDATA[
+            this._selectedDataSource = this._getSelectedDataSource(this.renderer.result);
+            if (this._selectedDataSource != null) {
+                domStyle.set(this._actionDiv, "display", "");
+                domStyle.set(this._queryTextDiv, "display", "");
+                domStyle.set(this._queryResultDiv, "display", "");
+            }
+            else {
+                domStyle.set(this._actionDiv, "display", "none");
+                domStyle.set(this._queryTextDiv, "display", "none");
+                domStyle.set(this._queryResultDiv, "display", "none");
+            }]]>
+        </CodeText>
+        <CodeText segment="#methods">
+          <![CDATA[        _getSelectedDataSource : function(result) {
+            var ds = null;
+            if (result != null && result.length > 0) {
+                ds = {};
+                for (var i=0; i<this.renderer.result.length; i++) {
+                    ds[this.renderer.result[i]["name"]] = this.renderer.result[i]["value"];
+                }
+                if (ds.jndiName == null) {
+                    ds = null;
+                }
+            }
+            return ds;
+        },
+        
+        _onSelectFavorite : function(evt) {
+            var fav = evt.currentTarget.value;
+            var text = this._favorites[fav];
+            if (text != null) {
+                this._editor.setValue(text);
+            }
+        },
+        
+        _onClickAddFavorite : function(evt) {
+            var text = this._editor.getValue();
+            var fav = String(Date.now());
+            this._favorites[fav] = text;
+            
+            var option = domConstruct.create("option", {
+                value : fav
+            });
+            option.innerHTML = text.substring(0, Math.min(text.length, 100)) + "...";
+            this._favoriteSelect.appendChild(option);
+        },
+        
+        _onClickExecuteQuery : function(evt) {
+            var self = this;
+            var sqlQuery = (this._editor.getSelectedText() || "").trim();
+            if (sqlQuery == "") {
+                sqlQuery = this._editor.getValue().trim();
+            }
+            var plugin = Plugin();
+            if (sqlQuery != "") {
+                this._clearResult();
+                var str = sqlQuery.trim().toUpperCase();
+                if ((str.indexOf("SHOW") == 0) && (str.indexOf("CREATE") > 0)) {
+                    this._divQueryTime.innerHTML = "";
+                    this._enableExecuteButton(false);
+                    plugin.dbExecuteQuery(this._selectedDataSource, sqlQuery, function(response) {
+                        self._enableExecuteButton(true);
+                        if (response.status == "OK") {
+                            if (str.indexOf("TABLE") > 0 && response.value.result.length == 1 && response.value.result[0]["Create Table"] != null) {
+                                // show create table
+                                var sql = response.value.result[0]["Create Table"];
+                                self._showStatus("<pre>"+sql+"</pre>");
+                            }
+                            else if (str.indexOf("VIEW") > 0 && response.value.result.length == 1 && response.value.result[0]["Create View"] != null) {
+                                // show create view
+                                var sql = response.value.result[0]["Create View"];
+                                sql = sql.replace(/,/g, ",\n    ").replace("select ", "select\n    ").replace(" from", "\nfrom").replace(" where", "\nwhere");
+                                self._showStatus("<pre>"+sql+"</pre>");
+                            }
+                            else {
+                                self._showStatus("<pre>"+JSON.stringify(response.value, null, "    ")+"</pre>");
+                            }
+                        }
+                        else {
+                            self._showError(response.error);
+                        }
+                    });
+                }
+                else if ((str.indexOf("SELECT") == 0) || (str.indexOf("EXEC") == 0) || (str.indexOf("SHOW") == 0) || (str.indexOf("DESC") == 0)) {
+                    this._divQueryTime.innerHTML = "";
+                    this._enableExecuteButton(false);
+                    plugin.dbExecuteQuery(this._selectedDataSource, sqlQuery, function(response) {
+                        self._enableExecuteButton(true);
+                        if (response.status == "OK") {
+                            self._showQueryResult(response.value.schema, response.value.result);
+                            self._divQueryTime.innerHTML = response.value.result.length + " rows in " + response.value.mstime + "ms";
+                        }
+                        else {
+                            self._showError(response.error);
+                        }
+                    });
+                }
+                else if ((str.indexOf("CREATE") == 0) || (str.indexOf("DROP") == 0) || (str.indexOf("ALTER") == 0)) {
+                    this._enableExecuteButton(false);
+                    plugin.dbExecuteUpdate(this._selectedDataSource, sqlQuery, function(response) {
+                        self._enableExecuteButton(true);
+                        if (response.status == "OK") {
+                            self._showStatus(response.value);
+                        }
+                        else {
+                            self._showError(response.error);
+                        }
+                    });
+                }
+                else if ((str.indexOf("INSERT") == 0) || (str.indexOf("UPDATE") == 0) || (str.indexOf("DELETE") == 0)) {
+                    this._enableExecuteButton(false);
+                    plugin.dbExecuteUpdate(this._selectedDataSource, sqlQuery, function(response) {
+                        self._enableExecuteButton(true);
+                        if (response.status == "OK") {
+                            self._showStatus(response.value);
+                        }
+                        else {
+                            self._showError(response.error);
+                        }
+                    });
+                }
+            }
+        },
+        
+        _enableExecuteButton : function(enable) {
+            domStyle.set(this._btnExecute, {
+                "pointer-events" : enable ? "auto" : "none",
+                "opacity" : enable ? 1.0 : 0.3
+            });
+        },
+
+        _clearResult : function() {
+            if (this._resultGrid != null) {
+                this._resultGrid.destroy();
+                delete this._resultGrid;
+            }
+            this._schema = null;
+            this._result = null;
+            AppUtil.removeAllChildrenOf(this._queryResultDiv);
+            this._enableViewAsButtons(false);
+        },
+        
+        _showQueryResult : function(schema, result) {
+            this._clearResult();
+
+            this._schema = schema;
+            this._result = result;
+            this._enableViewAsButtons(this._result.length > 0);
+            this._createResultGrid();
+        },
+        
+        _showStatus : function(status) {
+            this._clearResult();
+
+            var statusDiv = domConstruct.create("div", {
+                "class" : "status-div via-scroller"
+            });
+            statusDiv.innerHTML = status;
+            this._queryResultDiv.appendChild(statusDiv);
+        },
+        
+        _showError : function(error) {
+            this._clearResult();
+
+            var errorDiv = domConstruct.create("div", {
+                "class" : "error-div via-scroller"
+            });
+            errorDiv.innerHTML = error;
+            this._queryResultDiv.appendChild(errorDiv);
+        },
+        
+        _showText : function(text) {
+            this._clearResult();
+
+            var textDiv = domConstruct.create("div", {
+                "class" : "text-div"
+            });
+            textDiv.innerHTML = text;
+            this._queryResultDiv.appendChild(textDiv);
+        },
+        
+        _loadAceLib : function(callback) {
+            if (window.ace == undefined) {
+                require(["af/utils/proxies/Ace", "dojo/domReady!"], function(AceLib) {
+                    var proxy = new AceLib();
+                    proxy.load('default').then(function() {
+                        callback();
+                    });
+                });
+            }
+            else {
+                callback();
+            }
+        },
+
+        _createAceEditor : function() {
+            var container = domConstruct.create("div", {
+                "style" : "display:block;width:100%;height:100%;",
+            });
+            this._queryTextDiv.appendChild(container);
+            var editor = ace.edit(container);
+            editor.setTheme("ace/theme/chrome");
+            editor.getSession().setMode("ace/mode/sql");
+            editor.getSession().setTabSize(4);
+            editor.setKeyboardHandler(null);
+            editor.setShowPrintMargin(false);
+            editor.getSession().setUseWrapMode(false);                
+            editor.setBehavioursEnabled(true);
+            ace.config.loadModule('ace/ext/language_tools', function() { 
+                editor.setOptions({ 
+                    enableBasicAutocompletion: true, 
+                    enableSnippets: true 
+                });
+            });
+            return editor;
+        },
+
+        _createResultGrid : function(schema, result) {
+            var div = domConstruct.create("div", {});
+            this._queryResultDiv.appendChild(div);
+            
+            var columns = [];
+            for (var i=0; i<this._schema.length; i++) {
+                columns.push({
+                    field    : this._schema[i]["name"],
+                    label    : this._schema[i]["label"],
+                    style    : "width:" + getDefaultWidthByType(this._schema[i]) + "px;font-family:monospace;",
+                    sortable : true,
+                });
+            }
+            for (var i=0; i<this._result.length; i++) {
+                this._result[i]["_rownum_"] = i;
+            }
+            this._resultStore = GridUtil.createGridStore("_rownum_", this._result);
+            this._resultGrid = GridUtil.createGridWidget("result", div, true, null, columns, this._resultStore, null, null, "none", null, null);
+        },
+
+        _enableViewAsButtons : function(enable) {
+            domStyle.set(this._btnViewAsCSV, {
+                "pointer-events" : enable ? "auto" : "none",
+                "opacity" : enable ? 1.0 : 0.3
+            });
+            domStyle.set(this._btnViewAsJSON, {
+                "pointer-events" : enable ? "auto" : "none",
+                "opacity" : enable ? 1.0 : 0.3
+            });
+        },
+
+        _onClickViewResultAsCSV : function() {
+            if (this._schema != null && this._result != null) {
+                var self = this;
+                createPopupDialog("View Result as CSV", 900, 700, function(dialog) {
+                    // add stuff to dialog.containerNode
+                    var buf = [];
+                    var columns = [];
+                    for (var i=0; i<self._schema.length; i++) {
+                        columns.push(self._schema[i]["name"]);
+                    }
+                    buf.push('"'+columns.join('","')+'"');
+                    for (var i=0; i<self._result.length; i++) {
+                        var values = [];
+                        for (var j=0; j<self._schema.length; j++) {
+                            values.push(escapeText(self._result[i][self._schema[j]["name"]]));
+                        }
+                        buf.push('"'+values.join('","')+'"');
+                    }
+                    
+                    var textarea = domConstruct.create("textarea", {
+                        "class" : "via-scroller",
+                        "style" : "width:calc(100% - 10px);height:calc(100% - 10px);font-family:Courier New;font-size:12pt;white-space:pre;",
+                        "value" : buf.join("\n"),
+                        "readonly" : true
+                    });
+                    dialog.containerNode.appendChild(textarea);
+                });
+            }
+        },
+        
+        _onClickViewResultAsJSON : function() {
+            if (this._result != null) {
+                var self = this;
+                createPopupDialog("View Result as CSV", 900, 700, function(dialog) {
+                    // add stuff to dialog.containerNode
+                    var textarea = domConstruct.create("textarea", {
+                        "class" : "via-scroller",
+                        "style" : "width:calc(100% - 10px);height:calc(100% - 10px);font-family:Courier New;font-size:12pt;white-space:pre;",
+                        "value" : JSON.stringify(self._result, null, "    "),
+                        "readonly" : true
+                    });
+                    dialog.containerNode.appendChild(textarea);
+                });
+            }
+        },
+        
+        _onClickExportData : function() {
+            if (this.tile != null) {
+            	this.tile.updateUIEvent([{
+                    "__TYPE__" : "onExportData",
+                    "__DATA__" : this._result,
+                }]);
+            }
+        },
+]]>
+        </CodeText>
+        <CodeText segment="#postCreate">
+          <![CDATA[
+            this._enableViewAsButtons(false);
+            this.doRefresh();]]>
+        </CodeText>
+        <CodeText segment="#buildRendering">
+          <![CDATA[
+            var self = this;
+            this._loadAceLib(function() {
+                self._editor = self._createAceEditor();
+            });
+]]>
+        </CodeText>
+        <CodeText segment="#functions">
+          <![CDATA[    function getDefaultWidthByType(field)
+    {
+        switch (field.type) {
+            case "date":
+            case "time":
+            case "datetime":
+                return 150;
+            case "number":
+            case "integer":
+            case "long":
+            case "float":
+            case "double":
+                return 80;
+            case "boolean":
+                return 50;
+            case "string":
+                return 200;
+            case "text":
+                return 300;
+        }
+        return 100;
+    }
+    
+    function createPopupDialog(title, w, h, callback)
+    {
+        require(["af/controls/MaximizableAppDialog", "af/controls/ButtonMode", "dojo/domReady!"], function(PopupDialogClazz, ButtonMode) {
+            var dialog = new PopupDialogClazz({
+                title    : title,
+                vtWidth  : w,
+                vtHeight : h,
+            });
+            dialog.showTitle = true;
+            dialog.buttonMode = ButtonMode.YES;
+            dialog.set("okLabel", I18N.getString("af.frame", "Close"));
+            dialog.setOkButtonEnable(true);
+            dialog.okHandler = function() {
+                this.hide();
+            };
+            dialog.show();
+            domStyle.set(dialog.containerNode, {
+                "width"    : "100%",
+                "height"   : "100%",
+                "overflow" : "hidden"
+            });
+            callback(dialog);
+        });
+    }
+    
+    function escapeText(value)
+    {
+        if (value != null && typeof value == "string" && value != "") {
+            return value.replace(/"/g, '\\"').replace(/\n/g, "\\n");
+        }
+        return value;
+    }]]>
+        </CodeText>
+        <CodeText segment="#constructor">
+          <![CDATA[
+            this._favorites = {};]]>
+        </CodeText>
+        <CodeText segment="#onTileMaxsize">
+          <![CDATA[            if (this._resultGrid != null) {
+                this._resultGrid.refresh({
+                    keepScrollPosition : true
+                });
+            }]]>
+        </CodeText>
+        <CodeText segment="#onTileMinisize">
+          <![CDATA[            if (this._resultGrid != null) {
+                this._resultGrid.refresh({
+                    keepScrollPosition : true
+                });
+            }]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div style="width:100%;height:100%;">
+    <style>
+        @import '/vitria-oi/rest/app/dbp/user/via_common/dbpm/VIA - Common/VIA-CSS';
+        .action-div {
+            width:100%;
+            height:30px;
+            background-color:#efefef;
+        }
+        .favorite-div {
+            display:inline-block;
+            width:calc(100% - 400px);
+            vertical-align:top;
+        }
+        .favorite-select {
+            height:29px !important;
+            font-size:14px !important;
+            font-family:"Courier New" !important;
+            font-weight:bold !important;
+        }
+        .fa-button-div {
+            display:inline-block;
+            width:30px;
+            border-radius:3px;
+            cursor:pointer;
+            vertical-align:top;
+            padding-top:2px;
+        }
+        .fa-button-div:hover {
+            color:red;
+        }
+        .favorite-button-div {
+            font-size:18px;
+            color:gray;
+            padding-top:5px;
+        }
+        .execute-button-div {
+            font-size:26px;
+        }
+        .text-button-div {
+            display:inline-block;
+            border-radius:5px;
+            cursor:pointer;
+            vertical-align:top;
+            padding:2px 3px 0px 3px;
+            font-size:8px;
+            border:thin solid gray;
+            margin-top:4px;
+            text-align:center;
+            margin-left:5px;
+            font-weight:bold;
+        }
+        .text-button-div:hover {
+            color:red;
+            background-color:white;
+        }
+        .result-as-csv-div {
+        }
+        .result-as-json-div {
+        }
+        .query-text-div {
+            width:calc(100% - 2px);
+            height:calc(50% - 2px);
+            border:thin solid #efefef;
+        }
+        .query-result-div {
+            width:calc(100% - 2px);
+            height:calc(50% - 32px);
+            border:thin solid #efefef;
+        }
+        .favorite-select:required:invalid {
+            color:lightgray !important;
+        }
+        .favorite-select option[value=""][disabled] {
+            display:none;
+        }
+        .favorite-select option {
+            color:black;
+        }
+        .status-div {
+            color: black;
+            font-family: monospace;
+            width: calc(100% - 10px);
+            height: calc(100% - 10px);
+            white-space: normal;
+            font-size: 14px;
+            line-height: 20px;
+            padding: 5px;
+            overflow-y: auto;
+        }
+        .status-div pre {
+            background-color: white;
+            border: none;
+        }
+        .error-div {
+            color: red;
+            font-family: monospace;
+            width: 100%;
+            white-space: normal;
+            font-size: 14px;
+            line-height: 20px;
+            padding: 5px;
+        }
+        .text-div {
+            color: black;
+            font-family: Courier New;
+            width: 100%;
+            white-space: normal;
+            font-size: 14px;
+            line-height: 20px;
+            padding: 5px;
+        }
+        .query-time-div {
+            width: 100px;
+            display: inline-block;
+            padding-left: 5px;
+            padding-top: 6px;
+            font-size: 10pt;
+        }
+    </style>
+    <div data-dojo-attach-point='_actionDiv' class="action-div">
+        <div class="favorite-div">
+            <select required class="favorite-select" title="Click on *star* to add query expression to favorite list."
+                    data-dojo-attach-point='_favoriteSelect' data-dojo-attach-event="change:_onSelectFavorite">
+                <option value="" disabled selected>Click on *star* to add query expression to favorite list...</option>
+            </select>
+        </div>
+        <div class="favorite-button-div fa-button-div" title="Click on *star* to add query expression to favorite list."
+             data-dojo-attach-event="click:_onClickAddFavorite">
+            <i class="far fa-star"></i>
+        </div>
+        <div class="execute-button-div fa-button-div" title="Click to execute query."
+             data-dojo-attach-point='_btnExecute' data-dojo-attach-event="click:_onClickExecuteQuery">
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+        <div class="result-as-csv-div text-button-div" title="View result as CSV."
+             data-dojo-attach-point='_btnViewAsCSV' data-dojo-attach-event="click:_onClickViewResultAsCSV">
+            CSV
+        </div>
+        <div class="result-as-json-div text-button-div" title="View result as JSON."
+             data-dojo-attach-point='_btnViewAsJSON' data-dojo-attach-event="click:_onClickViewResultAsJSON">
+            JSON
+        </div>
+        <!--
+        <div class="result-as-json-div text-button-div" title="Export result via UI Events port."
+             data-dojo-attach-point='_btnExportData' data-dojo-attach-event="click:_onClickExportData">
+            DATA
+        </div>
+        -->
+        <div class="query-time-div" title="Query elapsed time in milliseconds." data-dojo-attach-point='_divQueryTime'>
+        </div>
+    </div>
+    <div data-dojo-attach-point='_queryTextDiv' class="query-text-div scriptDiv via-scroller">
+    </div>
+    <div data-dojo-attach-point='_queryResultDiv' class="query-result-div via-scroller">
+    </div>
+</div>
+]]>
+        </HtmlText>
+      </Widget>
+    </Widgets>
+    <Functions>
+      <Function name="doDeleteDataSource" args="name,url,callback" private="false">
+        <CodeText>
+          <![CDATA[var self = this;
+prompt(
+    "Data Source",
+    "Remove selected data source?",
+    [   // may be null, in which case, no form UI collected
+        {name: "name", label: "Name", type: "string", value: name, disabled: true, style: {
+            "width" : "200px",
+            "font-family" : "monospace",
+        }},
+        {name: "url", label: "URL", type: "string",  value: url, disabled: true, style: {
+            "font-family" : "monospace",
+        }},
+    ],
+    [   // may be null, in which case, default OK/Cancel buttons used
+        {label: "Yes", value: true},
+        {label: "No", value: false},
+    ],
+    {
+        width: "500px",
+        "container" : {
+            "background-color" : "white",
+        },
+        "form-label" : {
+            "width" : "10%",
+            "white-space" : "nowrap",
+        },
+        "form-value" : {
+            "width" : "90%",
+        },
+    },
+    function(value, info) {
+		// if we get callback, means user clicked YES
+        self.dsRemoveDataSource(name, callback);
+    }
+);
+]]>
+        </CodeText>
+      </Function>
+      <Function name="doUpdateDataSource" args="name,url,username,password,behavior,callback" private="false">
+        <CodeText>
+          <![CDATA[var self = this;
+prompt(
+    "Data Source",
+    "Please provide information to create/update data source.",
+    [   // may be null, in which case, no form UI collected
+        {name: "name", label: "Name", type: "string", value: name, disabled: (name != ""), style: {
+            "width" : "200px",
+            "font-family" : "monospace",
+        }},
+        {name: "url", label: "URL", type: "string", value: url, style: {
+            "width" : "100%",
+            "font-family" : "monospace",
+        }},
+        {name: "username", label: "User Name", type: "string", value: username, style: {
+            "width" : "150px",
+            "font-family" : "monospace",
+        }},
+        {name: "password1", label: "Password", type: "password", value: password, style: {
+            "width" : "150px",
+            "font-family" : "monospace",
+        }},
+        {name: "password2", label: "Confirm Password", type: "password", value: password, style: {
+            "width" : "150px",
+            "font-family" : "monospace",
+        }},
+        {name: "behavior", label: "Behavior", type: "select", enums: "MySQL,Oracle,MSSQL,SAP,HIVE", value: behavior, style: {
+            "width" : "100px",
+        }},
+    ],
+    [   // may be null, in which case, default OK/Cancel buttons used
+        {label: "Yes", value: true},
+        {label: "No", value: false},
+    ],
+    {
+        width: "500px",
+        "container" : {
+            "background-color" : "white",
+        },
+        "form-label" : {
+            "width" : "10%",
+            "white-space" : "nowrap",
+        },
+        "form-value" : {
+            "width" : "90%",
+        },
+    },
+    function(value, info) {
+        // value is value of button clicked
+        // data is form data
+        var DRIVER_CLASSES = {
+            "MySQL"  : "com.mysql.jdbc.Driver",
+            "HIVE"   : "com.vitria.hive.jdbc.VtHiveDriver",
+            "ORACLE" : "oracle.jdbc.driver.OracleDriver",
+            "MSSQL"  : "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+            "SAP"    : "com.sap.db.jdbc.Driver",
+        };
+        info["driver"] = DRIVER_CLASSES[info["behavior"]];
+        if (info["password1"] == info["password2"]) {
+            info["password"] = info["password1"];
+            delete info["password1"];
+            delete info["password2"];
+            self.dsUpdateDataSource(info, callback);
+        }
+    }
+);
+]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="_getConnectionInfo" args="dataSource" private="true">
+        <CodeText>
+          <![CDATA[if (dataSource.name == "Default_ODA_QS") {
+    // check if we are using an external ODA Query Service
+    var System = java.lang.System;
+    var VT_ODA_QS = System.getenv("VT_ODA_QS");
+    if (VT_ODA_QS != null && VT_ODA_QS != "") {
+        print("VT_ODA_QS="+VT_ODA_QS);
+        return {
+            url : VT_ODA_QS,
+            username : "", 
+            password : ""
+        };
+    }
+}
+return {
+    url : dataSource.jndiName,
+    username : "", 
+    password : ""
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="dbExecuteQuery" args="dataSource,sqlQuery" private="false">
+        <CodeText>
+          <![CDATA[//print("dbExecuteQuery: dataSource="+__prettyPrintJSON(dataSource));
+//print("dbExecuteQuery: sqlQuery="+__prettyPrintJSON(sqlQuery));
+
+var DatabaseUtil = com.vitria.db.DatabaseUtil;
+var DatabaseHelper = com.vitria.db.impl.DatabaseHelper;
+
+var connInfo = this._getConnectionInfo(dataSource);
+var schema = [];
+var result = [];
+var start  = Date.now();
+try {
+    var connObj = DatabaseUtil.getConnection(connInfo.url, connInfo.username, connInfo.password);
+    var conn = connObj.getConnection();
+    var helper = DatabaseHelper.getHelper(conn);
+    var pStmt;
+    if (sqlQuery.toUpperCase().indexOf("EXEC ") == 0) {
+        pStmt = conn.prepareCall(sqlQuery);
+    } else {
+        pStmt = conn.prepareStatement(sqlQuery);
+    }
+    var rs = pStmt.executeQuery();
+    var cols = helper.getColumns(rs);
+    for (var i=0; i<cols.length; i++) {
+        var col = cols[i];
+        schema.push(JSON.parse(col.toJSON().toString()));
+    }
+    while (rs.next()) {
+        var record = {};
+        for (var i=0; i<cols.length; i++) {
+            var col = cols[i];
+            var label = col.getLabel();
+            record[label] = col.getValue(rs, true);
+        }
+        result.push(record);
+    }
+}
+finally {
+	if (connObj != null) {
+		//print("########## Release Connection Object");
+		connObj.release();
+	}
+}
+//print("dbQuery: schema="+__prettyPrintJSON(schema));
+//print("dbQuery: result="+__prettyPrintJSON(result));
+return {
+    schema : schema,
+    result : result,
+    mstime : Date.now() - start,
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="dbExecuteUpdate" args="dataSource,sqlQuery" private="false">
+        <CodeText>
+          <![CDATA[//print("dbExecuteUpdate: dataSource="+__prettyPrintJSON(dataSource));
+//print("dbExecuteUpdate: sqlQuery="+__prettyPrintJSON(sqlQuery));
+
+var DatabaseUtil = com.vitria.db.DatabaseUtil;
+var DatabaseHelper = com.vitria.db.impl.DatabaseHelper;
+
+var status = -1;
+var connInfo = this._getConnectionInfo(dataSource);
+try {
+    var connObj = DatabaseUtil.getConnection(connInfo.url, connInfo.username, connInfo.password);
+    var conn = connObj.getConnection();
+    var helper = DatabaseHelper.getHelper(conn);
+    var stmt = conn.createStatement();
+    status = stmt.executeUpdate(sqlQuery);
+    conn.commit();
+}
+finally {
+	if (connObj != null) {
+		//print("########## Release Connection Object");
+		connObj.release();
+	}
+}
+//print("dbExecuteUpdate: status="+__prettyPrintJSON(status));
+return status;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="dsHasDataSources" args="jndiNames" private="false">
+        <CodeText>
+          <![CDATA[if (typeof jndiNames == "string") {
+    jndiNames = JSON.parse(jndiNames);
+}
+var exists = {};
+for (var i=0; i<jndiNames.length; i++) {
+    exists[jndiNames[i]] = false;
+}
+var VirtualServerLib = com.vitria.m3oui.virtualserver.VirtualServerLib;
+var dslist = VirtualServerLib.listAllDataSources();
+if (dslist != null && dslist.size() > 0) {
+    for (var i = 0; i < dslist.size(); i++) {
+        var model = dslist.get(i);
+        var jndiName = model.getProperty("jndi");
+        if (exists[jndiName] != null) {
+            exists[jndiName] = true;
+        }
+    }
+}
+return exists;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="dsListDataSources" args="" private="false">
+        <CodeText>
+          <![CDATA[var DomainServiceClient = com.vitria.domainservice.DomainServiceClient;
+var dsMap = DomainServiceClient.getClient().listAllDataSources();
+var dsList = [];
+if (dsMap != null && dsMap.size() > 0) {
+    var iter = dsMap.entrySet().iterator();
+    while (iter.hasNext()) {
+		var entry = iter.next();
+        var ds = entry.getValue();
+        
+        var desc = ds.getDescription() || "";
+        var url = ds.getUrl() || ds.getConnectionUrl() || "";
+        dsList.push({
+            "jndiName" : ds.getJndiName(),
+            "name" : ds.getName(),
+            "behavior" : ds.getBehavior(),
+            "username" : ds.getUsername(),
+            "password" : ds.getPassword(),
+            "class" : ds.getDataSourceClass(),
+            "url" : url,
+            "desc" : desc,
+        });
+    }
+}
+return dsList;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="dsRemoveDataSource" args="name" private="false">
+        <CodeText>
+          <![CDATA[var JNDI_PREFIX = "/vitria/m3o/datasource/DefaultDomain/";
+var VirtualServerLib = com.vitria.m3oui.virtualserver.VirtualServerLib;
+
+if (dsHasDataSources([JNDI_PREFIX + name])[JNDI_PREFIX + name]) {
+    VirtualServerLib.removeDataSource(JNDI_PREFIX + name);
+    return {
+        "action" : "deleted",
+        "message" : "Data source '" + JNDI_PREFIX + name + "' deleted.",
+    };
+}
+return false;]]>
+        </CodeText>
+      </Service>
+      <Service name="dsUpdateDataSource" args="info" private="false">
+        <CodeText>
+          <![CDATA[if (typeof info == "string") {
+    info = JSON.parse(info);
+}
+var name = info["name"];
+var url = info["url"];
+var username = info["username"];
+var password = info["password"];
+var driver = info["driver"];
+var xaclass = info["xaclass"];
+var dsclass = info["dsclass"];
+var behavior = info["behavior"];
+var desc = info["desc"];
+var server = null;
+var port = null;
+var database = null;
+
+// expect jdbc:behavior://server:port/database
+var toks = url.split(":");
+if (toks.length == 4) {
+    // toks[2] == //server
+    // toks[3] == port/database
+	server = (toks[2]).substring(2);
+	var slash = (toks[3]).indexOf('/');
+	port = (toks[3]).substring(0, slash);
+	database = (toks[3]).substring(slash+1);
+}
+
+var Encrypt = com.vitria.fc.data.Encrypt;
+password = Encrypt.unencrypt(password.trim());
+
+var JNDI_PREFIX = "/vitria/m3o/datasource/DefaultDomain/";
+
+var DataSourceInfo = com.vitria.domainservice.DataSourceInfo;
+var ds = new DataSourceInfo();
+ds.setBehavior(behavior);
+ds.setUsername(username);
+ds.setPassword(password);
+ds.setName(name);
+ds.setJndiName(JNDI_PREFIX + name);
+ds.setNotUsedByProjectPersistence(true);
+
+if (behavior.toLowerCase() == "oracle" || behavior.toLowerCase() == "mysql" || behavior.toLowerCase() == "mysql") {
+    ds.setServer(server);
+    ds.setPort(parseInt(port));
+    ds.setDatabase(database);
+}
+else {
+    ds.setUrl(url);
+}
+
+if (driver != null && driver != "")
+    ds.setDriver(driver);
+if (xaclass != null && xaclass != "")
+    ds.setXaDataSourceClass(xaclass);
+if (dsclass != null && dsclass != "")
+    ds.setDataSourceClass(dsclass);
+if (desc != null && desc != "")
+    ds.setDescription(desc);
+
+var VirtualServerLib = com.vitria.m3oui.virtualserver.VirtualServerLib;
+
+if (dsHasDataSources([JNDI_PREFIX + name])[JNDI_PREFIX + name]) {
+    VirtualServerLib.updateDataSource(ds);
+    return {
+        "action" : "created",
+        "message" : "Data source '" + JNDI_PREFIX + name + "' updated.",
+    };
+}
+else {
+    VirtualServerLib.addDataSource(ds);
+    return {
+        "action" : "updated",
+        "message" : "Data source '" + JNDI_PREFIX + name + "' created.",
+    };
+}
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="b6bd80d9-065e-472f-89f4-b68c83e9ef06" name="MenubarAndToolbar" type="application/json" size="0" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="58bde02d-ae39-4e75-8ceb-67d195d39f4d" name="MenubarOnly" type="application/json" size="881" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="713c3e25-cb22-4b19-8d8a-1192e61a78ee" name="SAMPLE" type="application/json" size="1180" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="e0d14430-508f-46b7-8d74-863ae098943a" name="Sample Queries" type="application/sql" size="1106" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="fb988af1-dd7d-4c7f-8d4c-b2330044f23e" name="SidebarOnly" type="text/plain" size="0" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="55b58f6e-562b-4707-818e-6ffdd05ec9b6" name="ToolbarOnly" type="application/json" size="0" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

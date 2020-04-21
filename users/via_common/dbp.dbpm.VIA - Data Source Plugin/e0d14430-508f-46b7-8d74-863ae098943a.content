@@ -1,0 +1,50 @@
+SELECT * FROM charter_change_mgmt
+
+CREATE TABLE charter_change_acks (
+    id VARCHAR(255) NOT NULL,
+    tsepoch BIGINT(20) NOT NULL,
+    ackuser VARCHAR(255) NOT NULL,
+    ackepoch BIGINT(20) NOT NULL,
+    ackvalue VARCHAR(255) NOT NULL,
+    acknotes VARCHAR(1000)
+);
+
+DROP TABLE charter_change_acks;
+
+INSERT INTO charter_change_acks (id, tsepoch, ackuser, ackepoch, ackvalue, acknotes)
+VALUES ("234-42342-42342", 45352344, "ekwang", 553545644, "accept", "Hello World")
+
+DELETE FROM charter_change_acks
+
+SELECT * FROM charter_change_acks
+
+DROP TABLE charter_anomaly_feedback_1;
+CREATE TABLE charter_anomaly_feedback_1 (
+    appmetric VARCHAR(255) NOT NULL,
+    tsepoch BIGINT(20) NOT NULL,
+    feedback VARCHAR(30) NOT NULL,
+    metric DECIMAL(10,2),
+    zscore DECIMAL(5,2),
+    normalized_zscore DECIMAL(5,2)
+);
+
+DROP TABLE charter_anomaly_feedback_2;
+CREATE TABLE charter_anomaly_feedback_2 (
+    appmetric VARCHAR(255) NOT NULL,
+    tsepoch BIGINT(20) NOT NULL,
+    feedback VARCHAR(30) NOT NULL,
+    metric_value DECIMAL(10,2),
+    metric_baseline DECIMAL(10,2),
+    calls_value DECIMAL(10,2),
+    calls_baseline DECIMAL(10,2)
+);
+
+DROP TABLE charter_anomaly_feedback_3;
+CREATE TABLE charter_anomaly_feedback_3 (
+    service VARCHAR(32) NOT NULL,
+    subservice VARCHAR(32) NOT NULL,
+    appmetric VARCHAR(255) NOT NULL,
+    tsepoch BIGINT(20) NOT NULL,
+    feedback VARCHAR(30) NOT NULL,
+    content VARCHAR(4096)
+);

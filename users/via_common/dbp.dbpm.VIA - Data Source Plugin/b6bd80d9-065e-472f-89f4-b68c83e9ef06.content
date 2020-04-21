@@ -1,0 +1,66 @@
+{
+    "menubar" : [{
+        "label" : "File",
+        "value" : "file",
+        "items" : [{
+            "label" : "New",
+            "value" : "new"
+        }, {
+            "label" : "Open...",
+            "value" : "open"
+        }, {
+            "label" : "Save",
+            "value" : "save"
+        }, {
+            "label" : "Save As...",
+            "value" : "save_as"
+        }, {
+            "label" : "Close",
+            "value" : "close"
+        }]
+    }, {
+		"label" : "Upload",
+		"value" : "upload",
+		"items" : [{
+			"label" : "Filename only",
+			"value" : "upload_filename",
+			"config" : {
+			    "action": "#doUploadFile",
+				"content" : false
+            }
+		}, {
+			"label" : "with Content",
+			"value" : "upload_content",
+			"config" : {
+			    "action": "#doUploadFile",
+				"content" : true
+            }
+		}]
+	}],
+	"toolbar": [{
+		"label": "Option A",
+		"value": "option_a"
+	},
+	{
+		"label": "Option B",
+		"value": "option_b"
+	},
+	{
+		"label": "Option C",
+		"value": "option_c"
+	}, {
+		"label": "Upload Filename Only",
+		"value": "upload_filename",
+		"config": {
+			"action": "#doUploadFile",
+			"content": false
+		}
+	}, {
+		"label": "Upload with Content",
+		"value": "upload_content",
+		"config": {
+			"action": "#doUploadFile",
+			"content": true
+		}
+	}]
+}
