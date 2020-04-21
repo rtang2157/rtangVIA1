@@ -1,0 +1,706 @@
+<DashboardPluginModel description="Description of New Model 0" name="VIA - Image Library" is_init="false">
+  <ModelInfo validated="true">
+    <Properties>
+    </Properties>
+    <Widgets>
+    </Widgets>
+    <Functions>
+      <Function name="captureImage" args="domNode,callback,option" private="false">
+        <CodeText>
+          <![CDATA[var self = this;
+var modelurl = "/app/dbp/user/via_common/dbpm/VIA - Image Library";
+require([getItemURL(modelurl)+"?op=vt:dbp:resource:html2canvas"], function(html2canvas){
+    html2canvas(domNode || document.body).then(function(canvas) {
+        switch(option){
+            case "download":
+                canvas.toBlob(function(blob){
+                    var url = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.download = 'download';
+                    a.href = url;
+                    a.click();
+                    URL.revokeObjectURL(url);
+                    if (callback)
+                        callback();
+                },"image/png");
+                break;
+            case "url":
+                canvas.toBlob(function(blob){
+                    var url = URL.createObjectURL(blob);
+                    callback(url);
+                    //URL.revokeObjectURL(url);
+                },"image/png");
+                break;
+            case "save":
+                require(["dojox/uuid/generateRandomUuid"], function(generateRandomUuid){
+                    var uuid = generateRandomUuid();
+                    var filename = uuid+".png";
+                    var data = canvas.toDataURL("image/png");
+                    self.saveBase64File(data.split(',')[1], filename, function(result) {
+                        callback(filename);
+                    });
+                });
+                break;
+            case "downloadPDF":
+                require([getItemURL(modelurl)+"?op=vt:dbp:resource:jsPDF"], function(jsPDF){
+                    var contentWidth = canvas.width;
+                    var contentHeight = canvas.height;
+                    
+                    var pageHeight = contentWidth / 592.28 * 841.89;
+                    var leftHeight = contentHeight;
+                    var position = 0;
+                    var imgWidth = 595.28;
+                    var imgHeight = 592.28/contentWidth * contentHeight;
+                    var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                    var pdf = new jsPDF('', 'pt', 'a4');
+                    if (leftHeight < pageHeight) {
+                        pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+                    } else {
+                        while(leftHeight > 0) {
+                            pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                            leftHeight -= pageHeight;
+                            position -= 841.89;
+                            if(leftHeight > 0) {
+                              pdf.addPage();
+                            }
+                        }
+                    }
+                    pdf.save('download.pdf'); 
+                });
+                break;
+            case "savePDF":
+                require([getItemURL(modelurl)+"?op=vt:dbp:resource:jsPDF",
+                "dojox/uuid/generateRandomUuid"], function(jsPDF,generateRandomUuid){
+                    var uuid = generateRandomUuid();
+                    var filename = uuid+".pdf";
+                    var contentWidth = canvas.width;
+                    var contentHeight = canvas.height;
+                    var pageHeight = contentWidth / 592.28 * 841.89;
+                    var leftHeight = contentHeight;
+                    var position = 0;
+                    var imgWidth = 595.28;
+                    var imgHeight = 592.28/contentWidth * contentHeight;
+                    var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                    var pdf = new jsPDF('', 'pt', 'a4');
+                    if (leftHeight < pageHeight) {
+                        pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+                    } else {
+                        while(leftHeight > 0) {
+                            pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                            leftHeight -= pageHeight;
+                            position -= 841.89;
+                            if(leftHeight > 0) {
+                              pdf.addPage();
+                            }
+                        }
+                    }
+                    var data = pdf.output("dataurlstring");
+                    self.saveBase64File(data.split(',')[1], filename, function(result) {
+                        callback(filename);
+                    });
+                });
+                break;
+            default :
+                callback(canvas.toDataURL("image/png"));
+        }
+        
+    });
+});]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services>
+      <Service name="_addShutdownHook" args="" private="true">
+        <CodeText>
+          <![CDATA[var Thread = java.lang.Thread;
+
+var MyThread = Java.extend(Thread, { 
+    run: function() {
+        java.lang.System.out.println("captureImageService - Shutdown Hook --- clearDriverCache"); 
+        clearDriverCache();
+    } 
+}); 
+var th = new MyThread(); 
+print("captureImageService - addShutdownHook"); 
+java.lang.Runtime.getRuntime().addShutdownHook(th);]]>
+        </CodeText>
+      </Service>
+      <Service name="_getConfigurations" args="config" private="true">
+        <CodeText>
+          <![CDATA[// Context.getLocalResource can't work here due to 3rd lib conflict
+// default config  
+var defaultConfig = {
+    "useToken":false,
+    "username":"vtbaadmin",
+    "password":"vitria",
+    "timeout":100,
+    "windowSize":"1440,900",
+    "maxCacheSize":5,
+    "maxDriverCacheLoops":30
+};
+
+if (config){
+    config = JSON.parse(config);
+}
+if (config){
+    if (config.token != null && config.useToken){
+        defaultConfig.token = config.token;
+        defaultConfig.useToken = true;
+    }
+    if(config.username)
+        defaultConfig.username = config.username;
+    if(config.password)
+        defaultConfig.password = config.password;
+    if(config.encrypt == true && config.password)
+        defaultConfig.password = this._unencrypt(config.password);
+    
+    if(config.timeout)
+        defaultConfig.timeout = Number(config.timeout);
+    
+    if(config.nestedElementSelector)
+        defaultConfig.nestedElementSelector = config.nestedElementSelector;
+    
+    if(config.pdfOriented)
+        defaultConfig.pdfOriented = config.pdfOriented;
+    
+    
+}
+return defaultConfig;]]>
+        </CodeText>
+      </Service>
+      <Service name="_getDriver" args="config" private="true">
+        <CodeText>
+          <![CDATA[var System = java.lang.System;
+
+var driverCache = com.vitria.dbservice.imageCapture.driverCache;
+var Thread = java.lang.Thread;
+
+
+var maxCacheSize = config.maxCacheSize || 5;
+try{
+   print("-----driverCache.size:"+driverCache.cache.size());
+}catch (e){
+    e.printStackTrace(java.lang.System.out);
+    return null;
+}
+
+function getDriverFromCache(){
+    try{
+        var sz = driverCache.cache.size();
+        for (var i=0; i<sz; i++){
+            var driverj = driverCache.cache.get(i);
+            if (driverj && driverj.used == false){
+                return driverj;
+            }
+        }
+    }catch (e){
+        e.printStackTrace(java.lang.System.out);
+    }
+    return null;
+}
+
+var driverObj = getDriverFromCache();
+
+//print("-----driverCache.cache instance:" +  driverCache.cache.hashCode()); 
+
+if (driverObj == null){
+    var _newDriverFailed = null;
+    
+    Java.synchronized(function(){
+        if (driverCache.cache.size() < maxCacheSize) {
+            print("-----create a new driver");
+            var driver = this._getNewDriver(config);
+            if (driver != null){
+                driverObj = {
+                    driver:driver,
+                    used:true,
+                    id:driverCache.cache.size()
+                }
+                driverCache.cache.add(driverObj);
+            }else{
+                _newDriverFailed = true;
+            }
+        }
+    }, driverCache.class)();
+    /*
+    driverCache.lock.lock();
+    try{
+        print("-----lock.lock");
+        if (driverCache.cache.size() < maxCacheSize) {
+            print("-----create a new driver");
+            var driver = this._getNewDriver(config);
+            if (driver != null){
+                driverObj = {
+                    driver:driver,
+                    used:true,
+                    id:driverCache.cache.size()
+                }
+                driverCache.cache.add(driverObj);
+            }else{
+                _newDriverFailed = true;
+            }
+        }
+    }finally{
+        print("-----lock.unlock");
+        driverCache.lock.unlock();
+    }
+    */
+    
+    if (_newDriverFailed == true)
+        return null;
+    
+    if (driverObj == null){
+        print("-----captureImageService:max cache size, will wait to get free driver");
+        var maxDriverCacheLoops = config.maxDriverCacheLoops || 30;
+        for (var loop = 0; loop < maxDriverCacheLoops; loop++){
+            Thread.sleep(10000);
+            driverObj = getDriverFromCache();
+            if (driverObj != null){
+                break;
+            }
+        }
+        if (driverObj != null){
+            print("-----captureImageService: get driver from cache:" + ((loop+1)*10000));
+        }
+    }
+    
+    if (driverObj == null){
+        print("-----captureImageService:failed to get driver, reason: timeout");
+        return null;
+    }
+}
+
+//print("-----driverObj:"+driverObj);
+driverObj.used = true;
+return driverObj;
+
+
+	]]>
+        </CodeText>
+      </Service>
+      <Service name="_getFileBase64" args="content,name" private="true">
+        <CodeText>
+          <![CDATA[var Base64 = org.apache.commons.codec.binary.Base64; 
+var FileRepresentation = org.restlet.representation.FileRepresentation;
+var MediaType = org.restlet.data.MediaType;
+var System = java.lang.System;
+var vtbahome = System.getenv("VTBA_HOME");
+var File = java.io.File;
+var FileOutputStream = java.io.FileOutputStream;
+var contents = String(content);
+if (contents != null){
+    var dirname =  vtbahome + File.separator + "capturedImage";
+    var filename = vtbahome + File.separator + "capturedImage"+ File.separator + name;
+    var file = new File(dirname);
+    if(!file.exists()) {
+		file.mkdirs();
+	}
+	var file = new File(filename);
+    var out = new FileOutputStream(file);
+    out.write(Base64.decodeBase64(contents.getBytes()));
+    out.close();
+    return new FileRepresentation(file, MediaType.IMAGE_PNG);
+}
+return null;]]>
+        </CodeText>
+      </Service>
+      <Service name="_getNewDriver" args="config" private="true">
+        <CodeText>
+          <![CDATA[var System = java.lang.System;
+
+if (System.getProperty("captureImageService.addShutdownHook") != "true"){
+    System.setProperty("captureImageService.addShutdownHook", "true");
+    this._addShutdownHook();
+}
+
+var ChromeOptions = org.openqa.selenium.chrome.ChromeOptions;
+var ChromeDriver =  org.openqa.selenium.chrome.ChromeDriver;
+
+var vtbahome = System.getenv("VTBA_HOME");
+var File = java.io.File;
+var driverPath = vtbahome + File.separator +"captureImage" + File.separator + "chromium" + File.separator + "chromedriver";
+var browserPath = vtbahome + File.separator +"captureImage" + File.separator + "chromium" + File.separator + "chrome";
+
+var os = System.getProperty("os.name");
+if (os.toLowerCase().startsWith("win")){
+    driverPath += ".exe";
+    browserPath += ".exe"
+}
+
+System.setProperty("webdriver.chrome.driver", driverPath);
+try{
+    var options = new ChromeOptions();
+    options.addArguments("--no-sandbox");
+    options.addArguments("--headless");
+    options.addArguments("--disable-gpu");
+    options.addArguments("--log-level=3");
+    options.addArguments("--proxy-server='direct://'");
+    options.addArguments("--proxy-bypass-list=*");
+    var windowSize = config && config.windowSize;
+    if (windowSize == null)
+        windowSize = "1440,900";
+    options.addArguments("--window-size="+windowSize);
+    options.setBinary(browserPath);
+    var driver = new ChromeDriver(options);	
+    return driver;
+}catch (e){
+    print("captureImageService - new driver failed");
+    e.printStackTrace(java.lang.System.out);
+    try{
+        if(driver){
+            driver.quit()
+        }
+    }catch(e){}
+    return null;
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="_getToken" args="username,password" private="true">
+        <CodeText>
+          <![CDATA[var Encrypt = com.vitria.fc.data.Encrypt;
+var UserManagerFactory = com.vitria.usermanager.UserManagerFactory;
+
+var SUMAppLib = com.vitria.m3oui.sum.SUMAppLib;
+var SUMLib = com.vitria.m3oui.sum.SUMLib;
+
+var passwordE = Encrypt.unencrypt(password);
+var context = SUMAppLib.loginSilence(username, passwordE); // context is used for logout.
+UserManagerFactory.getAccessTokenManaher();
+var token = SUMLib.getToken();
+return token;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_imagetoPDF" args="imgname,pdfname,config" private="true">
+        <CodeText>
+          <![CDATA[var PDDocument = org.apache.pdfbox.pdmodel.PDDocument;
+var PDPage = org.apache.pdfbox.pdmodel.PDPage;
+var PDPageContentStream = org.apache.pdfbox.pdmodel.PDPageContentStream;
+var PDImageXObject = org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+var Matrix = org.apache.pdfbox.util.Matrix;
+var System = java.lang.System;
+var vtbahome = System.getenv("VTBA_HOME");
+var File = java.io.File;
+
+var imgpath = vtbahome + File.separator + "capturedImage"+ File.separator + imgname;
+var pdfpath = vtbahome + File.separator + "capturedImage"+ File.separator + pdfname;
+
+var pdfOriented = config && config.pdfOriented; // landscape or portrait
+if (pdfOriented == null)
+    pdfOriented = "landscape"; 
+try {
+    var doc = new PDDocument();
+    var page = new PDPage();
+    
+    if (pdfOriented == "landscape"){
+        page.setRotation(90);
+    }
+        
+    doc.addPage(page);
+    var pageSize = page.getMediaBox();
+	var pageWidth = pageSize.getWidth();
+	var pageHeight = pageSize.getHeight();
+	
+	if (pdfOriented == "landscape"){
+        pageWidth = pageSize.getHeight();
+        pageHeight = pageSize.getWidth();
+	}
+    
+    var pdImage = PDImageXObject.createFromFile(imgpath, doc);
+    
+    var iw = pdImage.getWidth();
+    var ih = pdImage.getHeight();
+    
+    var scalew =  ((pageWidth - 40) / iw);
+    var scaleh =  ((pageHeight - 40) / ih);
+    var scale = Math.min(scalew, scaleh);
+    
+    if (scale > 1)
+    	scale = 1;	
+    var contents = new PDPageContentStream(doc, page);
+    if (pdfOriented == "landscape"){
+        contents.transform(new Matrix(0, 1, -1, 0, pageHeight, 0));
+    }
+    contents.drawImage(pdImage, 20, (pageHeight -20 - ih * scale) , iw * scale, ih * scale);
+    contents.close();
+    doc.save(pdfpath);
+    doc.close();
+}catch (e){
+    print("captureImageService - imagetoPDF failed");
+    e.printStackTrace(java.lang.System.out);
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="_releaseDriver" args="driverObj" private="true">
+        <CodeText>
+          <![CDATA[if (driverObj) {
+    driverObj.used = false;
+    try{
+    if (driverObj.driver)
+        driverObj.driver.get("about:blank");
+    }catch (e){
+        e.printStackTrace(java.lang.System.out);
+    }
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="_unencrypt" args="password" private="false">
+        <CodeText>
+          <![CDATA[var Encrypt = com.vitria.fc.data.Encrypt;
+var passwordE = Encrypt.unencrypt(password);
+return passwordE]]>
+        </CodeText>
+      </Service>
+      <Service name="captureImageService" args="url,selector,option,config" private="false">
+        <CodeText>
+          <![CDATA[var By = org.openqa.selenium.By;
+var OutputType = org.openqa.selenium.OutputType;
+var Thread = java.lang.Thread;
+var Cookie = org.openqa.selenium.Cookie;
+
+var ExpectedConditions = org.openqa.selenium.support.ui.ExpectedConditions;
+var WebDriverWait = org.openqa.selenium.support.ui.WebDriverWait;
+
+var _timeStart = new Date().getTime();
+
+print("captureImageService - url:"+java.net.URLDecoder.decode(url, "UTF-8")+" selector:"+selector+" option:"+option);
+var config = this._getConfigurations(config);
+print("captureImageService - config:"+JSON.stringify(config))
+if (url == null || url == ""){
+    print("captureImageService - invalide url")
+    return null;
+}
+
+var driverObj = this._getDriver(config);
+if (driverObj == null || driverObj.driver == null){
+    print("captureImageService - get web driver failed");
+    print("captureImageService - returned in "+ ((new Date().getTime() - _timeStart)/1000) + "s");
+    return null; 
+}
+var driverid = driverObj.id || 0;
+var tmpFileName = "tmp"+driverid;
+var base64 = null;
+try {
+    var driver = driverObj.driver;
+    try{
+        driver.navigate().to(url);
+    }catch (e){
+        print("captureImageService - get url failed");
+        print("captureImageService - returned in "+ ((new Date().getTime() - _timeStart)/1000) + "s");
+        e.printStackTrace(java.lang.System.out);
+        this._releaseDriver(driverObj);
+        return null;
+    }
+    
+    Thread.sleep(500);
+    var loginPanelEle = null;
+    try {
+		loginPanelEle = driver.findElement(By.className("loginPanelBorder"));
+	} catch(e){
+	}
+    if (loginPanelEle != null){
+		//need log in
+		if (config.token != null && config.useToken){
+		    // use token
+		    try {
+    		    driver.manage().addCookie(new Cookie("vttoken", config.token)); 
+                Thread.sleep(100);
+                driver.navigate().refresh();
+		    }catch(e){
+                print("captureImageService - set token failed");
+                e.printStackTrace(java.lang.System.out);
+    	    }
+		} else {
+		    // use username and password
+    		try{
+    			loginPanelEle.findElement(By.id("sUserName1")).sendKeys(config.username);
+    			loginPanelEle.findElement(By.id("sPwd1")).sendKeys(config.password);
+    			loginPanelEle.findElement(By.id("login1")).click();
+    		}catch(e){
+                print("captureImageService - log in failed");
+                e.printStackTrace(java.lang.System.out);
+    	    }
+		}
+        Thread.sleep(2000);
+	}
+	
+	var targetEle = null;
+    
+    if (selector != null && selector != ""){
+        // dom selector
+        try{
+            var wait = new WebDriverWait(driver, config.timeout); 
+		    wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(selector)));
+		    targetEle = driver.findElement(By.cssSelector(selector));
+        }catch(e){
+            print("captureImageService - get dom element failed:"+selector);
+            e.printStackTrace(java.lang.System.out);
+	    }
+    }
+    if (targetEle == null)
+        targetEle = driver.findElement(By.tagName("body"));
+        
+    if(config.nestedElementSelector){
+        try{
+            var nestedWait = new WebDriverWait(driver, config.timeout);
+		    nestedWait.until(ExpectedConditions.presenceOfNestedElementLocatedBy(targetEle, By.cssSelector(config.nestedElementSelector)));
+        }catch(e){
+            print("captureImageService - get nestedElement failed:"+config.nestedElementSelector);
+            e.printStackTrace(java.lang.System.out);
+	    }
+	    Thread.sleep(1000);
+    }else{
+        Thread.sleep(1000 * config.timeout);
+    }
+    
+    base64 = targetEle.getScreenshotAs(OutputType.BASE64);
+} catch (e){
+    e.printStackTrace(java.lang.System.out);
+}
+
+this._releaseDriver(driverObj);
+if (base64){
+    switch(option){
+        case "file":
+            print("captureImageService - returned in "+ ((new Date().getTime() - _timeStart)/1000) + "s");
+            return this._getFileBase64(base64, tmpFileName+".png");
+            break;
+        case "save":
+            var UUID =  java.util.UUID;
+            var uuid = UUID.randomUUID().toString();
+            var filename = uuid+".png";
+            this.saveBase64File(base64, filename)
+            print("captureImageService - returned in "+ ((new Date().getTime() - _timeStart)/1000) + "s");
+            return filename;
+            break;
+        case "filePDF":
+            this.saveBase64File(base64, tmpFileName+".png");
+            this._imagetoPDF(tmpFileName+".png", tmpFileName+".pdf", config);
+            print("captureImageService - returned in "+ ((new Date().getTime() - _timeStart)/1000) + "s");
+            return this.getImage(tmpFileName+".pdf");
+            break;
+        case "savePDF":
+            this.saveBase64File(base64, tmpFileName+".png");
+            var UUID =  java.util.UUID;
+            var uuid = UUID.randomUUID().toString();
+            var filename = uuid+".pdf";
+            this._imagetoPDF(tmpFileName+".png", filename, config);
+            print("captureImageService - returned in "+ ((new Date().getTime() - _timeStart)/1000) + "s");
+            return filename;
+            break;
+        default:
+            print("captureImageService - returned in "+ ((new Date().getTime() - _timeStart)/1000) + "s");
+            return "data:image/png;base64,"+base64;
+    }
+}
+return null;
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="clearDriverCache" args="" private="false">
+        <CodeText>
+          <![CDATA[var System = java.lang.System;
+var driverCache = com.vitria.dbservice.imageCapture.driverCache;
+
+var size = driverCache.cache.size();
+for (var i=0; i<size; i++){
+    var driverj = driverCache.cache.get(i);
+    if (driverj && driverj.driver){
+        try{
+            driverj.driver.quit();
+        }catch (e){
+            e.printStackTrace(java.lang.System.out);
+        }
+    }
+}
+driverCache.cache.clear();
+
+
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getImage" args="name" private="false">
+        <CodeText>
+          <![CDATA[var FileRepresentation = org.restlet.representation.FileRepresentation;
+var File = java.io.File;
+var MediaType = org.restlet.data.MediaType;
+var System = java.lang.System;
+var vtbahome = System.getenv("VTBA_HOME");
+
+var filename = vtbahome + File.separator + "capturedImage"+ File.separator + name;
+var file = new File(filename);
+if(name.indexOf(".pdf"))
+    return new FileRepresentation(file, MediaType.APPLICATION_PDF);
+else
+    return new FileRepresentation(file, MediaType.IMAGE_PNG);]]>
+        </CodeText>
+      </Service>
+      <Service name="removeFile" args="range" private="false">
+        <CodeText>
+          <![CDATA[var System = java.lang.System;
+var vtbahome = System.getenv("VTBA_HOME");
+var File = java.io.File;
+var dirname =  vtbahome + File.separator + "capturedImage";
+var file = new File(dirname);
+if (!file.exists()) {
+    return "";
+}
+if (range == null)
+    range = 24*60*60*1000;
+var now = new Date().getTime();
+var tempList = file.list();
+var temp = null;
+for (var i = 0; i < tempList.length; i++) {
+    temp = new File(dirname + File.separator + tempList[i]);
+    if (temp.isFile()) {
+        if(now - temp.lastModified() > range){
+            temp.delete();
+            print("delete "+dirname + File.separator + tempList[i])
+        }
+    }
+}
+return "";]]>
+        </CodeText>
+      </Service>
+      <Service name="saveBase64File" args="content,name" private="false">
+        <CodeText>
+          <![CDATA[var Base64 = org.apache.commons.codec.binary.Base64;  
+var System = java.lang.System;
+var vtbahome = System.getenv("VTBA_HOME");
+var File = java.io.File;
+var FileOutputStream = java.io.FileOutputStream;
+var contents = String(content);
+if (contents != null){
+    var dirname =  vtbahome + File.separator + "capturedImage";
+    var filename = vtbahome + File.separator + "capturedImage"+ File.separator + name;
+    var file = new File(dirname);
+    if(!file.exists()) {
+		file.mkdirs();
+	}
+	var file = new File(filename);
+    var out = new FileOutputStream(file);
+    out.write(Base64.decodeBase64(contents.getBytes()));
+    out.close();
+}
+return name;]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="01ae5650-bb31-49f3-84d6-552eb2795689" name="html2canvas" type="text/plain" size="366346" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="bd557bb7-0cdb-4258-8b9d-44143a15231a" name="jsPDF" type="text/plain" size="758538" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+    </Plugins>
+    <ExtLib path="${VTBA_HOME}/captureImage/selenium"></ExtLib>
+  </ModelInfo>
+</DashboardPluginModel>
