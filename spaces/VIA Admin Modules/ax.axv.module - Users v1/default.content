@@ -1,0 +1,573 @@
+<AnalyticsExplorerView description="" name="module - Users v1" is_init="false">
+  <ModelInfo validated="false" nextPageId="4">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <BackgroundColor color="#000000"/>
+      <TileOpacity opacity="0"/>
+      <NoTileSpacing value="true"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="false"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[.app .smallTile .tileContainer.actionbar {
+    margin-top: -7px;
+    margin-left: -3px;
+    padding: 0px;
+    height: 58px !important;
+}
+
+.field-type IMG {
+    width: 19px !important;
+    height: 19px !important;
+    margin-top: 6px; 
+    filter: brightness(.5);
+}
+
+.userLayout .field-domainAdmin IMG,
+.userLayout .field-securityAdmin IMG {
+    width: 19px !important;
+    height: 19px !important;
+    margin-top: 6px;
+}
+
+
+
+
+
+]]></CustomCSSSetting>
+    <Page id="2" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="compTemplate">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<style>
+    .userLayout .infoPanel{
+        left : 0px;
+        width : 100%;
+        height : 100%;
+    }
+    
+    .tabPanelHeader{
+        height : 30px;
+        margin-bottom : 3px;
+    }
+</style>
+<table class="vertical-flex headerContentTable userLayout" style="width: 100%; height: 100%; padding-bottom: 3px; background-color: white;" border="0">
+    <tbody class="vertical-flex">
+    
+        <tr class="horizontal-flex headerTr" style="vertical-align: middle;">
+        
+            <td class="horizontal-flex header headerTd" style="height: 50px;">
+                
+                <div class="headerTitle" style="border: currentColor; border-image: none; height: 50px;">
+                        
+                    <div style="margin: 15px 10px 10px; display: inline-flex;">
+                    
+                        <i class="fa fa-users"> </i> <span class="userPageTitle">VIA User Management</span>
+    
+                    </div>
+                    
+                </div>
+            
+                <div class="header" style="border: currentColor; border-image: none; height: 50px; background-color: transparent;" data-vitria-type="tile" data-vitria-tile-name="Tile1"></div>
+    
+            </td>
+            
+        </tr>
+        
+        <tr class="contentTr horizontal-flex">
+        
+            <td style="left: 0px; top: 0px; width: 100%; height: 100%;">
+            
+                <div class="compContent" style="width: 100%; height: 100%;">
+                
+                    <div class="listPanel" style="left: 0px; width: 0px; height: 100%; position: absolute;" data-vitria-type="tile" data-vitria-tile-name="ListTile"></div>
+                            
+                    <div class="infoPanel" style="visibility: visible; position: absolute;">
+                            
+                       <div style="width: 100%; height: 100%; display: block;">
+                        <div class="tabPanelHeader">
+                            <input name="user_tabs" id="tab_users" type="radio" checked="true">
+                            <label for="tab_users">
+                                <i class="fa fa-users"> </i> <span class="viaUsersTab">VIA Users</span></label>
+                        </div>
+    					<div class="tabPanel" id="cont_users" style="height: calc( 100% - 33px);" data-vitria-type="tile" data-vitria-tile-name="Tile1">
+    						</div>
+                        </div>
+                       
+                    </div>
+    
+                </div>
+                
+            </td>
+            
+        </tr>
+        
+    </tbody>
+    
+</table> 
+]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[
+/*
+.userComp  label:before {
+  font-family: fontawesome;
+  font-weight: normal;
+  margin-right: 10px;
+}
+
+.userComp [for*='1']:before { font-family: FontAwesome; content: '\f1cb'; }
+.userComp label[for*='2']:before { font-family: FontAwesome; content: '\f17d'; }
+.userComp label[for*='3']:before { font-family: FontAwesome; content: '\f16b'; }
+.userComp label[for*='4']:before { font-family: FontAwesome; content: '\f1a9'; }
+*/
+#tab_users:checked ~ #cont_users
+ {
+
+  visibility: visible;
+}
+
+
+]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="NaN" numCol="NaN" count="NaN" templateType="7" screenHeight="undefined" renderType="undefined" positions="[]" unitSize="undefined" viewRows="NaN" viewCols="NaN"/>
+      <frame_tile name="toolbar" title="toolbar" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="actionbar" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:29" name="axflow:localstore:node:29" label="Local Store 2" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="value" label="Value" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="disable" label="Disable" type="boolean" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"0.1"}]]></TileThemeSetting>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/space/VIA Admin Modules/dbpm/Admin - Plugin/Action Bar&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="Main Tile1" title="Configured Users" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="false" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" name="#NONE" label="(not configured)" untyped="true"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+      </frame_tile>
+      <frame_tile name="Main Tile" title="Configured Users" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:25" name="axflow:localstore:node:25" label="Local Store 1" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="name" label="Name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="type" label="Type" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="fullname" label="Fullname" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="emails" label="Emails" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="phones" label="Phones" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="enabled" label="Enabled" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="locked" label="Locked" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="runtime_server_list" label="Runtime Servers" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="feed_server_list" label="Feed Servers" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="datasource_list" label="Data Sources" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="domainAdmin" label="Domain Admin" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="securityAdmin" label="Security Admin" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="defaultServerList" label="Default Servers" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="vs_list" label="Virtual Server" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"fontSize":"20px","display":"block","color":"#2d3538"}]]></LabelStyle>
+        <DataViewer name="DataGrid" label="Data Grid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="0"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#72b9dc"/>
+          <Property name="hoverColor" value="#72b9dc"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="columnDefaultSetting" value="{&quot;columnFont&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;14&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;color&quot;:&quot;#2d3538&quot;}}"/>
+          <Property name="columnSetting" value="[{&quot;name&quot;:&quot;enabled&quot;,&quot;label&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:1,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:20,&quot;backgroundColor&quot;:&quot;#eaeaeb&quot;},&quot;shapeOnly&quot;:false,&quot;renderer&quot;:{&quot;type&quot;:&quot;icon&quot;,&quot;checkDisplayField&quot;:&quot;false&quot;,&quot;labelFieldSelect&quot;:&quot;enabled&quot;,&quot;iconType&quot;:&quot;signal&quot;,&quot;cases&quot;:[{&quot;shape&quot;:&quot;circle&quot;,&quot;value&quot;:&quot;false&quot;,&quot;color&quot;:&quot;#cd4343&quot;},{&quot;shape&quot;:&quot;circle&quot;,&quot;value&quot;:&quot;true&quot;,&quot;color&quot;:&quot;#68ad80&quot;}]}},{&quot;name&quot;:&quot;locked&quot;,&quot;label&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:14,&quot;opened&quot;:true,&quot;renderer&quot;:{&quot;type&quot;:&quot;icon&quot;,&quot;checkDisplayField&quot;:&quot;false&quot;,&quot;labelFieldSelect&quot;:&quot;locked&quot;,&quot;iconType&quot;:&quot;signal&quot;,&quot;cases&quot;:[{&quot;shape&quot;:&quot;image&quot;,&quot;value&quot;:&quot;true&quot;,&quot;color&quot;:{&quot;imgdata&quot;:&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABMAAAATCAYAAAByUDbMAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAAVlpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KTMInWQAAAoZJREFUOBGlVE1rU0EUvTPzUmvdtNiICxGRCpYQKJTiqjYrpQVpFbL3D7hQsevsqzvxTwSLVppgNlYLLoRYaEkRKdKdYLQgoZXkzcz13HmJfS0Fq72Bmcydc8+c+8FTdNhKJU2lks9N3ZlQ7B/ieoKYzpOmr8rTB6f8wua7pTUqFg2Vyy4drtKHHiA/dfsBKf1Ea01KaXAxKfyYPXmPeOfvbay+eFoEYTlFaHpkhUIh2q5UXH5y7q7O9D1jBCHQwyrYa+Tsjmc/Iq/rqG9m+OKVzyuVxfUQt73thaenTOO/HyvMDVpPX5TWQ+x9i5WfbbxdeiNAsdzk7E0oXFTGDOCxb7p/7/J6rbaLK+FhISGwh90y3dImGlIqvHFfiEamp0+Nj49nZG+svnzNSs3LPXDnuH1mphsfMgwk4gjm1VWpk3euxbqzLL6tarVTr9fjreq1OMHYV+zsL6iX42jwdZcofUCh+0UxE7V7/lyumMlmm76ZbehGmTomykgd20j3NHvB71sgazaziUJNu2gf6BQP0953gTUa5c4+nGinbX4MZry0V6wlSy9eXKF4+euzeSAeoxY3vLMt6HvkmX+iOhFqxDB5I8Z6Vnm1oKNoAOVYxrjMo5abwhP4c4W5MUNmDemhp85hN0hHTkeas6F8Tmtj8IjQjG6sPP8U0tSOLlEELdZ2oLNPGBBgj2RKnBJnMH8x+DLM9gLOCRmTj4NERX+GGJcHmpNwHFoZeEnH6SA1KTybwHUIeuwjG1QSdnDOjh2eAqZknJwsxZuQofUp33//PbGyMBrdvgcyVtZgZkTRvynENGHISXenIJDFmt/buL2BD6GMQ/g2/TVXzBPwxsWdj9BRF/xvm9EU5hXIEhIAAAAASUVORK5CYII=&quot;,&quot;fname&quot;:&quot;font-awesome_4-7-0_lock_256_0_2c3e50_none.png&quot;,&quot;uuid&quot;:&quot;4c520353-dfdc-485d-879f-34e4e185eab2&quot;,&quot;width&quot;:19,&quot;height&quot;:19}},{&quot;shape&quot;:&quot;circle&quot;,&quot;value&quot;:&quot;false&quot;,&quot;color&quot;:&quot;#26b99a&quot;}]},&quot;shapeOnly&quot;:false,&quot;style&quot;:{&quot;width&quot;:25,&quot;backgroundColor&quot;:&quot;#eaeaeb&quot;}},{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:2,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:25,&quot;backgroundColor&quot;:&quot;#eaeaeb&quot;},&quot;renderer&quot;:{&quot;type&quot;:&quot;icon&quot;,&quot;checkDisplayField&quot;:&quot;false&quot;,&quot;labelFieldSelect&quot;:&quot;type&quot;,&quot;iconType&quot;:&quot;signal&quot;,&quot;cases&quot;:[{&quot;shape&quot;:&quot;image&quot;,&quot;value&quot;:&quot;(unknown)&quot;,&quot;color&quot;:{&quot;imgdata&quot;:&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAACNdJREFUeNqEVwtMVOkV/ucBw2t4+HYUBdFBRY2C77XNGKmPdtdmg2+xgqboFhAjPrqaFohBUqMuEEAkqU920XR3taKp1lWxxkLWjl0TYtzxUfAxPlARBhlgXv2+671kHAVvcjMzd/7/P+d85zvfOVeVnZ0tervcbrfYt2+fBl918h1YWlo6qb29PUKlUnWvCwwMbE5PT/8vvtpxd+Du3Lx5s1t85FL15sCePXtoOKimpiby4sWLn798+TIRhk1arVao1Wrh7YDH45GcDQgIqOnbt+8PeXl5h/C4lQ7BEVePDmzatOm9h3v37lXJ0Ybj/9xXr16tgFH94MGDxfDhw0VERITw9/cXGo1GWu9yuYTT6RRtbW3i4cOHwmq1CofDYevXr195fn7+XixpISII1vNRB2BczagBs+nGjRvcbJwwYYKgcb1ebwPUNYjyup+fXwOces09MB7e2dkZ1dHRMQWfJrvdrn/x4oWor6+nc5bx48dnr1+//jKWtvs68Y4DsvGQnTt3rr57927+wIED9XFxcaJPnz5WwFo+c+bMg/j/De4uBk6KyFu5T+JJQ0OD4dGjR0lAbTMdsVgs4unTp7aEhIRVa9as+cHXCc306dOlLyAaYQ+G8ZQ7d+4Ux8bG6saOHSsAYzWcSEEU/8D/zdu3b7efO3fOMXfuXB6ixe0nG6dD9vDw8JfDhg0jQt/ZbLbIsLCwWKRLBzSWPXv27MdJkyY9mDdvnvP8+fOSXS3JI1+6kpISE4znjxkzRsr1oEGDcmbPnl1KMu3YscOBfKp37doVJBNz4PXr1+OR709IRvCiftasWZew/hGjHDFixM+4U2EoHWnII2nNZvOxkJCQ3yxZsuRH2O2UUpCVlSUKCwsZQb/U1NR/DRgwwMjIaRyeFtP41q1b3SQZUAretm1b5vPnz1NxqJEkVCqCFUAyIl0HUD1/IlpyikJPnz69oaWlJe/BgwcCKFiKi4t/gecvNm7c6FbLCASiVLJxkBFeC51OVw3jUuTIlxvEkg7nOpRiAfhgJDfi4+MFIBUTJ04UyLGIiYkRyPs6HPxXrNWzOnnGwoULS1EV1QiK1WMsKChIw/MA2lYXFRWRQKFg7fpRo0bRuBUHf6kYx0apxmVHPVhjYVXQWHR0tKDDBoNBINdETXoGZD47ePDgJ+THhg0biELr1KlTd6BKbEOHDhVA8As8C6NtGtfl5uamBgUF6UNDQwVyVG40GhsBtYOwK8ZlB5jbr1COFlTIn/H9l/Pnzx8Gwv4KKbCQC9gvQETR1NT0Kdb78xmccIwbN64RjlUhQKJg2L179xraJosDmpubEwEr82hD/r8nm+GtArv31bl48eIj+Kxi+fM38zx69OiW2traKrA+B+yX0EDaYuXqkPhB52fMmFFy4cKFNPBEQFET8ayMDui6uroSgoODBTbXwAErpZPGvSpEuqD1PMkOrvCW/gehJA24f/++HodK1UNy4jyrzAFpXUZGhhNVZkUJ1wABE1QzQULgxIkTMdiglxn9M0UG14ei776YmgMHDkjoUbggYL+GcP2e+ZVKC7BDMVmOTkYvIyAhCOP/Aa9MCEBfXV0dowUhopkXGkRu699Ku8t703sXjKvheOTly5e3vH79+rcwaGDeUcICXGLEtilTphxmMD5nOWkDSimhBLWM1tJb/iDbkTfX25R9tIsS8ulv3rz5gkbJfhKYN/qEDb9XgnQN0Binz1ksaRf5RbLStlbJkRfTJY998+/bxBCJhsYh1RLpYNwKcp0ZOXJkIaqogTMB9cM3GJ7rjYqEAAnFvOMhWatWentvF9dwL29yAo7koiS/xV+2zMxMp3yebyA8W8P/5HnCowZc/xNvmceuNU7pD73dtA8yuVhOREDOZxuet61bt84JNZScUhzw2qeFHM9UfiNNP2mTkpLu1dXV2ThwQGYnszQAUdtHUuCC+NQ1NjaWQj/8UH4OVEAdnyuGPzTa8ezW1lYjuQIErJDxJnKgE8QxQwNMjx8/Nl27ds0AGW1JSUlx9mQdTct96NAhltmXcjt2MOdpaWnunvhz5MgR7ZUrVwxoSiaoKMvUTNsUETvS8J1EbUB56tSpDLbb3lIA45KE79+/Py4nJ2d+eXl5HDWhoqJC7Qu7F5+CULoZVEoEzPZ9XnGgCwr3LWC3Mp9ol8uvXr0aBY/9euGAbsuWLb87e/Zs7c2bN7+GutVisspkt/zQ+qNHj/pBM6KA8HKWLAK1AkUG3aVetWqV1K369+9fBlgoofrDhw8XcSDFRk0PDgQ+efIki1BydhgyZIhAbv/IKBWJ9jLONPcBSkUoXT2DxL4y2ly7dm33PNABra7AdzMPg1CY0Iq3sWUeO3ZM8wEHVCBSCHWAkFKCEZn+rQqrutdhL41HrF69eh/PhEaw3ZvBrwrapPhJDqxcuZIotEyePHkjFtggJByts5GaAjzvW1lZ6eedW+YO88Df6SxnATqCJvQN+aTknHu4F8YLOdZzgIFg2TBLptIWnHBTkFTLli2TWFpVVcWhNPDMmTOJmAsrwVb97du32aBqAFUWZj2qWzvWO48fP07BCgOp0qAHUTjo1aJFi5T5XyLcpUuXosrKyoo4ptM4HLWhbSfDgQvIv10RKtXSpUu7SwUH04kgkGsOtL4SLVN/69YtAc3nS0YV1pbMmTPHqswB8lSslduuNCXDsAHRp0PUloPtek5PQIioJicmJl5kEEDco3TbdxzwciIQNRt/7969QvZtVIYAKpJa8sUERLVERkb+2yWfApQ0VDgMNglQwQQOqsw3xnMOqeZp06alQrjuMu8rVqzweAvVew54OcEchp08eTINLfcPgNIApRQoJZaq1FC8Zwayn1VBQpLpHEgQ+V8WLFhAbrQi510K7O90NczoPeotcqyWh45QcCMJkjuP0xPYa1AcIOkoYLzBBytuM6L+G+D+JxsTo05OTnYr8+V7bRUzXu+vzygr2RF/5RUdr1v90QcmquTXYxzsiYqK+gkTc5PMD76eO1hdipM99Zb/CzAA1+piiv6CZeoAAAAASUVORK5CYII=&quot;,&quot;fname&quot;:&quot;245-QuestionCircle.png&quot;,&quot;uuid&quot;:&quot;f45544bc-d8c6-41af-89eb-617388504077&quot;,&quot;width&quot;:32,&quot;height&quot;:32}},{&quot;shape&quot;:&quot;image&quot;,&quot;value&quot;:&quot;Application&quot;,&quot;color&quot;:{&quot;imgdata&quot;:&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAwVJREFUeNrMVz1rWlEYPupVo+YaSxQUiWQSMnQIki0SNzsWBwdp/Qd2DmRosmXp1KlbEnfJmA7ZOrVooREHSUZFEMRvEz/7PhdvOLH33gQ80hw4XO7X8z7vxznneU2z2YzNh5mm8/z8/G2pVHo/nU49TOCQJKm5s7NzmU6nb+i2T3OK56Y5ARNN19HR0adKpXJotVpl+oGZzWZhBGBnMpl0AoHA6fHx8Vd61MVjlYA1m83uXV9fX/n9fjkUCjG73S6UAEWU1Wo1Vq1W2cHBwX4ymfxJj0fS/L319vb2o2p8fX2dra2tIWzMYrEsZZi8ZuPxmA2HQ7a1taXgEokP9Oo3T8DicrnMNJnNZlOM0jXv8Xjyy0YBxpvNZoQIRBCFjY0Ntd4UzyQ+RyaTSbk+PDzA+3wsFvtMr3pLRt91dnZ20u/3I0grSMDOY3EuFgrmaDRi7XabzY13ls1/vV5XVwLjVh37JwI8CTAVNVAHPPaLCIgcRtjSYvjhOa6i9wA9bLPWh6IjYIQt8RsFz5KvVBGbkB62ZgrUn1aRgkVszWW4iqGH/SQF6lSKQ/A5oIetS0BkCoywX08KeKb85iE6CovYmstQNAEjbElvoxBJwAj7CYFVFaER9ush8Co2ov9ahDxLCEioIsgpAfZdvV5PMQ6xa7gMVabQhCTJIplM5gRklqkHnHzAcrvdmmpLcxlCPJIqjpCWi0DVaqUD+zkUNMZzJGVZZlDcIKM6uUhghpeqKgawz+djXq9XExhgm5ubZQLu4HvyUG40GmFSvrok1ANIT5BMHQ5HU6tItE7FbrfLtre3v6RSqR+4v7i42L+7u/v2km4KzpE6hqEJ3xtKuVxur1AofCcQGSE1WgWQ2YPBoIxeDyki4jI5EA4Gg7qdFKLrdDpx7ezu7r6Lx+O/+M5okkgkblqt1ikV4CF9JGMV6JGg8CPv4fv7e0VyUzOrtFzwTisCMI6egGaH0ndKxv+gaeIj8NieF4vFULlcTtNPb57ThYsEn/m+ScQvo9Hok/b8rwADAPQIsF5fL984AAAAAElFTkSuQmCC&quot;,&quot;fname&quot;:&quot;114-TouchPad.png&quot;,&quot;uuid&quot;:&quot;ade14f92-b8e7-470d-8355-b242b0cd984b&quot;,&quot;width&quot;:32,&quot;height&quot;:32}},{&quot;shape&quot;:&quot;image&quot;,&quot;value&quot;:&quot;Workbench&quot;,&quot;color&quot;:{&quot;imgdata&quot;:&quot;data:image/png;base64,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&quot;,&quot;fname&quot;:&quot;068-Tools.png&quot;,&quot;uuid&quot;:&quot;51a8b2c0-e57f-4bb1-816f-38e4da5d5cce&quot;,&quot;width&quot;:32,&quot;height&quot;:32}}]},&quot;shapeOnly&quot;:false},{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:3,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:150,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;14&quot;,&quot;color&quot;:&quot;#2d3538&quot;,&quot;textAlign&quot;:&quot;left&quot;,&quot;backgroundColor&quot;:&quot;#eaeaeb&quot;}},{&quot;name&quot;:&quot;domainAdmin&quot;,&quot;label&quot;:&quot;Dom&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:4,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:50,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;12&quot;,&quot;color&quot;:&quot;#000000&quot;,&quot;textAlign&quot;:&quot;center&quot;},&quot;renderer&quot;:{&quot;type&quot;:&quot;icon&quot;,&quot;checkDisplayField&quot;:&quot;false&quot;,&quot;labelFieldSelect&quot;:&quot;domainAdmin&quot;,&quot;iconType&quot;:&quot;signal&quot;,&quot;cases&quot;:[{&quot;shape&quot;:&quot;image&quot;,&quot;value&quot;:&quot;(unknown)&quot;,&quot;color&quot;:{&quot;imgdata&quot;:&quot;data:image/png;base64,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&quot;,&quot;fname&quot;:&quot;186-CheckCircleAlt.png&quot;,&quot;uuid&quot;:&quot;34425d0b-9dd2-44af-8b33-4bcbdad18336&quot;,&quot;width&quot;:32,&quot;height&quot;:32}},{&quot;shape&quot;:&quot;image&quot;,&quot;value&quot;:&quot;true&quot;,&quot;color&quot;:{&quot;imgdata&quot;:&quot;data:image/png;base64,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&quot;,&quot;fname&quot;:&quot;186-CheckCircleAlt.png&quot;,&quot;uuid&quot;:&quot;788c11cd-deaf-4af1-8297-793a73786958&quot;,&quot;width&quot;:32,&quot;height&quot;:32}}]},&quot;shapeOnly&quot;:false},{&quot;name&quot;:&quot;securityAdmin&quot;,&quot;label&quot;:&quot;Sec&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:5,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:50,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;fontWeight&quot;:&quot;normal&quot;,&quot;fontSize&quot;:&quot;12&quot;,&quot;color&quot;:&quot;#000000&quot;,&quot;textAlign&quot;:&quot;center&quot;},&quot;renderer&quot;:{&quot;type&quot;:&quot;icon&quot;,&quot;checkDisplayField&quot;:&quot;false&quot;,&quot;labelFieldSelect&quot;:&quot;securityAdmin&quot;,&quot;iconType&quot;:&quot;signal&quot;,&quot;cases&quot;:[{&quot;shape&quot;:&quot;image&quot;,&quot;value&quot;:&quot;(unknown)&quot;,&quot;color&quot;:{&quot;imgdata&quot;:&quot;data:image/png;base64,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&quot;,&quot;fname&quot;:&quot;186-CheckCircleAlt.png&quot;,&quot;uuid&quot;:&quot;b67738f0-745d-49a8-8671-24f7c2085e9f&quot;,&quot;width&quot;:32,&quot;height&quot;:32}},{&quot;shape&quot;:&quot;image&quot;,&quot;value&quot;:&quot;true&quot;,&quot;color&quot;:{&quot;imgdata&quot;:&quot;data:image/png;base64,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&quot;,&quot;fname&quot;:&quot;186-CheckCircleAlt.png&quot;,&quot;uuid&quot;:&quot;1e123617-1a68-4aa0-8d6b-773a00b830f9&quot;,&quot;width&quot;:32,&quot;height&quot;:32}}]},&quot;shapeOnly&quot;:false},{&quot;name&quot;:&quot;fullname&quot;,&quot;label&quot;:&quot;Fullname&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:6,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:200}},{&quot;name&quot;:&quot;emails&quot;,&quot;label&quot;:&quot;Emails&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:7,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:200}},{&quot;name&quot;:&quot;phones&quot;,&quot;label&quot;:&quot;Phones&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:8,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:125}},{&quot;name&quot;:&quot;runtime_server_list&quot;,&quot;label&quot;:&quot;Runtime Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:9,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:150}},{&quot;name&quot;:&quot;feed_server_list&quot;,&quot;label&quot;:&quot;Feed Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:10,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:150}},{&quot;name&quot;:&quot;datasource_list&quot;,&quot;label&quot;:&quot;Data Sources&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:11,&quot;opened&quot;:true,&quot;seriesTableShow&quot;:null,&quot;style&quot;:{&quot;width&quot;:150}},{&quot;name&quot;:&quot;defaultServerList&quot;,&quot;label&quot;:&quot;Default Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:12,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;seriesTableShow&quot;:null},{&quot;name&quot;:&quot;vs_list&quot;,&quot;label&quot;:&quot;Virtual Server&quot;,&quot;type&quot;:&quot;string&quot;,&quot;defaultListId&quot;:13,&quot;opened&quot;:true,&quot;display&quot;:&quot;false&quot;,&quot;seriesTableShow&quot;:null}]"/>
+          <Property name="highLightSetting" value="[]"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:9" type="UserScript" label="Action Handler" _undefined_title="" originHeight="100" width="160" height="177" x="840" y="13">
+        <dynIn type="event[]" label="Action" id="din:0" evaluate="always" _isArray="true"/>
+        <dynIn type="event[]" label="Selection" id="din:1" evaluate="always" _isArray="true"/>
+        <dynIn type="any" label="localization" id="din:2" evaluate="always" _isArray="true"/>
+        <dynIn type="any" label="User" id="din:3" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Out(0)" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:20" type="Tile" label="Menu" _undefined_title="" _undefined_originHeight="" width="120" height="160" x="540" y="8"/>
+      <Item id="node:24" type="UserScript" label="List User" _undefined_title="" originHeight="100" width="120" height="117" x="1060" y="18">
+        <dynIn type="any" label="In(0)" id="din:0" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="UserNumber" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:25" type="LocalStore" label="Local Store 1" _undefined_title="" _undefined_originHeight="" width="120" height="160" x="1254" y="19"/>
+      <Item id="node:27" type="Tile" label="Users" _undefined_title="" _undefined_originHeight="" width="120" height="160" x="540" y="240"/>
+      <Item id="node:28" type="UserScript" label="Toolbar Styler" _undefined_title="" originHeight="100" width="120" height="117" x="1054" y="220">
+        <dynIn type="event[]" label="In(0)" id="din:0" evaluate="always" _isArray="true"/>
+        <dynIn type="any" label="User" id="din:1" evaluate="always" _isArray="true"/>
+        <dynOut type="event[]" label="Disable" id="dout:0" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:29" type="LocalStore" label="Local Store 2" _undefined_title="" _undefined_originHeight="" width="120" height="160" x="1248" y="220"/>
+      <Item id="node:31" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="117" width="130" height="177" x="68" y="60">
+        <dynOut type="json" label="baseConfig" id="dout:0" propagate="always" _isArray="true"/>
+        <dynOut type="any" label="locale" id="dout:1" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:33" type="UserScript" label="parseBaseConfig" _undefined_title="" originHeight="117" width="220" height="177" x="260" y="29">
+        <dynIn type="json" label="baseConfig" id="din:0" evaluate="always" _isArray="true"/>
+        <dynIn type="any" label="locale" id="din:1" evaluate="always" _isArray="true"/>
+        <dynOut type="any" label="Menu Model" id="dout:0" propagate="always" _isArray="true"/>
+        <dynOut type="any" label="localization" id="dout:1" propagate="always" _isArray="true"/>
+        <dynOut type="any" label="User Model" id="dout:2" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:35" type="GlobalProperty" label="Property 0" _undefined_title="" _undefined_originHeight="" width="130" height="117" x="284" y="279">
+        <dynOut title="Current user id." type="string" label="UserID" id="dout:.${user}" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:37" type="PortOut" label="Port OUT 0" _undefined_title="" originHeight="177" width="140" height="177" x="1520" y="366">
+        <dynIn id="din:0" type="boolean" label="RefreshSummaryData" evaluate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:39" type="UserScript" label="NotifyChange" _undefined_title="" originHeight="117" width="180" height="117" x="1226" y="426">
+        <dynIn id="din:0" type="any" label="userNumber" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="lastUserNumber" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="userNumber" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="boolean" label="requireRefresh" propagate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:20" srcPort="out:0" tgtId="node:9" tgtPort="din:0"/>
+      <Link srcId="node:24" srcPort="dout:0" tgtId="node:25" tgtPort="in:0"/>
+      <Link srcId="node:9" srcPort="dout:0" tgtId="node:24" tgtPort="din:0"/>
+      <Link srcId="node:28" srcPort="dout:0" tgtId="node:29" tgtPort="in:0"/>
+      <Link srcId="node:27" srcPort="out:0" tgtId="node:28" tgtPort="din:0"/>
+      <Link srcId="node:27" srcPort="out:0" tgtId="node:9" tgtPort="din:1"/>
+      <Link srcId="node:31" srcPort="dout:0" tgtId="node:33" tgtPort="din:0"/>
+      <Link srcId="node:31" srcPort="dout:1" tgtId="node:33" tgtPort="din:1"/>
+      <Link srcId="node:33" srcPort="dout:0" tgtId="node:20" tgtPort="in:0"/>
+      <Link srcId="node:33" srcPort="dout:1" tgtId="node:9" tgtPort="din:2"/>
+      <Link srcId="node:33" srcPort="dout:2" tgtId="node:27" tgtPort="in:0"/>
+      <Link srcId="node:35" srcPort="dout:.${user}" tgtId="node:9" tgtPort="din:3"/>
+      <Link srcId="node:35" srcPort="dout:.${user}" tgtId="node:28" tgtPort="din:1"/>
+      <Link srcId="node:27" srcPort="out:3" tgtId="node:24" tgtPort="din:0"/>
+      <Link srcId="node:24" srcPort="dout:1" tgtId="node:39" tgtPort="din:0"/>
+      <Link srcId="node:39" srcPort="dout:0" tgtId="node:39" tgtPort="din:1"/>
+      <Link srcId="node:39" srcPort="dout:1" tgtId="node:37" tgtPort="din:0"/>
+      <Input key="node:9/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Action&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;localization&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;User&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:9/cfg:model/default" value="&quot;if (port == \&quot;din:0\&quot;) {\n    var action = getInput(\&quot;din:0\&quot;);\n    var selection = getInput(\&quot;din:1\&quot;);\n    var localization = getInput(\&quot;din:2\&quot;);\n    var plugin = Plugin(\&quot;Admin - Plugin\&quot;);\n    var currentUser = getInput(\&quot;din:3\&quot;);\n    var user;\n    if (plugin != null &amp;&amp; selection != null &amp;&amp; selection.length == 1) {\n        user = {};\n        user.name            = selection[0][\&quot;name\&quot;];\n        user.password        = selection[0][\&quot;password\&quot;] || \&quot;\&quot;;\n        user.fullname        = selection[0][\&quot;fullname\&quot;] || \&quot;\&quot;;\n        user.phone           = selection[0][\&quot;phones\&quot;] || \&quot;\&quot;;\n        user.emails           = selection[0][\&quot;emails\&quot;] || \&quot;\&quot;;\n        user.workbench = selection[0][\&quot;type\&quot;] == \&quot;Workbench\&quot;;\n        user.isEnabled       = selection[0][&apos;enabled&apos;] || \&quot;false\&quot;;\n        user.domain   = selection[0][&apos;domainAdmin&apos;] || \&quot;false\&quot;;\n        user.security = selection[0][&apos;securityAdmin&apos;] || \&quot;false\&quot;;\n        user.runtime_server_list  = selection[0][\&quot;runtime_server_list\&quot;] || \&quot;\&quot;;\n        user.feed_server_list     = selection[0][\&quot;feed_server_list\&quot;] || \&quot;\&quot;;\n        user.datasource_list     = selection[0][\&quot;datasource_list\&quot;] || \&quot;\&quot;;\n    }\n    if (action != null &amp;&amp; action.length == 1) {\n        action = action[0];\n        switch (action.value) {\n            \n            case \&quot;user/add\&quot;:\n                addUser();\n                break;\n            case \&quot;user/edit\&quot;:\n                if (plugin != null &amp;&amp; selection != null &amp;&amp; selection.length == 1) {\n                    updateUser(user);\n                }\n                break;\n            case \&quot;user/unlock\&quot;:\n                if (plugin != null &amp;&amp; selection != null &amp;&amp; selection.length == 1) {\n                    plugin.doUnlockUser(user, {\n                        onsuccess : function(){\n                            setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n                        },\n                        onfail : function(u, message){\n                            plugin.popAlert(&apos;Unlock &apos;+ user.name + \&quot; Fail\&quot;, message);\n                            setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n                        }    \n                    }, localization);\n                }\n                break;\n            case \&quot;user/delete\&quot;:\n                if (plugin != null &amp;&amp; selection != null &amp;&amp; selection.length == 1) {\n                    plugin.doDeleteUser(user, {\n                        onsuccess : function(){\n                            setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n                        },\n                        onfail : function(name, message){\n                            plugin.popAlert(&apos;Delete &apos;+ user.name + \&quot; Fail\&quot;, message);\n                            setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n                        }\n                    }, localization);\n                }\n                break;\n            case \&quot;user/refresh\&quot;:\n                setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n                break;\n        }\n    }\n}\n\nfunction addUser(user){\n    if (plugin != null) {\n        plugin.doAddUser(user, {\n            onsuccess : function(info){\n                setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n            },\n            onfail : function(info, message){\n                plugin.popAlert(&apos;Add User Fail&apos;, message, [{\n                    label : &apos;OK&apos;,\n                    callback : function(){  delete info.password; addUser(info); }\n                }]\n                );\n            },\n        }, localization);\n    }\n}\n\nfunction updateUser(user){\n    if (plugin != null) {\n        var isEnabledAttribute = {\n        };\n        if(user != null &amp;&amp; user.name === currentUser){\n            isEnabledAttribute.disabled = true;    \n        }\n        plugin.doUpdateUser( user == null ? {} : user, {\n            onsuccess : function(info){\n                setOutput(\&quot;dout:0\&quot;, (new Date()).getTime());\n            },\n            onfail : function(info, message){\n                plugin.popAlert(&apos;Update User Fail&apos;, message, [{\n                    label : &apos;OK&apos;,\n                    callback : function(){  delete info.password; updateUser(info); }\n                }]\n                );\n            },\n        }, localization, { isEnabled : isEnabledAttribute });\n    }\n}\n&quot;"/>
+      <Input key="node:9/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:20/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#toolbar&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;toolbar&quot;}]"/>
+      <Input key="node:24/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Out(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;UserNumber&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:24/cfg:model/default" value="&quot;var input = getInput(\&quot;din:0\&quot;);\nvar actionRefresh = (input &gt; 0 || input === null);\nif(Array.isArray(input)){\n    var tileRefresh = input.some(function(i){\n        return i[\&quot;__TYPE__\&quot;] === &apos;refresh&apos;;\n    });\n}else{\n    var tileRefresh = (input != null &amp;&amp; input[\&quot;__TYPE__\&quot;] === &apos;refresh&apos;);\n}\nvar plugin = Plugin(\&quot;Admin - Plugin\&quot;);\nif (plugin != null &amp;&amp; (actionRefresh || tileRefresh)) {\n    plugin.isDomainAdmin(function(response) {\n        if (response != null &amp;&amp; response.status == \&quot;OK\&quot; &amp;&amp; response.value == true) {\n            plugin.doListUsers(function(users) {\n                setOutput(\&quot;dout:0\&quot;, users);\n                setOutput(\&quot;dout:1\&quot;, users.length);\n            });\n        }\n        else {\n            setOutput(\&quot;dout:0\&quot;, []);\n            message(\n                \&quot;error\&quot;,\n                \&quot;Not Authorized\&quot;,\n                \&quot;You are not authorized to view user/group informaton. Must be a domain administrator.\&quot;,\n                function(value) {\n                    // value will be true... continue\n                    console.debug(\&quot;OK\&quot;);\n                }\n            );\n        }\n    });\n}\n&quot;"/>
+      <Input key="node:24/cfg:schema/default" value="&quot;var schema = [];\r\nschema.push({\r\n    name:\&quot;name\&quot;,\r\n    label:\&quot;Name\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;type\&quot;,\r\n    label:\&quot;Type\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;fullname\&quot;,\r\n    label:\&quot;Fullname\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;emails\&quot;,\r\n    label:\&quot;Emails\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;phones\&quot;,\r\n    label:\&quot;Phones\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;enabled\&quot;,\r\n    label:\&quot;Enabled\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;locked\&quot;,\r\n    label:\&quot;Locked\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;runtime_server_list\&quot;,\r\n    label:\&quot;Runtime Servers\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;feed_server_list\&quot;,\r\n    label:\&quot;Feed Servers\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;datasource_list\&quot;,\r\n    label:\&quot;Data Sources\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;domainAdmin\&quot;,\r\n    label:\&quot;Domain Admin\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;securityAdmin\&quot;,\r\n    label:\&quot;Security Admin\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;defaultServerList\&quot;,\r\n    label:\&quot;Default Servers\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;vs_list\&quot;,\r\n    label:\&quot;Virtual Server\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:0\&quot;, schema);&quot;"/>
+      <Input key="node:24/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:27/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#2#Main Tile&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;Main Tile&quot;}]"/>
+      <Input key="node:28/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;In(0)&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;User&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:28/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;event[]&quot;,&quot;portLabel&quot;:&quot;Disable&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:28/cfg:schema/default" value="&quot;var schema = [];\r\nschema.push({\r\n    name:\&quot;value\&quot;,\r\n    label:\&quot;Value\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;disable\&quot;,\r\n    label:\&quot;Disable\&quot;,\r\n    type:\&quot;boolean\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:0\&quot;, schema);&quot;"/>
+      <Input key="node:28/cfg:model/default" value="&quot;var selection = port == \&quot;din:0\&quot; ? getInput(\&quot;din:0\&quot;) : null;\nvar disable = selection == null || selection.length == 0;\nvar currentUser = getInput(\&quot;din:1\&quot;);\nvar isCurrentUser;\nif(selection != null &amp;&amp; selection[0] != null){\n    isCurrentUser = (currentUser === selection[0].name);\n}\n\nsetOutput(\&quot;dout:0\&quot;, [\n    { value : \&quot;user/unlock\&quot;, \&quot;disable\&quot; : disable},\n    { value : \&quot;user/delete\&quot;, \&quot;disable\&quot; : disable || isCurrentUser },\n    { value : \&quot;user/edit\&quot;, \&quot;disable\&quot; : disable},\n]);\n&quot;"/>
+      <Input key="node:31/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;json&quot;,&quot;portLabel&quot;:&quot;baseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:33/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;json&quot;,&quot;portLabel&quot;:&quot;baseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:33/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Menu Model&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;localization&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;User Model&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:33/cfg:model/default" value="&quot;var plugin = null;\r\nvar config = null;\r\nvar debugging = true;\r\n\r\nif ( port != null ){\r\n    \r\n    var baseConfig = getInput(\&quot;din:0\&quot;);\r\n    var locale = getInput(\&quot;din:1\&quot;);\r\n    if( baseConfig == null || baseConfig == \&quot;\&quot; ) {\r\n        config = \&quot;\&quot;;\r\n    } else {\r\n        config = baseConfig;   \r\n    }\r\n    var deployModel = baseConfig.groups.filter(function(item) {\r\n        return item.group == \&quot;user\&quot;;\r\n    })[0].items.filter(function(item) {\r\n        return item.name == \&quot;user\&quot;;\r\n    })[0];\r\n    \r\n    var helperPlugin = Plugin(baseConfig.helperPluginName);\r\n    var localize = helperPlugin.localize.bind(helperPlugin, baseConfig.locale.user, locale);\r\n    \r\n    var deployModel = JSON.parse(JSON.stringify(deployModel));\r\n    var menubar = deployModel[\&quot;menu-model\&quot;].menubar;\r\n    localizeMenu(menubar[0]);\r\n\r\n    setOutput(\&quot;dout:0\&quot;, {model: deployModel[\&quot;menu-model\&quot;]});\r\n\r\n    setOutput(&apos;dout:2&apos;, deployModel[&apos;user-model&apos;]);\r\n    \r\n    var localizeMap = {\r\n    \&quot;Add User Dialog Title\&quot; : undefined,\r\n    \&quot;Add User Dialog Message\&quot; : undefined,\r\n    \&quot;User Dialog Name\&quot; : undefined,\r\n    \&quot;User Dialog Full Name\&quot; : undefined,\r\n    \&quot;User Dialog Email\&quot; : undefined,\r\n    \&quot;User Dialog Phone\&quot; : undefined,\r\n    \&quot;User Dialog Password\&quot; : undefined,\r\n    \&quot;User Dialog Confirm Password\&quot; : undefined,\r\n    \&quot;User Dialog Active\&quot; : undefined,\r\n    \&quot;User Dialog Workbench\&quot; : undefined,\r\n    \&quot;User Dialog Domain\&quot; : undefined,\r\n    \&quot;User Dialog Security\&quot; : undefined,\r\n    \&quot;User Dialog Runtime Servers\&quot; : undefined,\r\n    \&quot;User Dialog Feed Servers\&quot; : undefined,\r\n    \&quot;User Dialog Data Sources\&quot; : undefined,\r\n    \&quot;User Dialog Value Miss\&quot; : undefined,\r\n    \&quot;User Dialog Name Mismatch\&quot; : undefined,\r\n    \&quot;User Dialog Full Name Mismatch\&quot;: undefined,\r\n    \&quot;User Dialog Email Invalid\&quot;: undefined,\r\n    \&quot;User Dialog Phone Invalid\&quot; : undefined,\r\n    \&quot;User Dialog Save\&quot; : undefined,\r\n    \&quot;User Dialog Cancel\&quot; : undefined,\r\n    \&quot;User Dialog OK\&quot; : undefined,\r\n    \&quot;Update User Dialog Title\&quot; : undefined,\r\n    \&quot;Update User Dialog Message\&quot; : undefined,\r\n    \&quot;Unlock User Dialog Title\&quot; : undefined,\r\n    \&quot;Unlock User Dialog Message\&quot; : undefined,\r\n    \&quot;Delete User Dialog Title\&quot; : undefined,\r\n    \&quot;Delete User Dialog Message\&quot; : undefined,\r\n    \&quot;User Dialog Password Invalid Characters\&quot; : undefined,\r\n    \&quot;User Dialog Password Too Short\&quot; : undefined,\r\n\r\n\r\n    };    \r\n    if (baseConfig != null &amp;&amp; locale != null){\r\n        window.$(&apos;.userPageTitle&apos;).html(localize(\&quot;{i18n::User Page Title}\&quot;));\r\n        window.$(&apos;.viaUsersTab&apos;).html(localize(\&quot;{i18n::Via Users Tab}\&quot;));\r\n\r\n\r\n        for(var key in localizeMap){\r\n            localizeMap[key] = localize(\&quot;{i18n::\&quot; + key + \&quot;}\&quot;);\r\n        }\r\n    }\r\n    setOutput(\&quot;dout:1\&quot;, localizeMap);\r\n}\r\n\r\nfunction localizeMenu(menu){\r\n    menu.label =  localize(\&quot;{i18n::User Menu}\&quot;);\r\n    menu.items.forEach(function(i){\r\n        var key = &apos;{i18n::&apos; + i.value.charAt(0).toUpperCase() + i.value.slice(1) + &apos; User}&apos;;\r\n        var label = localize(key);\r\n        i.label = label;\r\n    });\r\n}\r\n&quot;"/>
+      <Input key="node:37/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;RefreshSummaryData&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:39/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;userNumber&quot;,&quot;portValue&quot;:&quot;-1&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;lastUserNumber&quot;,&quot;portValue&quot;:&quot;-1&quot;,&quot;portTrigger&quot;:&quot;ignore&quot;}]"/>
+      <Input key="node:39/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;userNumber&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;boolean&quot;,&quot;portLabel&quot;:&quot;requireRefresh&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:39/cfg:model/default" value="&quot;var lastNumber = getInput(\&quot;din:1\&quot;);\nvar number = getInput(\&quot;din:0\&quot;);\nif(lastNumber != number &amp;&amp; lastNumber != null)\n    setOutput(&apos;dout:1&apos;, true);\nsetOutput(&apos;dout:0&apos;, number);\n&quot;"/>
+      <Schema id="node:24/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;fullname&quot;,&quot;label&quot;:&quot;Fullname&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;emails&quot;,&quot;label&quot;:&quot;Emails&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;phones&quot;,&quot;label&quot;:&quot;Phones&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;enabled&quot;,&quot;label&quot;:&quot;Enabled&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;locked&quot;,&quot;label&quot;:&quot;Locked&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;runtime_server_list&quot;,&quot;label&quot;:&quot;Runtime Servers&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;feed_server_list&quot;,&quot;label&quot;:&quot;Feed Servers&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;datasource_list&quot;,&quot;label&quot;:&quot;Data Sources&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainAdmin&quot;,&quot;label&quot;:&quot;Domain Admin&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;securityAdmin&quot;,&quot;label&quot;:&quot;Security Admin&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;defaultServerList&quot;,&quot;label&quot;:&quot;Default Servers&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;vs_list&quot;,&quot;label&quot;:&quot;Virtual Server&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:25/in:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;fullname&quot;,&quot;label&quot;:&quot;Fullname&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;emails&quot;,&quot;label&quot;:&quot;Emails&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;phones&quot;,&quot;label&quot;:&quot;Phones&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;enabled&quot;,&quot;label&quot;:&quot;Enabled&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;locked&quot;,&quot;label&quot;:&quot;Locked&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;runtime_server_list&quot;,&quot;label&quot;:&quot;Runtime Servers&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;feed_server_list&quot;,&quot;label&quot;:&quot;Feed Servers&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;datasource_list&quot;,&quot;label&quot;:&quot;Data Sources&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainAdmin&quot;,&quot;label&quot;:&quot;Domain Admin&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;securityAdmin&quot;,&quot;label&quot;:&quot;Security Admin&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;defaultServerList&quot;,&quot;label&quot;:&quot;Default Servers&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;vs_list&quot;,&quot;label&quot;:&quot;Virtual Server&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:25/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;fullname&quot;,&quot;label&quot;:&quot;Fullname&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;emails&quot;,&quot;label&quot;:&quot;Emails&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;phones&quot;,&quot;label&quot;:&quot;Phones&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;enabled&quot;,&quot;label&quot;:&quot;Enabled&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;locked&quot;,&quot;label&quot;:&quot;Locked&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;runtime_server_list&quot;,&quot;label&quot;:&quot;Runtime Servers&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;feed_server_list&quot;,&quot;label&quot;:&quot;Feed Servers&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;datasource_list&quot;,&quot;label&quot;:&quot;Data Sources&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainAdmin&quot;,&quot;label&quot;:&quot;Domain Admin&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;securityAdmin&quot;,&quot;label&quot;:&quot;Security Admin&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;defaultServerList&quot;,&quot;label&quot;:&quot;Default Servers&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;vs_list&quot;,&quot;label&quot;:&quot;Virtual Server&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:28/dout:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;Disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:29/in:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;Disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:29/out:0">
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;disable&quot;,&quot;label&quot;:&quot;Disable&quot;,&quot;type&quot;:&quot;boolean&quot;}"/>
+      </Schema>
+      <Schema id="node:27/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;fullname&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Fullname&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emails&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Emails&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;phones&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Phones&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;enabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Enabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;runtime_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Runtime Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;feed_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Feed Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;datasource_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Data Sources&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Domain Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;securityAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Security Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;defaultServerList&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Default Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;vs_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Virtual Server&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:28/din:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;fullname&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Fullname&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emails&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Emails&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;phones&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Phones&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;enabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Enabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;runtime_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Runtime Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;feed_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Feed Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;datasource_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Data Sources&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Domain Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;securityAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Security Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;defaultServerList&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Default Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;vs_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Virtual Server&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:9/din:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;fullname&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Fullname&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emails&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Emails&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;phones&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Phones&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;enabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Enabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;runtime_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Runtime Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;feed_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Feed Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;datasource_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Data Sources&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Domain Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;securityAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Security Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;defaultServerList&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Default Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;vs_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Virtual Server&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:27/out:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;fullname&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Fullname&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emails&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Emails&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;phones&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Phones&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;enabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Enabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;runtime_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Runtime Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;feed_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Feed Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;datasource_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Data Sources&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Domain Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;securityAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Security Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;defaultServerList&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Default Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;vs_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Virtual Server&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:27/out:2">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;fullname&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Fullname&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emails&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Emails&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;phones&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Phones&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;enabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Enabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;runtime_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Runtime Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;feed_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Feed Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;datasource_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Data Sources&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Domain Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;securityAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Security Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;defaultServerList&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Default Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;vs_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Virtual Server&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:27/out:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;fullname&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Fullname&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emails&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Emails&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;phones&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Phones&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;enabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Enabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;runtime_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Runtime Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;feed_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Feed Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;datasource_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Data Sources&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Domain Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;securityAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Security Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;defaultServerList&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Default Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;vs_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Virtual Server&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:20/out:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:9/din:0">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:20/out:1">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:20/out:2">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:20/out:3">
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;value&quot;,&quot;label&quot;:&quot;Value&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:true,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;data&quot;,&quot;label&quot;:&quot;Data&quot;,&quot;type&quot;:&quot;string&quot;,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:24/din:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;fullname&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Fullname&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;emails&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Emails&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;phones&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Phones&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;enabled&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Enabled&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;runtime_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Runtime Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;feed_server_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Feed Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;datasource_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Data Sources&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;domainAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Domain Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;securityAdmin&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Security Admin&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;defaultServerList&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Default Servers&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;vs_list&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Virtual Server&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <DynInput id="node:9">
+        <Port type="event[]" label="Action" id="din:0" _isArray="true" evaluate="always"/>
+        <Port type="event[]" label="Selection" id="din:1" _isArray="true" evaluate="always"/>
+        <Port type="any" label="localization" id="din:2" _isArray="true" evaluate="always"/>
+        <Port type="any" label="User" id="din:3" _isArray="true" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:24">
+        <Port type="any" label="In(0)" id="din:0" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:28">
+        <Port type="event[]" label="In(0)" id="din:0" _isArray="true" evaluate="always"/>
+        <Port type="any" label="User" id="din:1" _isArray="true" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:33">
+        <Port type="json" label="baseConfig" id="din:0" _isArray="true" evaluate="always"/>
+        <Port type="any" label="locale" id="din:1" _isArray="true" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:37">
+        <Port id="din:0" type="boolean" label="RefreshSummaryData" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynInput id="node:39">
+        <Port id="din:0" type="any" label="userNumber" evaluate="always" _isArray="true"/>
+        <Port id="din:1" type="any" label="lastUserNumber" evaluate="always" _isArray="true"/>
+      </DynInput>
+      <DynOutput id="node:9">
+        <Port id="dout:0" type="any" label="Out(0)" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:24">
+        <Port id="dout:0" type="event[]" label="Out(0)" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="any" label="UserNumber" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <DynOutput id="node:28">
+        <Port type="event[]" label="Disable" id="dout:0" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:31">
+        <Port type="json" label="baseConfig" id="dout:0" _isArray="true" propagate="always"/>
+        <Port type="any" label="locale" id="dout:1" _isArray="true" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:33">
+        <Port type="any" label="Menu Model" id="dout:0" _isArray="true" propagate="always"/>
+        <Port type="any" label="localization" id="dout:1" _isArray="true" propagate="always"/>
+        <Port type="any" label="User Model" id="dout:2" _isArray="true" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:35">
+        <Port title="Current user id." type="string" label="UserID" id="dout:.${user}" _isArray="true" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:39">
+        <Port id="dout:0" type="any" label="userNumber" propagate="always" _isArray="true"/>
+        <Port id="dout:1" type="boolean" label="requireRefresh" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <Version id="node:9" version="2"/>
+      <Version id="node:20" version="1"/>
+      <Version id="node:24" version="2"/>
+      <Version id="node:25" version="2"/>
+      <Version id="node:27" version="1"/>
+      <Version id="node:28" version="2"/>
+      <Version id="node:29" version="2"/>
+      <Version id="node:31" version="1"/>
+      <Version id="node:33" version="2"/>
+      <Version id="node:35" version="3"/>
+      <Version id="node:37" version="1"/>
+      <Version id="node:39" version="2"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/space/VIA Admin Modules/dbpm/Admin - Plugin" alias=""/>
+      <DashboardPlugin uri="/app/dbp/space/VIA Admin Modules/dbpm/Admin - Common Helper" alias=""/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>
