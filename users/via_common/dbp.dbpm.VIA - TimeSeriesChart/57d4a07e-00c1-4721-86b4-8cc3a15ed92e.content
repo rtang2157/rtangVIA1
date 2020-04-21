@@ -1,0 +1,18 @@
+{
+	"title":          "Timeseries Chart  Test",
+	"leftAxisTitle":  "Left Axis Label",
+	"rightAxisTitle": "Right Axis Label",
+	"showlegend":     true,
+	"format":         "%m/%d %H:%M", 
+	"showcursor":     true, 
+	"dimension": {
+		"title": "Time Stamp", 
+		"type": "date",
+		"dataType": "epoch",
+		"fieldName": "tsepoch"
+	},
+	"series": [
+		{ "label": "Z-Score", "fieldName": "score", "type": "line", "visible": true, "color":"#1f78b4", "width": 2,  "axis": "left", "opacity": 0.25 }
+
+	]
+}

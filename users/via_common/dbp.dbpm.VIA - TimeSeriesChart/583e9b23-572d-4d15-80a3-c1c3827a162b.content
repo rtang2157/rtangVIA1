@@ -1,0 +1,45 @@
+{
+	"title":                "Timeseries Chart  Test",
+	"leftAxisTitle":        "Left Axis Label",
+	"leftAxisRange":        [-10,10],
+	"leftAxisRangeMode":    "normal",
+	"rightAxisTitle":       "Right Axis Label",
+	"rightAxisRangeMode":    "nonnegative",
+	"showlegend":           true,
+	"format":               "%m/%d %H:%M", 
+	"showcursor":           true, 
+	"rangeslider":          false, 
+	"rangebuttons":         false,
+	"marginTop":            100,
+	"marginBottom":         100,
+	"marginLeft":           100,
+	"marginRight":          100,
+	"tickAngle":            25,
+    "buttons": [
+		{ "count": 1,  "label": "1d", "step": "day", "stepmode": "backward" },
+		{ "count": 3,  "label": "3d", "step": "day", "stepmode": "backward" },
+		{ "count": 5,  "label": "5d", "step": "day", "stepmode": "backward" },
+		{ "count": 7,  "label": "1w", "step": "day", "stepmode": "backward" },
+		{ "count": 14, "label": "2w", "step": "day", "stepmode": "backward" },
+		{ "count": 28, "label": "4w", "step": "day", "stepmode": "backward" }, 
+		{ "step": "all" }
+	],
+    "dimension": {
+		"title": "Time Stamp", 
+		"type": "date",
+		"dataType": "epoch",
+		"fieldName": "tsepoch"
+	},
+	"series": [
+		{ "label": "Z-Score", "fieldName": "score", "type": "line", "visible": true, "color":"#1f78b4", "width": 2,  "axis": "left", "opacity": 0.25 },
+		{ "label": "Baseline: Calls", "fieldName": "baseline", "type": "area", "visible": true, "color":"#2d3538", "fillColor": "rgba(87,93,96,.2)", "width": 1, "axis": "right" },
+		{ "label": "Volume: Calls", "fieldName": "calls", "type": "bar", "visible": false, "color":"#abaeaf", "fillColor": "rgba(87,93,96,.75)", "width": 0, "axis": "right" }
+
+	],
+	"annotations": [
+		{ "type": "line", "label": "High", "axis": "left", "value": 6, "range": null, "color": "#006600", "fillColor": "rgba(0,64,64,.4)","width": 1, "lineStyle": "dot"},
+		{ "type": "line", "label": "Low", "axis": "left", "value": -2, "range": null, "color": "#FF6600", "fillColor": "rgba(255,0,0,.4)","width": 1, "lineStyle": "dot"}, 
+		{ "type": "rectangle", "label": "Anomaly 1", "axis": "bottom", "value": null, "range": ["2018-08-08T09:30:00Z","2018-08-08T13:30:00Z"], "color": "#006600", "fillColor": "rgba(0,64,255,.1)" ,"width": 0, "lineStyle": "dot"},
+		{ "type": "rectangle", "label": "Anomaly 2", "axis": "bottom", "value": null, "range": ["2018-08-10T06:30:00Z","2018-08-10T15:30:00Z"], "color": "#006600", "fillColor": "rgba(0,64,0,.1)","width": 0, "lineStyle": "dot"}
+	]
+}
