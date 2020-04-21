@@ -1,0 +1,799 @@
+<DashboardPluginModel description="" name="VIA - SVG Map" is_init="false">
+  <ModelInfo validated="true">
+    <Properties>
+    </Properties>
+    <Widgets>
+      <Widget name="SVG Map" private="false">
+        <PropertyText>
+          <![CDATA[[{
+    "name" : "url",
+    "label" : "SVG URL",
+    "type" : "string"
+}, {
+    "name" : "idField",
+    "label" : "ID Field",
+    "type" : "field"
+}, {
+    "name" : "valueField",
+    "label" : "Value Field",
+    "type" : "field"
+}, {
+    "name" : "labelField",
+    "label" : "Label Field",
+    "type" : "field"
+}, {
+    "name" : "styleField",
+    "label" : "Style Field",
+    "type" : "field"
+}, {
+    "name" : "colorMaps",
+    "label" : "Color Maps",
+    "type" : "string"
+}, {
+    "name" : "selectable",
+    "label" : "Selectable",
+    "type" : "boolean",
+    "value" : false
+}, {
+    "name" : "selectedStroke",
+    "label" : "Selected Stroke",
+    "type" : "color",
+    "value" : "green"
+}, {
+    "name" : "selectedFill",
+    "label" : "Selected Fill",
+    "type" : "color",
+    "value" : "red"
+}, {
+    "name" : "xOffset",
+    "label" : "X-offset",
+    "type" : "number",
+    "value" : 0
+}, {
+    "name" : "yOffset",
+    "label" : "Y-offset",
+    "type" : "number",
+    "value" : 0
+}, {
+    "name" : "scale",
+    "label" : "Scale",
+    "type" : "number",
+    "value" : 1,
+    "min" : 0.1,
+    "max" : 2.0,
+    "step" : 0.1,
+    "places" : 1
+}, {
+    "name" : "zoomControl",
+    "label" : "Zoom Control",
+    "type" : "boolean",
+    "value" : false
+}, {
+    "name" : "tooltip",
+    "label" : "Show Tooltip",
+    "type" : "boolean",
+    "value" : false
+}, {
+    "name" : "labelStyle",
+    "label" : "Label Style",
+    "type" : "string"
+}]]]>
+        </PropertyText>
+        <CodeText segment="#methods">
+          <![CDATA[
+        ZOOM_WIDGET_ALIGN : "right",
+        ZOOM_WIDGET_LEFT  : 20,
+        ZOOM_WIDGET_RIGHT : 20,
+        ZOOM_WIDGET_TOP   : 20,
+        ZOOM_MIN_SCALE    : 0.1,
+        ZOOM_MAX_SCALE    : 2.0,
+        ZOOM_HIDE_TIMEOUT : 3000,
+        
+        DRILLDOWN_DELAY : 250,
+        HOVER_DELAY     : 2000,
+
+        _parseConfig : function() {
+            this._svgURL          = this.initialConfig.properties.url || "";
+            this._idField         = this.initialConfig.properties.idField || "";
+            this._valueField      = this.initialConfig.properties.valueField || "";
+            this._labelField      = this.initialConfig.properties.labelField || "";
+            this._styleField      = this.initialConfig.properties.styleField || "";
+            this._selectable      = this.initialConfig.properties.selectable || false;
+            this._selectionStroke = this.initialConfig.properties.selectedStroke || "green";
+            this._selectionFill   = this.initialConfig.properties.selectedFill || "red";
+            this._offset          = {
+                x : this.initialConfig.properties.xOffset ? Number(this.initialConfig.properties.xOffset) : 0,
+                y : this.initialConfig.properties.yOffset ? Number(this.initialConfig.properties.yOffset) : 0,
+            };
+            this._scale           = this.initialConfig.properties.scale || 1;
+            this._zoomControl     = this.initialConfig.properties.zoomControl || false;
+            this._tooltip         = this.initialConfig.properties.tooltip || false;
+            this._labelStyle      = this.initialConfig.properties.labelStyle || "";
+
+            var colorMapValue = (this.initialConfig.properties.colorMaps || "").trim();
+            if (colorMapValue.charAt(0) == "{" && colorMapValue.charAt(colorMapValue.length-1) == "}") {
+                // colorMapValue is of form {fromColor,toColor} or {baseColor}
+                var colorsFromTo = colorMapValue.substring(1, colorMapValue.length-1).split(",");
+                if (colorsFromTo.length == 2) {
+                    // from/to color specified... use color interpolation
+                    this._colorInterpolate = d3.interpolateRgb(colorsFromTo[0], colorsFromTo[1]);
+                }
+                else if (colorsFromTo.length == 1) {
+                    // single base color specified, use alpha interpolation
+                    var self = this;
+                    require(["dojo/_base/Color"], function(Color) {
+                        self._colorBase = new Color(colorsFromTo[0]);
+                    });
+                }
+            }
+            else {
+                // original value=color mapping
+                this._colorMaps = getColorMaps(colorMapValue);
+            }
+        },
+        
+        SVG_DATA_URL : "data:image/svg;base64,",
+
+        _loadSvgMap : function(callback) {
+            var self = this;
+            if (this._svgURL.trim() != "") {
+                var uri = this.properties._model.substring(0, this.properties._model.lastIndexOf("/"));
+                var params = {};
+                this._svgURL = this._svgURL.trim();
+                if (this._svgURL.indexOf(this.SVG_DATA_URL) == 0) {
+                    window.setTimeout(function() {
+                        var str = self._svgURL.substring(self.SVG_DATA_URL.length);
+                        debugger;
+                        self._renderSVG(atob(str));
+                        callback();
+                    }, 10);
+                    uri = null;
+                }
+                else if (this._svgURL.indexOf("http://") == 0 || this._svgURL.indexOf("https://") == 0) {
+                    // external URL
+                    uri = this._svgURL;
+                    params = null;
+                }
+                else if (this._svgURL.indexOf("/app/dbp") == 0) {
+                    // resource from explicit plugin...
+                    var sep = this._svgURL.lastIndexOf("?op=");
+                    if (sep != -1) {
+                        uri = this._svgURL.substring(0, sep);
+                        params["op"] = this._svgURL.substring(sep+4);
+                    }
+                    else {
+                        // error
+                        uri = null;
+                    }
+                }
+                else {
+                    // resource from this plugin
+                    params["op"] = "vt:dbp:resource:" + this._svgURL
+                }
+                if (uri != null) {
+                    if (params != null) {
+                        doREST("get", uri, params, null, function(t) {
+                            self._renderSVG(t);
+                            callback();
+                        });
+                    }
+                    else {
+                        // external resource
+                        GET(uri, null, function(t) {
+                            self._renderSVG(t);
+                            callback();
+                        });
+                    }
+                }
+            }
+        },
+
+        _renderSVG : function(t) {
+            this._root = dojo.create("div", {
+                style : "width:" + this._contentWidth + "px; height:" + this._contentHeight + "px; position:relative;",
+            });
+            this.domNode.appendChild(this._root);
+            
+            this._root.innerHTML = t;
+
+            this._root.addEventListener("click", lang.hitch(this, "_onClick"), false);
+            this._root.addEventListener("mouseover", lang.hitch(this, "_onMouseOver"), false);
+            this._root.addEventListener("mouseout", lang.hitch(this, "_onMouseOut"), false);
+
+            this._applyTransform();
+        },
+
+        _applyTransform : function() {
+            if (this._root != null) {
+                var transformOrigin = "0% 0%";
+                var transform = "";
+                if (this._offset.x != 0 || this._offset.y != 0) {
+                    transform += "translate(" + (- this._offset.x) + "px, " + (- this._offset.y) + "px)";
+                }
+                if (this._scale != 1) {
+                    transform += "scale(" + this._scale + "," + this._scale + ")";
+                }
+                domStyle.set(this._root, {
+                    transformOrigin: transformOrigin,
+                    WebkitTransformOrigin: transformOrigin,
+                    transform : transform,
+                    WebkitTransform : transform,
+                });
+            }
+        },
+
+        _addZoomWidget : function(callback) {  
+            var me = this;
+            require(["af/renderers/widgets/ZoomWidget", "dojo/mouse"], function(ZoomWidget, mouse) {
+                me._zoomWidget = new ZoomWidget({
+                    align        : me.ZOOM_WIDGET_ALIGN,
+                    left         : me.ZOOM_WIDGET_LEFT,
+                    right        : me.ZOOM_WIDGET_RIGHT,
+                    top          : me.ZOOM_WIDGET_TOP,
+                    minScale     : me.ZOOM_MIN_SCALE,
+                    maxScale     : me.ZOOM_MAX_SCALE,
+                    zoomFunction : function(scale) {
+                        me._scale = scale;
+                        me._applyTransform();
+                        me.renderer.onScale(scale);
+                    }
+                });
+                me.domNode.appendChild(me._zoomWidget.domNode);
+
+                // custom styling
+                domStyle.set(me._zoomWidget.domNode, {
+                    backgroundColor : "rgba(0, 0, 0, 0.5)",
+                    border          : "thin solid lightgray",
+                    borderRadius    : "5px",
+                    padding         : "5px",
+                    opacity         : 0.7,
+                });
+                
+                me._zoomWidgetAutoHideTimeout = setTimeout(function() {
+                    if (me._zoomWidget != null && me._zoomWidget.domNode != null) {
+                        domStyle.set(me._zoomWidget.domNode, "opacity", 0.1);
+                    }
+                    me._zoomWidgetAutoHideTimeout = null;
+                }, me.ZOOM_HIDE_TIMEOUT);
+                
+                on(me._zoomWidget.domNode, mouse.enter, function(evt) {
+                    if (me._zoomWidgetAutoHideTimeout != null) {
+                        clearTimeout(me._zoomWidgetAutoHideTimeout);
+                        me._zoomWidgetAutoHideTimeout = null;
+                    }
+                    domStyle.set(me._zoomWidget.domNode, "opacity", 0.7);
+                });
+                on(me._zoomWidget.domNode, mouse.leave, function(evt) {
+                    me._zoomWidgetAutoHideTimeout = setTimeout(function() {
+                        if (me._zoomWidget != null && me._zoomWidget.domNode != null) {
+                            domStyle.set(me._zoomWidget.domNode, "opacity", 0.1);
+                        }
+                        me._zoomWidgetAutoHideTimeout = null;
+                    }, me.ZOOM_HIDE_TIMEOUT);
+                });
+                me._zoomWidget.setScale(me._scale);
+            });
+        },
+
+        _updateZoomWidgetOnScroll : function(zoomWidget) {
+            if (zoomWidget != null) {
+                switch (this.ZOOM_WIDGET_ALIGN) {
+                    case "left":
+                        domStyle.set(zoomWidget.domNode, {
+                            left : (zoomWidget.domNode.parentNode.scrollLeft + this.ZOOM_WIDGET_LEFT) + "px",
+                            top  : (zoomWidget.domNode.parentNode.scrollTop + this.ZOOM_WIDGET_TOP) + "px",
+                        });
+                        break;
+                    case "right":
+                        domStyle.set(zoomWidget.domNode, {
+                            right : (this.ZOOM_WIDGET_RIGHT - zoomWidget.domNode.parentNode.scrollLeft) + "px",
+                            top  : (zoomWidget.domNode.parentNode.scrollTop + this.ZOOM_WIDGET_TOP) + "px",
+                        });
+                        break;
+                }
+            }
+        },
+
+        _resetSelection : function() {
+            // clear timeout and unselect
+            if (this._lastClickTO != null) {
+                clearTimeout(this._lastClickTO);
+                this._lastClickTO = null;
+            }
+            if (this._selected != null) {
+                this._unmarkSelection();
+                this.renderer.updateSelection([]);
+                this._selected = null;
+            }
+            this._lastClickID = null;
+        },
+
+        _onClick : function(evt) {
+            evt.stopPropagation();
+            if (this._items == null) return;
+            if (this._selectable && this._items[evt.target.id] == null) {
+                // clicked on something that is NOT in the dataset
+                this._resetSelection();
+                return;
+            }
+            var now = (new Date()).getTime();
+            if (this._lastClickID == null) {
+                this._pendingSingleClick(evt.target.id, evt);
+            }
+            else if (this._lastClickID == evt.target.id) {
+                // same item clicked... DOUBLE-CLICK
+                this._lastClickID = null;
+                if (this._lastClickTO != null) {
+                    clearTimeout(this._lastClickTO);
+                    this._lastClickTO = null;
+                }
+                var selection = this._items[evt.target.id];
+                if (this._selectable && selection != null) {
+                    this._updateUIEvent("dblclick", selection, evt);
+                    this.renderer.drillDownOnSelection(this.renderer.model, [selection]);
+                }
+            }
+            else {
+                // clicked on different item
+                if (this._lastClickTO != null) {
+                    // push out last mouse click event
+                    if (this._lastClickID != null) {
+                        var selection = self._items[this._lastClickID];
+                        if (selection != null) {
+                            this._updateUIEvent("click", selection, this._lastMouseEvent);
+                        }
+                    }
+                    clearTimeout(this._lastClickTO);
+                    this._lastClickTO = null;
+                }
+                this._pendingSingleClick(evt.target.id, evt);
+            }
+        },
+        
+        _pendingSingleClick : function(clickID, evt) {
+            if (this._items == null) return;
+            this._lastClickID = clickID;
+            this._lastMouseEvent = evt;
+            var self = this;
+            this._lastClickTO = setTimeout(function() {
+                if (self._lastClickID != null) {
+                    // time expired without another click... SINGLE-CLICK
+                    var selection = self._items[self._lastClickID];
+                    if (selection != null) {
+                        self._updateUIEvent("click", selection, self._lastMouseEvent);
+                    }
+                    if (self._selectable && selection != null) {
+                        if (self._selected == null || self._selected != selection) {
+                            if (self._selected != null) {
+                                self._unmarkSelection();
+                            }
+                            // no existing selection OR different item... select
+                            self._selected = selection;
+                            self._markSelection();
+                            self.renderer.updateSelection([selection]);
+                        }
+                        else if (self._selected == selection) {
+                            // same item... unselect
+                            self._unmarkSelection();
+                            self.renderer.updateSelection([]);
+                            self._selected = null;
+                        }
+                    }
+                }
+                self._lastClickID = null;
+                self._lastMouseEvent = null;
+            }, this.DRILLDOWN_DELAY);
+        },
+        
+        _unmarkSelection : function() {
+            if (this._selected != null && (this._selectedFill != null || this._selectedStroke != null)) {
+                var node = this.renderer._getElementById(this._root, this._selected[this._idField]);
+                if (node != null) {
+                    if (this._selectedFill != null) {
+                        domStyle.set(node, "fill", this._selectedFill);
+                    }
+                    if (this._selectedStroke != null) {
+                        domStyle.set(node, "stroke", this._selectedStroke);
+                    }
+                }
+                this._selectedFill = null;
+                this._selectedStroke = null;
+            }
+        },
+        
+        _markSelection : function() {
+            if (this._selected != null) {
+                var node = this.renderer._getElementById(this._root, this._selected[this._idField]);
+                if (node != null) {
+                    if (this._selectionFill != null && this._selectionFill != "") {
+                        this._selectedFill = domStyle.get(node, "fill");
+                        domStyle.set(node, "fill", this._selectionFill);
+                    }
+                    if (this._selectionStroke != null && this._selectionStroke != "") {
+                        this._selectedStroke = domStyle.get(node, "stroke");
+                        domStyle.set(node, "stroke", this._selectionStroke);
+                    }
+                }
+            }
+        },
+        
+        _onMouseOver : function(evt) {
+            evt.stopPropagation();
+            if (this._items == null || this._items[evt.target.id] == null) return;
+            var item = this._items[evt.target.id];
+            if (item != null) {
+                this._updateUIEvent("mouseover", item, evt);
+                if (this._tooltip && this._lastHoverItem != item){
+                    this._lastHoverItem = item
+                    this._showTooltip(item, evt);
+                }
+            }
+        },
+        
+        _onMouseOut : function(evt) {
+            evt.stopPropagation();
+            if (this._items == null || this._items[evt.target.id] == null) return;
+            var item = this._items[evt.target.id];
+            if (item != null) {
+                this._updateUIEvent("mouseout", item, evt);
+                if (this._tooltip && this._lastHoverItem == item) {
+                    this._lastHoverItem = null;
+                    if (this._customTooltip) {
+                        this._customTooltip.hide();
+                    }
+                }
+            }
+        },
+        
+        _showTooltip : function(item, e) {
+            require(["af/components/charts/action/CustomTooltip", "widgetcore/renderers/d3/mixins/D3TooltipWidget"], lang.hitch(this, function(CustomTooltip, ChartTooltipWidget) {
+                if (!this._customTooltip) {
+                    this._customTooltip = new CustomTooltip();
+                    this._customTooltip.startup();
+                    domStyle.set(this._customTooltip.domNode, {
+                        zIndex: 1000
+                    });
+                }
+                
+                if (!this._chartTooltipWidget) {
+                    this._chartTooltipWidget = new ChartTooltipWidget();
+				}
+                
+                this._customTooltip.show({x: 10000, y: 10000}, this._chartTooltipWidget.domNode);
+                if (this._chartTooltipWidget) {
+                    this._updateTooltip(item);
+                    var marginBox = domGeom.getMarginBox(this._chartTooltipWidget.domNode);
+                    var rendererBox = domGeom.position(this.domNode);
+                    var x = 0;
+                    var y = 0;
+                    if (e.pageX + 25 + parseInt(marginBox.w) >= rendererBox.x +rendererBox.w) {
+                        x = e.pageX - 25 - parseInt(marginBox.w);
+                    } else if (e.pageX + 25 + parseInt(marginBox.w) <= rendererBox.x + rendererBox.w) {
+                        x = e.pageX + 25;
+                    } else {
+                        x = rendererBox.x + 0.5 * (rendererBox.w - marginBox.w);
+                    }
+                    
+                    if (e.pageY - 20 - parseInt(marginBox.h) >= rendererBox.y) {
+                        y = e.pageY - 20 - parseInt(marginBox.h);
+                    } else if(e.pageY + 20 + parseInt(marginBox.h) <= rendererBox.y + rendererBox.h){
+                        y = e.pageY + 20;
+                    } else {
+                        y = rendererBox.y + 0.5 * (rendererBox.h - marginBox.h);
+                    }
+                    
+                    this._customTooltip.show({
+                        x: x,
+                        y: y
+                    }, this._chartTooltipWidget.domNode);
+                }
+            }));
+        },
+        
+        _updateTooltip : function(item) {
+            var info = [];  
+            if (item != null) {
+				for (var key in item) {
+                    info.push({label:this.renderer._getFieldLabel(key), val:item[key]});
+				}
+            }
+            if (this._chartTooltipWidget){
+                var dom = this._chartTooltipWidget.domNode;
+                var tb = dom.children[0];
+                if (tb){
+                    AppUtil.removeAllChildrenOf(tb);
+                    for (var i=0; i<info.length; i++){
+                        var tr = domConstruct.create('tr');
+                        var tdl = domConstruct.create('td', {'style': 'text-align: right;white-space: nowrap;'});
+                        tdl.innerHTML = AppUtil.escapeHTML(info[i].label);
+                        tr.appendChild(tdl);
+                        var tdr = domConstruct.create('td', {'style': 'text-align: left;white-space: nowrap; padding-left: 10px;'});
+                        tdr.innerHTML = AppUtil.escapeHTML(info[i].val);
+                        tr.appendChild(tdr);
+                        tb.appendChild(tr);
+                    }
+                }
+            }
+        },
+
+        _useDummyData : function() {
+            if (this.controller.initialConfig.appId == "dbp") {
+                // in Dashboard Plugin app... so either modeling preview or summary preview
+                return true;
+            }
+            if (this.controller.initialConfig.appId == "ax" && this.controller.mode == "edit.model") {
+                // in dashboard builder modeling context
+                return true;
+            }
+            return false;
+        },
+
+        _updateUIEvent : function(eventType, selection, mouseEvent) {
+            var self = this;
+            require(["af/utils/AxUtil"], function(AxUtil) {
+                var item = lang.clone(selection);
+                item["__TYPE__"] = eventType;
+                item["__EVENT__"] = AxUtil.cloneMouseEvent(mouseEvent);
+                self.renderer.updateUIEvent([item]);
+            });
+        },]]>
+        </CodeText>
+        <CodeText segment="#buildRendering">
+          <![CDATA[
+            this._parseConfig();
+
+            domStyle.set(this.domNode, {
+                width    : this.vtWidth + "px",
+                height   : this.vtHeight + "px",
+                overflow : "auto",
+                border   : "thin solid lightgray",
+            });
+
+            this._contentWidth = this.vtWidth - 2;
+            this._contentHeight = this.vtHeight - 20;]]>
+        </CodeText>
+        <CodeText segment="#functions">
+          <![CDATA[
+    function getColorMaps(colorMapStr)
+    {
+        var colorMaps = [];
+        if (colorMapStr != "") {
+            var propList = colorMapStr.split(";");
+            for (var i=0; i<propList.length; i++) {
+                var prop = propList[i];
+                var rangeColor = prop.split("=");
+                if (rangeColor.length == 2) {
+                    var minmax = rangeColor[0].split("/");
+                    if (minmax.length == 2) {
+                        var min = minmax[0];
+                        var max = minmax[1];
+                        colorMaps.push({
+                            min   : min == "*" ? null : Number(min),
+                            max   : max == "*" ? null : Number(max),
+                            color : rangeColor[1],
+                        });
+                    }
+                }
+            }
+        }
+        return colorMaps;
+    }
+
+    function forEachSvgElement(parent, callback)
+    {
+        for (var i=0; i<parent.childNodes.length; i++) {
+            var child = parent.childNodes[i];
+            switch (child.nodeName) {
+                case "div":
+                case "svg":
+                    forEachSvgElement(child, callback);
+                    break;
+                case "#text":
+                    // ignore
+                    break;
+                default:
+                    var id = child.getAttribute("id");
+                    if (id != null) {
+                        callback(child);
+                    }
+                    break;
+            }
+        }
+    }
+    
+    function getStyleMap(styles)
+    {
+        var styleMap = {};
+        styles = styles.split(";");
+        for (var i=0; i<styles.length; i++) {
+            var style = (styles[i]).trim();
+            if (style != "") {
+                var toks = style.split("=");
+                if (toks.length == 2) {
+                    styleMap[toks[0]] = toks[1];
+                }
+                else {
+                    toks = style.split(":");
+                    if (toks.length == 2) {
+                        styleMap[toks[0]] = toks[1];
+                    }
+                }
+            }
+        }
+        return styleMap;
+    }]]>
+        </CodeText>
+        <CodeText segment="#postCreate">
+          <![CDATA[
+            if (this._useDummyData()) {
+                // development or modeling
+                if (this._svgURL == null || this._svgURL.trim() == "") {
+                    this._svgURL = "Warehouse Floorplan";
+                }
+            }
+            var self = this;
+            this._loadSvgMap(function() {
+                if (self._zoomControl) {
+                    self._addZoomWidget(function() {
+                        on(self.domNode, "scroll", function(evt) {
+                            self._updateZoomWidgetOnScroll(self._zoomWidget);
+                            var origin = { x: self.domNode.scrollLeft, y: self.domNode.scrollTop };
+                            self.renderer.onScroll(origin);
+                        });
+                        self.renderer.scrollTo = function(origin) {
+                            self._offset = origin;
+                            self._applyTransform();
+                        };
+                        self.renderer.scaleTo = function(scale) {
+                            self._scale = scale;
+                            self._applyTransform();
+                        };
+                    });
+                }
+            });
+]]>
+        </CodeText>
+        <CodeText segment="#doRefresh">
+          <![CDATA[
+            var self = this;
+            if (this._root != null) {
+                this._items = {};
+                if (this.renderer.result != null) {
+                    if (this._idField != "" && (this._valueField != "" || this._labelField != "" || this._styleField != "")) {
+                        var minValue = NaN;
+                        var maxValue = NaN;
+                        if (this._valueField != "" && (this._colorInterpolate != null || this._colorBase != null)) {
+                            // for interpolated color/alpha, we need to determine min/max
+                            array.forEach(this.renderer.result, function(item, index) {
+                                var value = Number(item[self._valueField]);
+                                if (value != null && !isNaN(value)) {
+                                    if (isNaN(minValue) || minValue > value) {
+                                        minValue = value;
+                                    }
+                                    if (isNaN(maxValue) || maxValue < value) {
+                                        maxValue = value;
+                                    }
+                                }
+                            });
+                        }
+                        array.forEach(this.renderer.result, function(item, index) {
+                            self._items[item[self._idField]] = item;
+                            var node = self.renderer._getElementById(self._root, item[self._idField]);
+                            if (node != null) {
+                                if (self._valueField != "") {
+                                    var value = Number(item[self._valueField]);
+                                    if (value != null && !isNaN(value)) {
+                                        if (self._colorMaps != null) {
+                                            for (var i=0; i<self._colorMaps.length; i++) {
+                                                var colorMap = self._colorMaps[i];
+                                                if ((colorMap.min == null || colorMap.min < value) && (colorMap.max == null || value <= colorMap.max)) {
+                                                    domStyle.set(node, "fill", colorMap.color);
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                        else if (self._colorInterpolate != null) {
+                                            domStyle.set(node, "fill", self._colorInterpolate((value - minValue) / (maxValue - minValue)));
+                                        }
+                                        else if (self._colorBase != null) {
+                                            domStyle.set(node, "fill", self._colorBase.toCss(false));
+                                            domStyle.set(node, "fill-opacity", (value - minValue) / (maxValue - minValue));
+                                        }
+                                    }
+                                }
+                                if (self._styleField != "") {
+                                    var styles = item[self._styleField];
+                                    if (styles != null && styles.trim() != "") {
+                                        domStyle.set(node, getStyleMap(styles));
+                                    }
+                                }
+                                if (self._labelField != "") {
+                                    var label = item[self._labelField];
+                                    if (label != null && label != "") {
+                                        node.innerHTML = label;
+                                    }
+                                    else {
+                                        node.innerHTML = "";
+                                    }
+                                    if (self._labelStyle != "") {
+                                        domStyle.set(node, getStyleMap(self._labelStyle));
+                                    }
+                                }
+                            }
+                        });
+                    }
+                }
+                this._applyTransform();
+            }]]>
+        </CodeText>
+        <CodeText segment="#updateWidthAndHeight">
+          <![CDATA[            this.vtWidth = w;
+            this.vtHeight = h;
+            
+            domStyle.set(this.domNode, {
+                width    : this.vtWidth + "px",
+                height   : this.vtHeight + "px",
+            });
+
+            this._contentWidth = this.vtWidth - 2;
+            this._contentHeight = this.vtHeight - 20;
+
+            if (this._root != null) {
+                domStyle.set(this._root, {
+                    width    : this._contentWidth + "px",
+                    height   : this._contentHeight + "px",
+                });
+            }]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div style="width:100%;height:100%;">
+</div>
+]]>
+        </HtmlText>
+      </Widget>
+    </Widgets>
+    <Functions>
+    </Functions>
+    <Services>
+    </Services>
+    <Resources>
+      <Resource uuid="24a9ab8a-2805-43f4-8fd5-247a16aad0fa" name="Harem Topkapi Palace" type="image/svg" size="1990587" private="false">
+        <Description>
+          <![CDATA[Lorem ipsum]]>
+        </Description>
+      </Resource>
+      <Resource uuid="a192dc8d-fce5-4d27-80d3-5b4ee96a62bb" name="Parlament de Catalunya" type="image/svg" size="316210" private="false">
+        <Description>
+          <![CDATA[Lorem ipsum]]>
+        </Description>
+      </Resource>
+      <Resource uuid="e81dfc46-fa9f-4012-8580-04ee3c6f4c59" name="Sample1" type="image/svg" size="7579" private="false">
+        <Description>
+          <![CDATA[created using http://vectorpaint.yaks.co.nz/]]>
+        </Description>
+      </Resource>
+      <Resource uuid="c281b098-e439-487a-80e4-11b136eaa036" name="Sample2" type="text/plain" size="5323" private="false">
+        <Description>
+          <![CDATA[variation of Sample1 but using SVG text instead of foreignObject]]>
+        </Description>
+      </Resource>
+      <Resource uuid="acc8f306-1e60-48c3-8dec-b10bea8b9dd4" name="Tiger" type="image/svg" size="69327" private="false">
+        <Description>
+          <![CDATA[Lorem ipsum]]>
+        </Description>
+      </Resource>
+      <Resource uuid="2c84a36c-f027-4b62-8220-24049051b77d" name="Warehouse Floorplan" type="image/svg" size="90842" private="false">
+        <Description>
+          <![CDATA[Lorem ipsum]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ffa99b54-de52-4f25-86b5-ecf79c94a235" name="Zarya Sunrise Module" type="image/svg" size="338958" private="false">
+        <Description>
+          <![CDATA[Lorem ipsum]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>
