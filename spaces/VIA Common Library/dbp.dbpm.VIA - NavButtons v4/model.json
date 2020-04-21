@@ -1,0 +1,27 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "0f9f9b1c-db5e-4481-884a-954080a95e1d"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile2",
+      "name": "cf16e4bf-e5f6-49c1-8fea-5369ef454d9b"
+    }
+  ],
+  "lastDate": "1587453112749",
+  "owner": "via_common",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "cf16e4bf-e5f6-49c1-8fea-5369ef454d9b,0f9f9b1c-db5e-4481-884a-954080a95e1d",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "VIA - NavButtons v4"
+  }
+}

@@ -1,0 +1,925 @@
+<DashboardPluginModel description="" name="VIA - NavButtons v4" is_init="false">
+  <ModelInfo validated="true">
+    <Properties>
+    </Properties>
+    <Widgets>
+      <Widget name="ButtonNavigator" private="false">
+        <PropertyText>
+          <![CDATA[[
+    {
+        "name": "iconListAlign",
+        "label":  "Icon align",
+        "type":   "enums",
+        "value":  "center",
+        "options": [
+            {"value":"left", "label":"left-align"},
+            {"value":"center", "label":"center-align"},
+            {"value":"right", "label":"right-align"}
+        ]
+    },
+    {
+        "name":   "iconListVAlign",
+        "label":  "Icon vertical align",
+        "type":   "enums",
+        "value":  "top",
+        "options": [
+            {"value":"top", "label":"top"},
+            {"value":"middle", "label":"middle"},
+            {"value":"bottom", "label":"bottom"}
+            ]
+    },
+    {
+        "name":   "itemWidth",
+        "label":  "Item width",
+        "type":   "number",
+        "value":  "150"
+    },
+    {
+        "name":   "itemHeight",
+        "label":  "Icon height",
+        "type":   "number",
+        "value":  "50"
+    },
+    {
+        "name":   "limitSizeOn",
+        "label":  "Constrain item to",
+        "type":   "enums",
+        "value":  "itemHeight",
+        "options": [
+            {"value":"auto", "label":"Auto"},
+            {"value":"itemWiidth", "label":"item width"},
+            {"value":"itemHeight", "label":"item height"}
+            ]
+    },
+    {
+        "name":   "displayLabels",
+        "label":  "Display labels",
+        "type":   "enums",
+        "value":  "hover",
+        "options": [
+            {"value":"false", "label":"false"},
+            {"value":"display", "label":"display"},
+            {"value":"hover", "label":"hover"}
+            ]
+    },
+    {
+        "name":   "labelSize",
+        "label":  "Label size",
+        "type":   "number",
+        "value":  "11"
+    },
+    {
+        "name":   "iconColor",
+        "label":  "Icon color",
+        "type":   "string",
+        "value":  "gray"
+    },
+    {
+        "name":   "labelColor",
+        "label":  "Label color",
+        "type":   "string",
+        "value":  "gray"
+    },
+    {
+        "name":   "highlightColor",
+        "label":  "Highlight color",
+        "type":   "string",
+        "value":  "#FFB53E"
+    },
+    {
+        "name":   "highlightBorder",
+        "label":  "Highlight border",
+        "type":   "enums",
+        "value":  "none",
+        "options": [
+            {"value":"none", "label":"none"},
+            {"value":"top", "label":"top"},
+            {"value":"bottom", "label":"bottom"},
+            {"value":"left", "label":"left"},
+            {"value":"right", "label":"right"}
+            ]
+    },
+    {
+        "name":   "borderStyle",
+        "label":  "Border style",
+        "type":   "enums",
+        "value":  "solid",
+        "options": [
+            {"value":"solid", "label":"solid"},
+            {"value":"dotted", "label":"dotted"},
+            {"value":"dashed", "label":"dashed"}
+            ]
+    },
+    {
+        "name":   "maintainState",
+        "label":  "Maintain selection",
+        "type":   "boolean",
+        "value":  "true"
+    }
+    
+]]]>
+        </PropertyText>
+        <CodeText segment="#buildRendering">
+          <![CDATA[            var _self  = this;
+           _self._parseConfig();
+            if(_self._debug) console.log("buildRendering");
+            _self._loadRequiredElements();]]>
+        </CodeText>
+        <CodeText segment="#postCreate">
+          <![CDATA[            var _self = this;
+            _self._buildOut(); 
+            if(_self._debug) console.log("postCreate");]]>
+        </CodeText>
+        <CodeText segment="#updateWidthAndHeight">
+          <![CDATA[            this._width = w;
+            this._height = h;
+            var _self = this;
+            if(_self._debug) console.log("updateWidthAndHeight");]]>
+        </CodeText>
+        <CodeText segment="#doRefresh">
+          <![CDATA[            var _self = this;
+            _self._buildOut();
+            if(_self._debug) console.log("doRefresh");]]>
+        </CodeText>
+        <CodeText segment="#methods">
+          <![CDATA[        _uuid: null,
+        _box:  null,
+        _height: null,
+        _width: null,
+        _debug: false,
+        _useDummyData : function() {
+            var _self = this;
+            if(_self._debug) console.log("_useDummyData");
+            if (this.controller.initialConfig.appId == "dbp") {
+                // in Dashboard Plugin app... so either modeling preview or summary preview
+                return true;
+            }
+            if (this.controller.initialConfig.appId == "ax" && this.controller.mode == "edit.model") {
+                // in dashboard builder modeling context
+                return true;
+            }
+            return false;
+        },
+
+        _getDummyData : function(callback) {
+            var _self = this;
+            if(_self._debug) console.log("_getDummyData");
+            var uri = this.properties._model.substring(0, this.properties._model.lastIndexOf("/"));
+            d3.json("/vitria-oi/rest" + uri + "?op=vt:dbp:resource:menuData", function(error, json) {
+                if (error) console.log(json);
+                if (error) console.log(error);
+                callback(json);
+            });
+        },
+        _buildOut: function(){
+            var _self = this;
+            if(_self._debug) console.log("_buildOut"); 
+            //console.log($);
+            if(typeof $ == "undefined" ){
+                require(["https://code.jquery.com/jquery-3.3.1.js"], function() {
+                    if( _self._useDummyData() ){
+                        _self._getDummyData(function(data) {
+                            _self._result = data;
+                            _self._generateMenu(_self._result);
+                        });
+                    } else {
+                        if(_self.renderer.result && _self.renderer.result != null ){
+                            _self._generateMenu(_self.renderer.result);   
+                        }
+                    }    
+                });
+            } else {
+                if( _self._useDummyData() ){
+                        _self._getDummyData(function(data) {
+                            _self._result = data;
+                            _self._generateMenu(_self._result);
+                        });
+                    } else {
+                        if(_self.renderer.result && _self.renderer.result != null ){
+                            _self._generateMenu(_self.renderer.result);   
+                        }
+                    }
+            }
+        },
+        
+        _generateMenu: function(_data){
+            var _self = this;
+            if(_self._debug) console.log("_generateMenu");
+            _self._box = $( "."+_self._uuid+"buttonNavigationInner");
+            _self.buildList(_data);
+        	_self.setStyleAttributes();
+        },
+        
+        _loadRequiredElements: function(){
+            var _self = this;
+            if(_self._debug) console.log("loadRequirements");
+            var cssId = 'myCss';  // you could encode the css path itself to generate id..
+            if (!document.getElementById(cssId))
+            {
+                var head  = document.getElementsByTagName('head')[0];
+                var link  = document.createElement('link');
+                link.id   = cssId;
+                link.rel  = 'stylesheet';
+                link.type = 'text/css';
+                link.href = '/vitria-oi/app/dojoclient/html/vendors/fontawesome/css/fontawesome-all.min.css';
+                //link.href = '/proto/font-awesome/css/font-awesome.css';
+                link.media = 'all';
+                head.appendChild(link);
+            }
+            
+            var _style =  ".vDiv{position: relative;left: 0px;top: 0px;right: 0px;bottom: 0px;text-align:center;}";
+                _style += "."+_self._uuid+"buttonNavigationInner{ flex-flow: row wrap; white-space: normal; }";
+                _style += "."+_self._uuid+"buttonNavigationOuter ."+_self._uuid+"buttonNavigationInner .menuItem {vertical-align: top; cursor: default;padding: 2px 0px;margin: 2px; margin-bottom: 10px;border-left: 1px dotted transparent;border-right: 1px dotted transparent;border-top: 1px dotted transparent;border-bottom: 1px dotted transparent;text-align: center; float:none; display: inline-flex; }";
+                _style += "."+_self._uuid+"buttonNavigationOuter ."+_self._uuid+"buttonNavigationInner .menuItem I DIV {font-size: 10px;width: 100%;font-family: Arial;margin-top: 3px; margin-bottom: 10px; text-align: center;text-overflow: ellipsis;vertical-align: top; white-space: normal; font-weight: normal;}";
+                _style += "."+_self._uuid+"buttonNavigationOuter ."+_self._uuid+"buttonNavigationInner .menuItem I {opacity: 1;padding: 5px 0;vertical-align: top;width: 100%;vertical-align: top;}";
+                _style += "."+_self._uuid+"buttonNavigationOuter ."+_self._uuid+"buttonNavigationInner .menuItem:hover { color: " + _self._properties.highlightColor + " !important }";
+                _style += "."+_self._uuid+"buttonNavigationOuter ."+_self._uuid+"buttonNavigationInner .menuItem I:hover {opacity: 1; cursor: pointer}";
+                _style += "."+_self._uuid+"buttonNavigationOuter ."+_self._uuid+"buttonNavigationInner .menuItem.selected { opacity: 1; }";
+                _style += "."+_self._uuid+"buttonNavigationOuter ."+_self._uuid+"buttonNavigationInner .menuItem.selected I {opacity: 1;}";
+                _style += "."+_self._uuid+"buttonNavigationOuter ."+_self._uuid+"buttonNavigationInner .menuItem.selected I DIV {opacity: 1;}"; 
+            
+            this.domNode.innerHTML =  '<style>'+_style+'</style>';
+            this.domNode.innerHTML += '<div class="'+_self._uuid+'buttonNavigationInner"></div>';
+          
+        },
+        _parseConfig: function(){
+
+            var _self = this;
+            if(_self._debug) console.log("_parseConfig");
+            if (_self.initialConfig && _self.initialConfig.properties){
+            
+                var props = this.initialConfig.properties;
+                
+                if(props["iconListAlign"] != null){
+                    this._properties["iconListAlign"] = props["iconListAlign"];        
+                }
+                if(props["iconListValign"] != null){
+                    this._properties["iconListValign"] = props["iconListValign"];        
+                }
+                if(props["itemWidth"] != null){
+                    this._properties["itemWidth"] = props["itemWidth"];        
+                }
+                if(props["itemHeight"] != null){
+                    this._properties["itemHeight"] = props["itemHeight"];        
+                }
+                if(props["limitSizeOn"] != null){
+                    this._properties["limitSizeOn"] = props["limitSizeOn"];        
+                }
+                if(props["displayLabels"] != null){
+                    this._properties["displayLabels"] = props["displayLabels"];        
+                }
+                if(props["labelSize"] != null){
+                    this._properties["labelSize"] = props["labelSize"];        
+                }
+                if(props["iconColor"] != null){
+                    this._properties["iconColor"] = props["iconColor"];        
+                }
+                if(props["labelColor"] != null){
+                    this._properties["labelColor"] = props["labelColor"];        
+                }
+                if(props["highlightColor"] != null){
+                    this._properties["highlightColor"] = props["highlightColor"];        
+                }
+                if(props["highlightBorder"] != null){
+                    this._properties["highlightBorder"] = props["highlightBorder"];        
+                }
+                if(props["borderStyle"] != null){
+                    this._properties["borderStyle"] = props["borderStyle"];        
+                }
+                if(props["maintainState"] != null){
+                    this._properties["maintainState"] = props["maintainState"];        
+                }
+            } else {
+                console.log("Error retrieving initial properties");   
+            }
+            console.log(this._properties);
+            console.log(this.domNode.className);
+            
+        },
+        
+        _properties: {
+            iconListAlign: 'center',
+            iconListValign: 'top',
+            itemWidth: 150,
+            itemHeight: 60,
+            limitSizeOn: 'itemHeight',
+            displayLabels: 'hover', 
+            labelSize: 11,
+            iconColor: 'gray',
+            labelColor: 'gray',
+            highlightColor: "#ffb53e",
+            highlightBorder: 'none', 
+            borderStyle: 'solid',
+            maintainState: true
+            
+        },
+        
+        setStyleAttributes: function(){
+            var _self = this;
+			if(_self._debug) console.log("setAttributes");
+			var _items = $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem');
+			_self._box = $('.'+_self._uuid+'buttonNavigationInner');
+			_self._box.css('text-align', this._properties.iconListAlign );
+			_self._box.css('vertical-align', this._properties.iconListValign );
+			
+			var maxWidth = this._width;
+			var maxHeight = this._height;
+			
+			if( this._properties.itemWidth > maxWidth && this._properties.limitSizeOn == 'auto' ) _self._properties.itemWidth = maxWidth;
+			if( this._properties.itemHeight > maxHeight && this._properties.limitSizeOn == 'auto' ) _self._properties.itemHeight = maxHeight;
+			
+			_items.css('width', _self._properties.itemWidth-6);			
+			_items.css('height', _self._properties.itemHeight);
+			//	$('.'+_self._uuid+'menuItem').css('display', 'inline-block' );
+			
+			
+			var items =	$('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I');
+			for( var ic=0; ic < items.length; ic++ ){
+			 
+			    var item = items[ic];
+			   // if( !item.hasClass( "hasStatus" ) ) 
+			      //  item.css('color', _self._properties.iconColor );
+			    
+			}
+			
+
+			
+			
+			
+			
+				$('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I DIV').css('font-size', _self._properties.labelSize );
+				$('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I DIV').css('color', _self._properties.labelColor );
+			    if( this._properties.maintainState ){
+			        $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem.selected ').css('border-style', this._properties.borderStyle );
+			        $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem.selected ').css('border-color', "transparent" );
+			        switch ( _self._properties.highlightBorder.toLowerCase() ) {
+                        case 'top':
+                            $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem.selected ').css('border-top-color', _self._properties.highlightColor );
+    			            break;
+    			        case 'bottom':
+                            $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem.selected ').css('border-bottom-color', _self._properties.highlightColor );
+                            break;
+    			        case 'left':
+                            $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem.selected ').css('border-left-color', _self._properties.highlightColor );
+                            break;
+    			        case 'right':
+                            $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem.selected ').css('border-right-color', _self._properties.highlightColor );
+                            break;
+			        }
+                    $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem.selected I').css('color', _self._properties.highlightColor );
+                    $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem.selected I DIV').css('color', _self._properties.highlightColor );
+    			}
+			
+				if( _self._properties.displayLabels == 'display' ){
+				    if( _self._properties.limitSizeOn == 'itemWidth' || _self._properties.limitSizeOn == 'auto' ){
+					    $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I').css('font-size', _self._properties.itemWidth / 3);
+					    $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I IMG').css('width', _self._properties.itemWidth / 3 );
+				    } else if ( _self._properties.limitSizeOn == 'itemHeight' ){
+				        $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I').css('font-size', _self._properties.itemHeight * .75);
+					    $('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I IMG').css('height', _self._properties.itemHeight * .75 );
+				    }
+					$('.menuItem I DIV').css('display', 'block' );
+				} else if( _self._properties.displayLabels == 'hover' ){
+					$('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I').css('font-size', _self._properties.itemWidth / 2);
+					$('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I IMG').css('width', _self._properties.itemWidth / 2 );
+					$('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I DIV').css('display', 'none' );
+					$('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem').hover(
+						function(){
+							var _icn = $(this).children()[0];
+							_icn.style.fontSize = (_self._properties.itemWidth / 3)+'px';
+							
+							var _lbl = '';
+							var _icnImg = '';
+							if( $(this).children()[0].children.length < 2 ){
+								_lbl = $(this).children()[0].children[0];
+							} else if ( $(this).children()[0].children.length > 1) {
+								_icnImg = $(this).children()[0].children[0];
+								_icnImg.style.width = ( _self._properties.itemWidth / 3 ) + 'px';
+								_lbl	= $(this).children()[0].children[1];
+							}
+							
+							_lbl.style.display 	= 'block';
+						
+						}, 
+						function(){
+							var _icn = $(this).children()[0];
+							_icn.style.fontSize = (_self._properties.itemWidth / 2)+'px';	
+							
+							var _lbl = '';
+							var _icnImg = '';
+							if( $(this).children()[0].children.length < 2 ){
+								_lbl = $(this).children()[0].children[0];
+							} else if ( $(this).children()[0].children.length > 1) {
+								_icnImg = $(this).children()[0].children[0];
+								_icnImg.style.width = ( _self._properties.itemWidth / 2 ) + 'px';
+								_lbl	= $(this).children()[0].children[1];
+							}
+							
+                            _lbl.style.display = 'none';
+						
+						}
+					);
+					
+				} else {
+					$('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I').css('font-size', _self._properties.itemWidth / 2);
+					$('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I IMG').css('width', _self._properties.itemWidth / 2 );
+					$('.'+_self._uuid+'buttonNavigationOuter .'+_self._uuid+'buttonNavigationInner .menuItem I DIV').css('display', 'none' );
+				}
+			
+			
+			$("." + _self._uuid + "buttonNavigationInner .menuItem").mouseover(
+				function(){
+					var _icn = $(this).children()[0];
+					var _lbl = $(this).children()[0].firstChild;
+				//	_icn.style.color = _self._properties.highlightColor;
+					_lbl.style.color = _self._properties.highlightColor;
+				}, 
+				function(){
+					var _icn = $(this).children()[0];
+					var _lbl = $(this).children()[0].firstChild;
+				//	_icn.style.color = _self._properties.highlightColor;
+					_lbl.style.color = _self._properties.highlightColor;
+				}
+			);
+			
+			
+			$("." + _self._uuid + "buttonNavigationInner .menuItem").mouseout(
+			    function(){
+					var _icn = $(this).children()[0];
+					var _lbl = $(this).children()[0].firstChild;
+					//_icn.style.color = _self._properties.iconColor;
+					_lbl.style.color = _self._properties.labelColor;
+				},
+			    function(){
+					var _icn = $(this).children()[0];
+					var _lbl = $(this).children()[0].firstChild;
+					//_icn.style.color = _self._properties.iconColor;
+					_lbl.style.color = _self._properties.labelColor;
+				}
+				
+				
+			);
+			
+			
+			if (this._properties.maintainState ) {
+                $("." + _self._uuid + "buttonNavigationInner .menuItem.selected").mouseover(
+                    function(){
+                        var _icn = $(this).children()[0];
+                        var _lbl = $(this).children()[0].firstChild;
+                        _icn.style.color = _self._properties.highlightColor;
+                        _lbl.style.color = _self._properties.highlightColor;
+                    },
+                    function(){
+                        var _icn = $(this).children()[0];
+                        var _lbl = $(this).children()[0].firstChild;
+                        _icn.style.color = _self._properties.highlightColor;
+                        _lbl.style.color = _self._properties.highlightColor;
+                    });
+                    
+                $("." + _self._uuid + "buttonNavigationInner .menuItem.selected").mouseout(
+                    function(){
+                        var _icn = $(this).children()[0];
+                        var _lbl = $(this).children()[0].firstChild;
+                        _icn.style.color = _self._properties.highlightColor;
+                        _lbl.style.color = _self._properties.highlightColor;
+                    },
+                    function(){
+                        var _icn = $(this).children()[0];
+                        var _lbl = $(this).children()[0].firstChild;
+                        _icn.style.color = _self._properties.highlightColor;
+                        _lbl.style.color = _self._properties.highlightColor;
+                    });
+			}
+			
+		},
+		
+		
+		buildList: function(_data){
+		    var _self = this;
+		    if(_self._debug) console.log("buildList");
+            if( !_data || _data.length < 1 ) return;
+            console.log(_data);
+            
+            this._data = _data;
+            var _box = _self._box;
+			_box.empty();
+
+			var _classBase = "fa fa-fw ";
+		
+			for(var i=0; i < _data.length; i++ ){
+			    
+			    var _menuItemClass = "menuItem ";
+			    var statusColor = "";
+			    if( _data[i]['statusColor'] && _data[i]['statusColor'] !== null && _data[i]['statusColor'] !== "" ){
+			        statusColor = _data[i]['statusColor'];    
+			    }
+			    
+                if( statusColor !== "" ) _menuItemClass += "hasStatus ";
+                
+                if( _data[i]['selected'] && this._properties.maintainState ) {
+                    _menuItemClass += "selected ";
+                }
+                
+                var _objcolor = ( statusColor == "" ) ? _self._properties.iconColor : statusColor;
+                
+                var _obj = $('<div/>', {
+					"class": _menuItemClass,
+					"id": _data[i]['id'],
+					"style": "color: "+_objcolor
+                });
+				
+                _obj.click(function(){
+                    var _oid = $(this).attr('id');
+                    var _dtObj = {};
+
+                    for ( var j=0; j < _data.length; j++ ){
+                        if(_data[j]['id'] == _oid){
+                            _dtObj = _data[j];
+                            if(_self._debug){
+                                console.log("updateSelection");
+                                console.log(_dtObj);
+                            }
+                            _self.renderer.updateSelection([_dtObj]);
+                        }
+                    }
+                });	
+				
+				var _cb = _classBase;
+				//if( _data[i]['iconType'] == 'fa'){
+				if( ['fa', 'fas', 'far', 'fab', 'fal'].indexOf( _data[i]['iconType'] ) > -1 ){
+				    _cb = _data[i]['iconType'] + " fa-fw ";
+					_cb += _data[i]['icon']
+				}
+				var _icn = $("<i/>",{
+					"class": _cb
+				});
+				
+				var _disp = "{ display: none }"
+				if( _data[i]['iconType'] == 'img'){
+                    var _img = $("<img/>", {
+						"src": _data[i]['icon']						
+                    }).appendTo(_icn);
+                    
+                }
+				
+				var _lbl = $("<div/>",{
+					"text": _data[i]['label']
+				}).appendTo(_icn);
+				
+				
+				_icn.appendTo(_obj);
+				_box.append(_obj);
+			}
+			
+		}]]>
+        </CodeText>
+        <CodeText segment="#onNotify">
+          <![CDATA[            var _self = this;
+
+            if(_self._debug) console.log(evt);
+            
+            if (evt.navId != null && this._data) {
+                for ( var j=0; j < this._data.length; j++ ){
+                    if(this._data[j]['id'] == evt.navId){
+                        _dtObj = this._data[j];
+                        _dtObj["initiator"] = "dynamic";
+                        if(_self._debug){
+                            console.log("notify updateSelection");
+                            console.log(_dtObj);
+                        }
+                        _self.renderer.updateSelection([_dtObj]);
+                    }
+                }
+            }]]>
+        </CodeText>
+        <CodeText segment="undefined">
+          <![CDATA[]]>
+        </CodeText>
+        <CodeText segment="#functions">
+          <![CDATA[]]>
+        </CodeText>
+        <CodeText segment="#postMixInProperties">
+          <![CDATA[            
+            var array = new Uint32Array(1);
+                window.crypto.getRandomValues(array);
+                this._uuid = "_BN_"+array;
+            
+            ]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div class="${_uuid}buttonNavigationOuter" style="width:100%;height:100%;">
+    <div class="${_uuid}buttonNavigationInner" style="width:100%;height:100%;"></div>
+</div>
+]]>
+        </HtmlText>
+      </Widget>
+      <Widget name="LinkAndButtonBar" private="false">
+        <PropertyText>
+          <![CDATA[[]]]>
+        </PropertyText>
+        <CodeText segment="#methods">
+          <![CDATA[
+        _box:  null,
+        _height: null,
+        _width: null,
+        _debug: false,
+        _selGroup: "",
+        _useDummyData : function() {
+            var _self = this;
+            if(_self._debug) console.log("_useDummyData");
+            if (this.controller.initialConfig.appId == "dbp") {
+                // in Dashboard Plugin app... so either modeling preview or summary preview
+                return true;
+            }
+            if (this.controller.initialConfig.appId == "ax" && this.controller.mode == "edit.model") {
+                // in dashboard builder modeling context
+                return true;
+            }
+            return false;
+        },
+
+        _getDummyData : function(callback) {
+            var _self = this;
+            if(_self._debug) console.log("_getDummyData");
+            var uri = this.properties._model.substring(0, this.properties._model.lastIndexOf("/"));
+            d3.json("/vitria-oi/rest" + uri + "?op=vt:dbp:resource:LinkAndButtonData", function(error, json) {
+                if (error) console.log(json);
+                if (error) console.log(error);
+                callback(json);
+            });
+        },
+        
+        _buildOut: function(){
+            var _self = this;
+            if(_self._debug) console.log("_buildOut"); 
+            if(typeof $ == "undefined" ){
+                require(["/proto/lib/jquery-3.2.1.js"], function() {
+                    if( _self._useDummyData() ){
+                        _self._selGroup = "Residents";
+                        _self._getDummyData(function(data) {
+                            _self._result = data;
+                            if(_self._debug) console.log(_self._result);
+                                _self._parseNav(_self._selGroup);
+                        });
+                    } else {
+                        if(_self._result && _self._result != null ){
+                            debugger;
+                            if(_self._debug) console.log(_self.renderer.result);
+                                _self._parseNav(_self._selGroup);   
+                        }
+                    }    
+                });
+            } else {
+                if( _self._useDummyData() ){
+                        _self._selGroup = "Residents";
+                        _self._getDummyData(function(data) {
+                            _self._result = data;
+                            if( _self._debug) console.log(_self._result);
+                                _self._parseNav(_self._selGroup);
+                        });
+                    } else {
+                        if(_self._result && _self._result != null ){
+                           if(_self._debug) console.log(_self._result);
+                            _self._parseNav(_self._selGroup);   
+                        }
+                    }
+            }
+        },
+        _parseNav: function ( selected ){
+    		
+    		var _self = this;
+    		var obj;
+    		
+    		for( var i=0; i < _self._result.length; i++ ){
+    			if( _self._result[i].group == selected ){
+    				obj = _self._result[i];
+    			}	
+    		}
+    		
+    		_self._processNavObj(obj);
+    	},
+    	_processNavObj: function ( navObj ){
+    	    var _self = this;
+    	    var hasButtons = false;
+    	    var hasLinks = false;
+    		$('.buttonBar .context').empty();
+    		$('.buttonBar .buttons').empty();
+    		$('.buttonBar .links').empty();
+    		
+    		if( navObj['buttonItems'] && navObj['buttonItems'].length > 0 ) hasButtons = true;
+    		if( navObj['linkItems'] && navObj['linkItems'].length > 0 ) hasLinks = true;
+    		
+    		if( hasButtons || hasLinks) {
+    	    	$('.buttonBar .context').append("<div class='label'>" + navObj['group'] + ":</div>");
+    		}
+    		
+    		if( hasButtons ){
+    			for( var i = 0; i < navObj['buttonItems'].length ; i++ ){
+    				var sel = ( navObj['buttonItems'][i].selected ) ? 'selected' : '';
+    				$('.buttonBar .buttons').append("<div id='" + navObj['buttonItems'][i]['id'] + "' class='label "+sel+"'>" + navObj['buttonItems'][i]['label'] + ":</div>");
+    			}
+    		}
+    		
+    		if( hasLinks ){
+    		    hasLinks = true;
+    			for( var i = 0; i < navObj['linkItems'].length ; i++ ){
+    				var sel = ( navObj['linkItems'][i].selected ) ? 'selected' : '';
+    				$('.buttonBar .links').append("<div id='" + navObj['linkItems'][i]['id'] + "' class='label "+sel+"'>" + navObj['linkItems'][i]['label'] + "<span class='deleteItem' data='" + navObj['linkItems'][i]['id'] + "'>❌</span></div>");
+    			}
+    		}
+    		
+    		_self.renderer.updateSelection(navObj);
+    		
+    		$('.buttons .label').click(function(){
+    		    
+    			for(var i=0; i < _self._result.length; i++){
+    				if(_self._result[i]["group"] == _self._selGroup){
+    					for(var j=0; j < _self._result[i]['buttonItems'].length; j++){
+    						if( $(this).attr('id') == _self._result[i]['buttonItems'][j]['id'] ){
+    						    _self._result[i]['buttonItems'][j]['selected'] = true; 
+    						} else {
+    						    _self._result[i]['buttonItems'][j]['selected'] = false;
+    						}
+    					}
+    				}				
+    			}
+
+    			_self._processNavObj( navObj );	
+    			
+    		});				
+    		
+    		
+    		$('.links .label').click(function(){
+    		    debugger;
+    			for(var i=0; i < _self._result.length; i++){
+    				if(_self._result[i]["group"] == _self._selGroup){					
+    					for(var j=0; j < _self._result[i]['linkItems'].length; j++){
+    						if( $(this).attr('id') == _self._result[i]['linkItems'][j]['id'] ){
+    							if(_self._result[i]['linkItems'][j]['selected']){
+    								_self._result[i]['linkItems'][j]['selected'] = false; 
+    							} else {
+    								_self._result[i]['linkItems'][j]['selected'] = true;
+    							}
+    						}
+    					}
+    				}				
+    			}
+    			_self._processNavObj( navObj );
+    		});
+    		
+    		$('.buttonBar .links .label .deleteItem').click(function(){
+    			for(var i=0; i < _self._result.length; i++){
+    				if(_self._result[i]["group"] == _self._selGroup){					
+    					for(var j=0; j < _self._result[i]['linkItems'].length; j++){
+    						if( $(this).attr('data') == _self._result[i]['linkItems'][j]['id'] ){
+    							_self._result[i]['linkItems'].splice(j,1);
+    						}
+    					}
+    				}				
+    			}
+    			_self._processNavObj( navObj );
+    		});
+		
+	    }
+	    
+	    ]]>
+        </CodeText>
+        <CodeText segment="undefined">
+          <![CDATA[]]>
+        </CodeText>
+        <CodeText segment="#doRefresh">
+          <![CDATA[            var _self = this;
+            _self._buildOut();]]>
+        </CodeText>
+        <CodeText segment="#postCreate">
+          <![CDATA[            var _self = this;
+            _self._buildOut();]]>
+        </CodeText>
+        <CodeText segment="#onNotify">
+          <![CDATA[            var _self = this;
+            
+            if( evt && evt.widget){ 
+                
+                if( evt.widget.selection ){
+                    _self._selGroup = evt.widget.selection;
+                
+                }
+                
+                if( evt.widget.data ) {
+                    _self._result = evt.widget.data;
+                    _self._buildOut();  
+                }
+            }]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div class="buttonBar" >
+	<div class="context"></div>
+	<div class='buttons'></div>	
+	<div class="links"></div>
+	<style>
+	
+	:root{
+		--vit-primary-blue: #50ACD4;
+		--vit-secondary-blue: #2C8186;
+		--vit-tertiary-blue: #3A6579;
+	}
+
+	.buttonBar {
+		font-family: Arial;
+		font-size: 14px;
+		color: var(--vit-secondary-blue);
+		height: 100%;
+		width: 100%;
+		display: inline-flex;
+		flex-direction: row;
+		border-bottom: 1px solid var(--vit-secondary-blue);
+	}
+	
+	.buttonBar .context,
+	.buttonBar .buttons,
+	.buttonBar .links { 
+		vertical-align: bottom;
+		height: 100%;		
+		display: inline-flex;
+		min-width: 1px;
+		
+	}
+	
+	.buttonBar .context { 
+		
+	}
+	
+	.buttonBar .label { 
+		align-self: flex-end;
+		height: 20px;
+		padding: 6px 10px;
+		margin: 0 3px;
+	}
+	
+	.buttonBar .buttons {
+		padding: 0;
+		margin: 0 3px;
+	}
+	
+	.buttonBar .buttons .label {
+		background-color: var(--vit-secondary-blue);
+		color: white;
+		border-radius: 4px;
+		border-bottom-left-radius: 0;
+		border-bottom-right-radius: 0;
+		opacity: .8;
+	}
+	
+	.buttonBar .buttons .label:hover{
+		opacity: 1;
+	}
+	
+	.buttonBar .buttons .label.selected{
+		background-color: var(--vit-tertiary-blue);
+		opacity: 1;
+	}
+	
+	.buttonBar .links .label {
+		cursor: pointer;
+		padding: 6px 5px;
+	}
+	
+	.buttonBar .links .label.selected {
+		color: var(--vit-tertiary-blue);
+		border-bottom: 2px dotted var(--vit-secondary-blue);
+		margin-bottom: 2px;
+		height: 18px;
+		padding-bottom: 4px;
+	}
+	
+	.buttonBar .links .label .deleteItem {
+		cursor:pointer;
+		font-size: 11px;
+		padding: 0 0 5px 5px;
+	}
+</style>
+</div>
+]]>
+        </HtmlText>
+      </Widget>
+    </Widgets>
+    <Functions>
+    </Functions>
+    <Services>
+    </Services>
+    <Resources>
+      <Resource uuid="cf16e4bf-e5f6-49c1-8fea-5369ef454d9b" name="LinkAndButtonData" type="text/plain" size="1442" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="0f9f9b1c-db5e-4481-884a-954080a95e1d" name="menuData" type="text/plain" size="1077" private="false">
+        <Description>
+          <![CDATA[Lorem ipsum]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>

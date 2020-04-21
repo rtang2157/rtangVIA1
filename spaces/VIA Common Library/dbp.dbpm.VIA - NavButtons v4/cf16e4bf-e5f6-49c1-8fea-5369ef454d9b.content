@@ -1,0 +1,45 @@
+[
+	{ 
+		"group": "Dashboard",
+		"buttonItems": [],
+		"linkItems": []	
+	},
+	{ 
+		"group": "Residents",
+		"buttonItems": [
+			{ "id":"Alerts", "label": "Alerts", "selected": true},
+			{ "id":"Vitals", "label": "Vitals", "selected": false},
+			{ "id":"Device", "label": "Device", "selected": false},
+			{ "id":"Logs", "label": "Logs", "selected": false},
+			{ "id":"Raw", "label": "Raw", "selected": false}
+		],
+		"linkItems": [
+			{ "id":"4_07_A", "label": "4 07A", "selected": false},
+			{ "id":"4_10_A", "label": "4 10A", "selected": false},
+			{ "id":"4_13_B", "label": "4 13B", "selected": false},
+			{ "id":"4_21_A", "label": "4 21A", "selected": true},
+			{ "id":"4_22_B", "label": "4 22B", "selected": false}
+		]
+	},
+	{ 
+		"group": "Devices",
+		"buttonItems": [],
+		"linkItems": [
+			{ "id":"C142178", "label": "C142178", "selected": false},
+			{ "id":"C154263", "label": "C154263", "selected": false},
+			{ "id":"C162419", "label": "C162419", "selected": false},
+			{ "id":"C163520", "label": "C163520", "selected": false}
+		]	
+	},
+	{ 
+		"group": "Reports",
+		"buttonItems": [
+			{ "id":"Alerts", "label": "Alerts", "selected": false},
+			{ "id":"Vitals", "label": "Vitals", "selected": false},
+			{ "id":"Device", "label": "Device", "selected": false},
+			{ "id":"Logs", "label": "Logs", "selected": false},
+			{ "id":"Raw", "label": "Raw", "selected": false}
+		],
+		"linkItems": []		
+	}
+]
