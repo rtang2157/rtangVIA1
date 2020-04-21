@@ -1,0 +1,44 @@
+Index: plotly-1.47.4.js
+===================================================================
+--- plotly-1.47.4.js	(revision 58362)
++++ plotly-1.47.4.js	(working copy)
+@@ -86642,7 +86642,7 @@
+         startY = offset[1];
+         initialTarget = e.target;
+         initialEvent = e;
+-        rightClick = e.buttons === 2 || e.ctrlKey;
++        rightClick = e.buttons === 2;
+ 
+         // fix Fx.hover for touch events
+         if(typeof e.clientX === 'undefined' && typeof e.clientY === 'undefined') {
+@@ -121484,7 +121484,12 @@
+             if(isMainDrag) {
+                 // main dragger handles all drag modes, and changes
+                 // to pan (or to zoom if it already is pan) on shift
+-                if(e.shiftKey) {
++                if(dragModeNow === 'select'){
++                    if (e.ctrlKey || e.metaKey)
++                        dragModeNow = 'zoom';
++                    else if(e.shiftKey)
++                        dragModeNow = 'pan';
++                }else if(e.shiftKey) {
+                     if(dragModeNow === 'pan') dragModeNow = 'zoom';
+                     else if(!isSelectOrLasso(dragModeNow)) dragModeNow = 'pan';
+                 } else if(e.ctrlKey) {
+
+
+
+Index: plotly-1.47.4.js
+===================================================================
+--- plotly-1.47.4.js	(revision 258611)
++++ plotly-1.47.4.js	(working copy)
+@@ -128700,7 +128700,7 @@
+                         range: ax.showexponent === 'none' ? ax.range.map(ax.r2d) : [0, v || 1]
+                     };
+                     autoTickRound(ah);
+-                    tickRound = (Number(ah._tickround) || 0) + 4;
++                    tickRound = 2 - ah._tickexponent;
+                     exponent = ah._tickexponent;
+                     if (ax.hoverformat) tickformat = ax.hoverformat;
+                 }
+
