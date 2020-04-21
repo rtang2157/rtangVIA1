@@ -17,15 +17,7 @@
         <Properties>
         </Properties>
       </Model>
-      <Model name="Types" id="67569d60-60b5-42a6-87e7-a58cc53e8516" type="folder" version="1" path="">
-        <Contents>
-        </Contents>
-        <References>
-        </References>
-        <Properties>
-        </Properties>
-      </Model>
-      <Model name="folder1" id="c6cb8c1e-222e-4340-8b75-c49fbf7cf26c" type="folder" version="2" path="">
+      <Model name="Types" id="67569d60-60b5-42a6-87e7-a58cc53e8516" type="folder" version="2" path="">
         <Contents>
         </Contents>
         <References>
