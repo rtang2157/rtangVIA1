@@ -1,0 +1,51 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile1",
+      "name": "24a9ab8a-2805-43f4-8fd5-247a16aad0fa"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile2",
+      "name": "a192dc8d-fce5-4d27-80d3-5b4ee96a62bb"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile3",
+      "name": "acc8f306-1e60-48c3-8dec-b10bea8b9dd4"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile4",
+      "name": "2c84a36c-f027-4b62-8220-24049051b77d"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile5",
+      "name": "ffa99b54-de52-4f25-86b5-ecf79c94a235"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile6",
+      "name": "e81dfc46-fa9f-4012-8580-04ee3c6f4c59"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile7",
+      "name": "c281b098-e439-487a-80e4-11b136eaa036"
+    }
+  ],
+  "lastDate": "1587453112733",
+  "owner": "via_common",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "modelStatus": "valid",
+    "name": "VIA - SVG Map"
+  }
+}
