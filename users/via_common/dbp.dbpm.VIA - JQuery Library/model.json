@@ -1,0 +1,21 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "classname": "bytearray",
+      "fileref": "ModelContentFile1",
+      "name": "898fbf72-196b-4a2b-8683-31878df4ed9f"
+    }
+  ],
+  "lastDate": "1587449592774",
+  "owner": "via_common",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "modelStatus": "valid",
+    "name": "VIA - JQuery Library"
+  }
+}
