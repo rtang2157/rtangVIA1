@@ -1,0 +1,22 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "518ff37a-aa75-4416-810f-d475cfd49349"
+    }
+  ],
+  "lastDate": "1587453112743",
+  "owner": "via_common",
+  "properties": {
+    "_RESOURCE_Description": "Description of New Model 0",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "518ff37a-aa75-4416-810f-d475cfd49349",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "VIA - Server Logs Service"
+  }
+}

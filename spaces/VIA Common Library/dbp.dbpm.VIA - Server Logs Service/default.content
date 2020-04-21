@@ -1,0 +1,997 @@
+<DashboardPluginModel description="Description of New Model 0" name="VIA - Server Logs Service" is_init="false">
+  <ModelInfo validated="true">
+    <Properties>
+    </Properties>
+    <Widgets>
+      <Widget name="ServerLogsWidget" private="false">
+        <PropertyText>
+          <![CDATA[[]]]>
+        </PropertyText>
+        <CodeText segment="#doRefresh">
+          <![CDATA[
+            AppUtil.removeAllChildrenOf(this._logsTable);
+            
+            this._logs = [];
+            this._infoCols = [];
+            this._serverCols = [];
+            this._fromCols = [];
+
+            var self = this;
+            this._plugin.getServerLogs(function(response) {
+                if (response.status == "OK") {
+                    var servers = {};
+                    self._logs = response.value;
+                    self._logs.forEach(function(log) {
+                        if (servers[log.server] == null) {
+                            servers[log.server] = true;
+                        }
+                        log.attachment = log.all.length > 1 ? "<i class='fas fa-paperclip'></i>" : "";
+                    });
+                    var options = [];
+                    for (var server in servers) {
+                        options.push({
+                            "value" : server,
+                            "label" : server
+                        });
+                    }
+                    options.sort(function(a,b) {
+                        return a.label.localeCompare(b.label);
+                    });
+                    if (options.length == 1) {
+                        // only one server
+                        self._serverName = options[0].value;
+                        self._showServer = false;
+                    }
+                    else {
+                        // multiple servers
+                        self._serverName = "#";
+                        self._showServer = true;
+                        options.unshift({
+                            "value" : "#",
+                            "label" : "(ALL)"
+                        });
+                    }
+                    var item = self._toolbarItems["serverName"];
+                    item.widget.removeOption(item.widget.getOptions());
+                    item.widget.addOption(options);
+                    item.widget.set("value", self._serverName, false);
+                    item.widget.set("disabled", options.length == 1);
+                }
+                self._doUpdateLogs(false);
+            });
+]]>
+        </CodeText>
+        <CodeText segment="#methods">
+          <![CDATA[
+        _checkLogLevel : function(log) {
+            switch (this._logLevel) {
+                case "ALL":
+                    return true;
+                case "DEBUG":
+                    return log.level == "ERROR" || log.level == "WARN" || log.level == "INFO" || log.level == "DEBUG";
+                case "INFO":
+                    return log.level == "ERROR" || log.level == "WARN" || log.level == "INFO";
+                case "WARN":
+                    return log.level == "ERROR" || log.level == "WARN";
+                case "ERROR":
+                    return log.level == "ERROR";
+            }
+            return true;
+        },
+
+        _onClickAttachment : function(log) {
+        	this.tile.updateUIEvent([{
+                "__TYPE__" : "onClickAttachment",
+                "__EVENT__" : {
+                    "data" : log.all
+                }
+            }]);
+        },
+
+        _doUpdateLogs : function(clear) {
+            if (clear) {
+                AppUtil.removeAllChildrenOf(this._logsTable);
+            }
+            var regex = null;
+            if (this._filterText != null && this._filterText.trim() != "") {
+                regex = new RegExp(this._filterText, "gi");
+            }
+            for (var i=0, n=this._logs.length; i<n; i++) {
+                var log = this._logs[i];
+                if (!this._checkLogLevel(log)) continue;
+                if (regex != null && !regex.test(log.text)) continue;
+                if (this._showServer && this._serverName != "#" && this._serverName != log.server) continue;
+
+                var tr = domConstruct.create("tr");
+                this._logsTable.appendChild(tr);
+                
+                var td = domConstruct.create("td", {
+                    "class" : "log-attachment",
+                });
+                td.innerHTML = log.attachment;
+                tr.appendChild(td);
+                
+                if (log.attachment != "") {
+                    domStyle.set(td, "cursor", "pointer");
+                    on(td, "click", lang.partial(lang.hitch(this, "_onClickAttachment"), log));
+                }
+
+                var td = domConstruct.create("td", {
+                    "class" : "log-info disallow-selection" + (log.level == "ERROR" || log.level == "FATAL" ? " log-error" : ""),
+                });
+                td.innerHTML = this._localTime ? parseInfoToLocalTime(log.info) : log.info;
+                tr.appendChild(td);
+                this._infoCols.push(td);
+
+                if (this._showServer) {
+                    var td = domConstruct.create("td", {
+                        "class" : "log-server disallow-selection",
+                    });
+                    td.innerHTML = log.server;
+                    tr.appendChild(td);
+                    this._serverCols.push(td);
+                }
+                
+                if (this._showSource) {
+                    var td = domConstruct.create("td", {
+                        "class" : "log-from disallow-selection",
+                    });
+                    td.innerHTML = log.from;
+                    if (log.clazz != "") {
+                        td.title = log.clazz;
+                    }
+                    tr.appendChild(td);
+                    this._fromCols.push(td);
+                }
+                
+                var td = domConstruct.create("td", {
+                    "class" : "log-text",
+                });
+                td.innerHTML = log.text;
+                tr.appendChild(td);
+            }
+            this._logsDiv.scrollTop = this._logsDiv.scrollHeight;
+        },
+        
+        _onToolBarSelect : function(item, value) {
+            switch (value) {
+                case "refresh":
+                    this.doRefresh();
+                    break;
+                case "download":
+                    this._plugin.downloadServerLogs(this._serverName != "#" ? this._serverName : null, function(response) {
+                        if (response.status == "OK") {
+                            var uuid = response.value;
+                            window.open("/vitria-oi/rest/app/dojoclient/user/*/*/server.log?op=downloadcsv&uid="+uuid);
+                        }
+                    });
+                    break;
+                case "logLevel":
+                    this._logLevel = item.widget.get("value");
+                    this._doUpdateLogs(true);
+                    break;
+                case "serverName":
+                    this._serverName = item.widget.get("value");
+                    this._doUpdateLogs(true);
+                    break;
+                case "source":
+                    this._showSource = item.widget.get("checked");
+                    this._doUpdateLogs(true);
+                    break;
+                case "localTime":
+                    this._localTime = item.widget.get("checked");
+                    this._doUpdateLogs(true);
+                    break;
+                case "filter":
+                    this._filterText = item.widget.get("value").trim();
+                    this._doUpdateLogs(true);
+                    break;
+            }
+        },
+
+        _createToolBar : function(defs) {
+            this._toolbarItems = {};
+
+            var div = domConstruct.create("div", {
+                style : "width:100%;height:auto;text-align:left;display:inline-block;"
+            });
+            this._headerDiv.appendChild(div);
+
+            var self = this;
+            parseToolBarDefs(this._toolbarItems, defs, function(value) {
+                var item = self._toolbarItems[value];
+                if (item != null) {
+                    self._onToolBarSelect(item, value);
+                }
+            }, function(toolbar) {
+                self._toolbar = toolbar;
+                self._toolbar.placeAt(div);
+                self._toolbar.startup();
+                
+                domStyle.set(self._toolbar.domNode, {
+                    "border" : "1px solid #b5bcc7",
+                });
+            });
+        },
+]]>
+        </CodeText>
+        <CodeText segment="#constructor">
+          <![CDATA[
+            this._plugin = Plugin();
+            this._logLevel = "ALL";
+            this._serverName = "#";
+            this._showSource = false;
+            this._showServer = false;
+            this._localTime  = false;
+            this._filterText = "";
+            ]]>
+        </CodeText>
+        <CodeText segment="#postCreate">
+          <![CDATA[
+            this.doRefresh();
+            
+            this._createToolBar([
+                {
+                    "label" : "<i class='fas fa-sync'>",
+                    "title" : "Refresh server log",
+                    "value" : "refresh"
+                },
+                {
+                    "label" : "<i class='fas fa-cloud-download-alt'></i>",
+                    "title" : "Download server log",
+                    "value" : "download"
+                },
+                {
+                    "label" : "Log Level:",
+                },
+                {
+                    "name" : "logLevel",
+                    "style" : "width:100px;",
+                    "value" : this._logLevel,
+                    "type" : "enumeration",
+                    "options" : [
+                        {
+                            "value" : "ERROR",
+                            "label" : "ERROR"
+                        },
+                        {
+                            "value" : "WARN",
+                            "label" : "WARN"
+                        },
+                        {
+                            "value" : "INFO",
+                            "label" : "INFO"
+                        },
+                        {
+                            "value" : "DEBUG",
+                            "label" : "DEBUG"
+                        },
+                        {
+                            "value" : "ALL",
+                            "label" : "ALL"
+                        },
+                    ]
+                },
+                {
+                    "label" : "Server:",
+                },
+                {
+                    "name" : "serverName",
+                    "style" : "width:100px;",
+                    "value" : this._serverName,
+                    "type" : "enumeration",
+                    "options" : [
+                        {
+                            "value" : "#",
+                            "label" : "ALL"
+                        },
+                    ]
+                },
+                {
+                    "label" : "Source:",
+                },
+                {
+                    "name"  : "source",
+                    "type"  : "boolean",
+                    "value" : false,
+                },
+                {
+                    "label" : "Local Time:",
+                },
+                {
+                    "name"  : "localTime",
+                    "type"  : "boolean",
+                    "value" : false,
+                },
+                {
+                    "label" : "Filter:",
+                },
+                {
+                    "name"  : "filter",
+                    "type"  : "string",
+                    "style" : "width:300px;font-family:Courier New;",
+                    "value" : "",
+                    "placeholder" : "Regular Expression",
+                },
+            ]);]]>
+        </CodeText>
+        <CodeText segment="#functions">
+          <![CDATA[
+    function parseToolBarDefs(toolbarItems, defs, onSelect, onComplete)
+    {
+        require(["dijit/form/Button", "dijit/Toolbar", "dijit/ToolbarSeparator", "dijit/form/Select", "dijit/form/CheckBox", "dijit/form/TextBox", "dojo/domReady!"],
+                function(Button, Toolbar, ToolbarSeparator, Select, CheckBox, TextBox)
+        {
+            var toolbar = new Toolbar({
+                "class" : "via-action-bar-toolbar",
+            });
+            for (var i=0; i<defs.length; i++) {
+                var def = defs[i];
+                if (def.label != null) {
+                    if (def.value != null) {
+                        // toolbar item
+                        var config = {
+                            name : def.value,
+                            label : def.label,
+                            showLabel : def.icon == null,
+                            iconClass: def.icon,
+                            onClick : lang.partial(function(value) {
+                                onSelect(value);
+                            }, def.value),
+                        };
+                        if (def.title != null) {
+                            config.title = def.title;
+                        }
+                        var button = new Button(config);
+                        button.startup();
+                        toolbar.addChild(button);
+                        def.widget = button;
+                        toolbarItems[def.value] = def;
+                    }
+                    else {
+                        // label using disabled button
+                        var config = {
+                            "label" : def.label,
+                            "class" : "via-action-bar-toolbar-button-as-label",
+                            "disabled" : true
+                        };
+                        if (def.title != null) {
+                            config.title = def.title;
+                        }
+                        var button = new Button(config);
+                        button.startup();
+                        toolbar.addChild(button);
+                    }
+                }
+                else if (def.type != null) {
+                    switch (def.type) {
+                        case "enumeration":
+                            if (def.options != null) {
+                                var config = {
+                                    options : def.options,
+                                    style : def.style || "",
+                                    onChange : lang.partial(function(name) {
+                                        onSelect(name);
+                                    }, def.name),
+                                };
+                                var select = new Select(config);
+                                select.startup();
+                                toolbar.addChild(select);
+                                def.widget = select;
+                                toolbarItems[def.name] = def;
+                                if (def.value != null) {
+                                    select.set("value", def.value, false);
+                                }
+                            }
+                            break;
+                        case "boolean":
+                                var config = {
+                                    onChange : lang.partial(function(name) {
+                                        onSelect(name);
+                                    }, def.name),
+                                };
+                                var checkbox = new CheckBox(config);
+                                checkbox.startup();
+                                toolbar.addChild(checkbox);
+                                def.widget = checkbox;
+                                toolbarItems[def.name] = def;
+                                if (def.value != null) {
+                                    checkbox.set("checked", def.value, false);
+                                }
+                            break;
+                        case "string":
+                                var config = {
+                                    style : def.style || "",
+                                    onChange : lang.partial(function(name, evt) {
+                                        onSelect(name);
+                                    }, def.name),
+                                    onKeyUp : lang.partial(function(name, evt) {
+                                        if (evt.keyCode == 13) {
+                                            onSelect(name);
+                                        }
+                                    }, def.name),
+                                };
+                                if (def.placeholder != null) {
+                                    config.placeholder = def.placeholder;
+                                }
+                                var textbox = new TextBox(config);
+                                textbox.startup();
+                                toolbar.addChild(textbox);
+                                def.widget = textbox;
+                                toolbarItems[def.name] = def;
+                                if (def.value != null) {
+                                    textbox.set("value", def.value, false);
+                                }
+                            break;
+                    }
+                }
+                else {
+                    toolbar.addChild(new ToolbarSeparator());
+                }
+            }
+            onComplete(toolbar);
+        });
+    }
+
+    function parseInfoToLocalTime(info)
+    {
+        var sp1 = info.indexOf(" ");
+        var sp2 = sp1 != -1 ? info.indexOf(" ", sp1+1) : -1;
+        if (sp1 != -1 && sp2 != -1) {
+            var date  = info.substring(0, sp1);
+            var time  = info.substring(sp1+1, sp2);
+            var level = info.substring(sp2+1);
+            var msec  = "";
+            var sep   = time.indexOf(",");
+            if (sep != -1) {
+                msec = time.substring(sep+1);
+                time = time.substring(0, sep);
+            }
+            var local = new Date(date + " " + time + "Z").toLocaleString();
+            if (msec != "") {
+                var sep   = local.lastIndexOf(" ");
+                if (sep != -1) {
+                    local = local.substring(0, sep) + "." + msec + local.substring(sep);
+                }
+            }
+            return local + " " + level;
+        }
+        return info;
+    }
+
+]]>
+        </CodeText>
+        <CodeText segment="#buildRendering">
+          <![CDATA[]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div style="width:100%;height:100%;">
+    <style>
+        @import '/vitria-oi/rest/app/dbp/user/via_common/dbpm/VIA - Common/VIA-CSS';
+        .log-attachment {
+            width:50px;
+            padding:3px 5px 3px 5px;
+        }
+        .log-attachment:hover {
+            color:red;
+        }
+        .log-info {
+            font-family:Courier New;
+            width:1%;
+            padding:3px 2px 3px 5px;
+            white-space:pre;
+            cursor: not-allowed;
+        }
+        .log-server {
+            font-family:Courier New;
+            width:1%;
+            padding:3px 2px 3px 5px;
+            white-space:pre;
+            cursor: not-allowed;
+        }
+        .log-from {
+            font-family:Courier New;
+            width:1%;
+            padding:3px 2px 3px 5px;
+            white-space:pre;
+            cursor: not-allowed;
+        }
+        .log-text {
+            font-family:Courier New;
+            width:97%;
+            padding:3px 5px 3px 5px;
+            white-space:pre;
+            cursor: text;
+        }
+        .log-first-line {
+            font-family:Courier New;
+            width:100%;
+            padding:3px 5px 3px 5px;
+            white-space:pre;
+        }
+        .log-error {
+            color:red;
+        }
+        .log-header {
+            width:100%;
+            height:29px;
+            padding:0px;
+            border:none;
+        }
+        .log-div {
+            width:100%;
+            height:calc(100% - 29px);
+            overflow:auto;
+        }
+        .disallow-selection {
+            -webkit-touch-callout: none;
+        	-webkit-user-select: none;
+        	-khtml-user-select: none;
+        	-moz-user-select: none;
+        	-ms-user-select: none;
+        	-o-user-select:none;
+        	user-select: none;
+        }
+    </style>
+    <div data-dojo-attach-point='_headerDiv' class="log-header">
+    </div>
+    <div data-dojo-attach-point='_logsDiv' class="log-div via-scroller">
+        <table data-dojo-attach-point='_logsTable' cellspacing="0" cellpadding="0">
+        </table>
+    </div>
+</div>
+]]>
+        </HtmlText>
+      </Widget>
+    </Widgets>
+    <Functions>
+    </Functions>
+    <Services>
+      <Service name="_checkExcludeLogEntry" args="excludeLogPatterns,line" private="true">
+        <CodeText>
+          <![CDATA[if (excludeLogPatterns.length == 0) return false;
+for (var i=0; i<excludeLogPatterns.length; i++) {
+    if (line.indexOf(excludeLogPatterns[i]) != -1) return true;
+}
+return false;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_createErrorEntry" args="server,error" private="true">
+        <CodeText>
+          <![CDATA[//print("_createErrorEntry: server="+server);
+//print("_createErrorEntry: error="+error);
+
+var SimpleDateFormat = java.text.SimpleDateFormat;
+var JavaDate = java.util.Date;
+
+var now = new JavaDate();
+var fmt = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss,SSS");
+
+var info = fmt.format(now) + " ERROR";
+var from = "[Server Logs Service]";
+var line = info + " " + from + " " + error;
+
+var entry = {
+    index  : 0,
+    server : server,
+    text   : error,
+    first  : line,
+    all    : [line],
+    info   : info,
+    from   : from,
+    clazz  : "[/app/dbp/space/VIA Common Library/dbpm/VIA - Server Logs Service]",
+    epoch  : now.getTime(),
+    level  : "ERROR",
+};
+return entry;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getLogEntries" args="logResult,serverType,serverName,maxLineCount,excludeLogPatterns" private="true">
+        <CodeText>
+          <![CDATA[//print("_getLogEntries: serverName="+serverName);
+
+var RuntimeAdminLib = com.vitria.m3oui.admin.RuntimeAdminLib;
+var ProjectInstance = com.vitria.m3oui.admin.service.ProjectInstance;
+var DomainServiceClient = com.vitria.domainservice.DomainServiceClient;
+var LogAccessorClientLib = com.vitria.logaccessor.LogAccessorClientLib;
+var HashMap = java.util.HashMap;
+
+try {
+    var serverInfo = null;
+    switch (serverType) {
+        case "FeedServer":
+            serverInfo = DomainServiceClient.getClient().getFeedServerInfo(serverName, new HashMap());
+            break;
+        case "PresentationServer":
+            serverInfo = DomainServiceClient.getClient().getPresentationServerInfo(serverName, new HashMap());
+            break;
+        case "DomainServer":
+            serverInfo = DomainServiceClient.getClient().getDomainServerInfo(serverName, new HashMap());
+            break;
+        case "RuntimeServer":
+            serverInfo = DomainServiceClient.getClient().getRuntimeServerInfo(serverName, new HashMap());
+            break;
+    }
+    if (serverInfo != null) {
+        var start = Date.now();
+        var accessor = LogAccessorClientLib.getLogAccessor(serverInfo.getNamingInfo());
+        var result = accessor.getLatestLogEntries(maxLineCount);
+        var logEntries = result.getLogEntries();
+        for (var i=0, n=logEntries.size(); i<n; i++) {
+            var logEntry = logEntries.get(i);
+            var lines = logEntry.getContent().trim();
+            if (!this._checkExcludeLogEntry(excludeLogPatterns, lines)) {
+                lines = lines.replace("\\r\n", "\n").replace("\\r", "").split("\n");
+                logResult.push(this._parseLogEntry(i, serverName, lines));
+            }
+        }
+        //print("_getLogEntries: serverName=" + serverName + " length="+logEntries.size()+" elapsed="+(Date.now()-start)+"ms");
+    }
+    else {
+        print("_getLogEntries: serverName=" + serverName + " - cannot get server info");
+        logResult.push(this._createErrorEntry(serverName, "Cannot get server info"));
+    }
+}
+catch (err) {
+    print("_getLogEntries: serverName=" + serverName + " error=" + err);
+    logResult.push(this._createErrorEntry(serverName, err));
+}
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getQueryConfig" args="" private="true">
+        <CodeText>
+          <![CDATA[return JSON.parse(Context.getLocalResource("QueryConfig"));
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getServerInfo" args="server" private="true">
+        <CodeText>
+          <![CDATA[var ServerInfo = com.vitria.domainservice.ServerInfo
+
+function getServerStatus(status)
+{
+    if (status == ServerInfo.SERVER_UNKNOWN) {
+        return "Unknown";
+    }
+    else if (status == ServerInfo.SERVER_ON) {
+        return "Running";
+    }
+    else if (status == ServerInfo.SERVER_OFF) {
+        return "Stopped";
+    }
+    return "Unknown";
+}
+
+var info = server.getServerInfo();
+return {
+    _id_                : info.getType() + ":" + info.getName(),
+    name                : info.getName(),
+    type                : info.getType(),
+    status              : getServerStatus(info.getStatus()),
+    namingInfo          : info.getNamingInfo(),
+    providerURL         : info.getNamingInfo().getNamingProviderUrl(),
+    backup              : info.getBackup(),
+    failureRetryCount   : info.getFailureRetryCount(),
+    timestamp           : info.getTimestamp(),
+    description         : info.getDescription(),
+    domainName          : info.getDomainName(),
+    haGroup             : info.getHAGroup(),
+    logicalName         : info.getLogicalName(),
+    serverType          : info.getNodeType(),
+    pool                : info.getPool(),
+    registryName        : info.getRegistryName(),
+    serverName          : info.getServerName(),
+    tag                 : info.getTag(),
+    tagSource           : info.getTagSource(),
+    isMonitoringEnabled : server.isMonitoringEnabled(),
+    cpu                 : server.getServerCpu(),
+    heap                : server.getServerHeap(),
+    heapAvailable       : server.getServerHeapAvailable(),
+    cpuAvg              : server.getServerCpuAVG(),
+    heapAvg             : server.getServerHeapAVG(),
+    heapAvailableAvg    : server.getServerHeapAvailableAVG(),
+};
+]]>
+        </CodeText>
+      </Service>
+      <Service name="_getServers" args="serverType" private="true">
+        <CodeText>
+          <![CDATA[var VirtualServerLib = com.vitria.m3oui.virtualserver.VirtualServerLib;
+var VirtualServerClient = com.vitria.component.server.client.VirtualServerClient;
+var DomainServiceClient = com.vitria.domainservice.DomainServiceClient;
+var HashMap = java.util.HashMap;
+
+var servers = [];
+var serversMap = {};
+if (serverType == null) {
+    serverType = ["PresentationServer"];
+} else if (!Array.isArray(serverType)) {
+    serverType = [serverType];
+}
+
+var self = this;
+serverType.forEach(function(serverType) {
+    switch (serverType) {
+        case "FeedServer":
+            var list = VirtualServerLib.listRealFeedServers(null);
+            if (list != null && list.size() > 0) {
+                for (var i = 0; i < list.size(); i++) {
+                    var server = self._getServerInfo(list.get(i));
+                    if (server != null && !serversMap[server.providerURL]) {
+                        serversMap[server.providerURL] = server;
+                        servers.push(server);
+                    }
+                }
+            }
+            break;
+        case "PresentationServer":
+            var list = VirtualServerLib.listPresentationServers(new HashMap());
+            if (list != null && list.size() > 0) {
+                for (var i = 0; i < list.size(); i++) {
+                    var server = self._getServerInfo(list.get(i));
+                    if (server != null && !serversMap[server.providerURL]) {
+                        serversMap[server.providerURL] = server;
+                        servers.push(server);
+                    }
+                }
+            }
+            break;
+        case "DomainServer":
+            var list = VirtualServerLib.listDomainServers(null);
+            if (list != null && list.size() > 0) {
+                for (var i = 0; i < list.size(); i++) {
+                    var server = self._getServerInfo(list.get(i));
+                    if (server != null && !serversMap[server.providerURL]) {
+                        serversMap[server.providerURL] = server;
+                        servers.push(server);
+                    }
+                }
+            }
+            break;
+        case "RuntimeServer":
+            var list = VirtualServerClient.listVirtualServer();
+            if (list != null && list.size() > 0) {
+                for (var i = 0; i < list.size(); i++) {
+                    var server = list.get(i);
+                    server = self._getServerInfo(VirtualServerLib.getRuntimeServerInfo(server.getName(), null));
+                    if (server != null && !serversMap[server.providerURL]) {
+                        serversMap[server.providerURL] = server;
+                        servers.push(server);
+                    }
+                }
+            }
+            break;
+    }
+});
+return servers;]]>
+        </CodeText>
+      </Service>
+      <Service name="_parseLogEntry" args="index,server,lines" private="true">
+        <CodeText>
+          <![CDATA[var entry = {
+    index  : index,
+    server : server,
+    first  : lines[0],
+    all    : lines,
+    info   : "",
+    from   : "",
+    clazz  : "",
+    epoch  : 0,
+    level  : "",
+};
+var sep1 = entry.first.indexOf("[");
+var sep2 = entry.first.indexOf("]");
+if (sep1 != -1 && sep2 != -1 && sep1 < sep2) {
+    entry.info = entry.first.substring(0, sep1-1);
+    entry.from = entry.first.substring(sep1, sep2+1);
+    var dot = entry.from.lastIndexOf(".");
+    if (dot != -1) {
+        entry.clazz = entry.from;
+        entry.from = "[" + entry.from.substring(dot+1);
+    }
+    if ((sep2+2) < entry.first.length) {
+        entry.text = entry.first.substring(sep2+2);
+    }
+    else {
+        entry.text = "";
+    }
+    var toks = entry.info.split(" ");
+    if (toks.length >= 3) {
+        var ts = toks[0] + " " + (toks[1]).replace(",", ".");
+        entry.epoch = (new Date(ts)).getTime();
+        entry.level = toks[2];
+    }
+}
+else {
+    entry.text = entry.first;
+}
+return entry;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="downloadServerLogs" args="serverName" private="false">
+        <CodeText>
+          <![CDATA[var RuntimeAdminLib = com.vitria.m3oui.admin.RuntimeAdminLib;
+var ProjectInstance = com.vitria.m3oui.admin.service.ProjectInstance;
+var DomainServiceClient = com.vitria.domainservice.DomainServiceClient;
+var LogAccessorClientLib = com.vitria.logaccessor.LogAccessorClientLib;
+var HashMap = java.util.HashMap;
+var MediaType = org.restlet.data.MediaType;
+var Disposition = org.restlet.data.Disposition;
+var File = java.io.File;
+//var FileRepresentation = org.restlet.representation.FileRepresentation;
+var System = java.lang.System;
+var FileUtils = org.apache.commons.io.FileUtils;
+var UUID = java.util.UUID;
+
+var queryConfig = this._getQueryConfig();
+if (queryConfig == null) return null;
+
+var serverType = queryConfig["server-type"];
+var servers = this._getServers(serverType);
+if (servers.length == 0) return null;
+
+var serverInfo = servers[0];
+serverName = serverName || queryConfig["server-name"];
+if (serverName != null) {
+    for (var i = 0; i < servers.length; i++) {
+        if (serverName == servers[i].name) {
+            serverInfo = servers[i];
+            break;
+        }
+    }
+}
+
+var accessor = LogAccessorClientLib.getLogAccessor(serverInfo.namingInfo);
+var logFiles = accessor.getLogFileInfos().getFiles();
+
+var path = null;
+for (var i=0, n=logFiles.size(); i<n; i++) {
+    var logFile = logFiles.get(i);
+    if (String(logFile.getFileName()) == "server.log") {
+        path = String(logFile.getPath());
+        break;
+    }
+}
+if (path != null) {
+    var srcFile;
+    try {
+        srcFile = new File(path);
+        if (!srcFile.exists()) return null;
+    } catch (ex) {
+        return null;
+    }
+    /*
+    ** Dashboard SDK does not currently support returning a Restlet representation object
+    ** so for now, we have to copy file to TEMP and have client invoke the download
+    **
+    var fr = new FileRepresentation(downloadFile, MediaType.APPLICATION_OCTET_STREAM);
+    var disp = new Disposition(Disposition.TYPE_ATTACHMENT); 
+    disp.setFilename(downloadFile.getName()); 
+    disp.setSize(downloadFile.length()); 
+    fr.setDisposition(disp); 
+    return fr;
+    */
+    var tempDirectory = System.getProperty("java.io.tmpdir");
+    var tgtFile = new File(tempDirectory + "/" + UUID.randomUUID().toString());
+    print("Copy "+ srcFile.getPath() + " to " + tgtFile.getPath() + " for download");
+    FileUtils.copyFile(srcFile, tgtFile);
+    
+    TimerTask.setTimeout("DeleteTempDownloadFile", 10, function(path) {
+        var file = new java.io.File(path);
+        print("Deleting download file: "+ file.getPath());
+        if (file.delete()) {
+            print("... " + file.getPath() + " deleted");
+        }
+        else {
+            print("... " + file.getPath() + " delete exception");
+        }
+    }, tgtFile.getPath());
+
+    return tgtFile.getName();
+}
+return null;
+]]>
+        </CodeText>
+      </Service>
+      <Service name="getServerLogs" args="" private="false">
+        <CodeText>
+          <![CDATA[var queryConfig = this._getQueryConfig();
+if (queryConfig == null) return [];
+
+var maxLineCount = queryConfig["max-line-count"];
+var excludeLogPatterns = queryConfig["excluded-log-pattern"] || [];
+var logResult = [];
+
+// this.setLogLevel("com.vitria.security.ejb.ServerSecurityInterceptor", "ERROR");
+
+var serverType = queryConfig["server-type"];
+var serverName = queryConfig["server-name"];
+if (serverName == null) {
+    var servers = this._getServers(serverType);
+    if (servers.length == 0) {
+        throw "No Presentation Server defined.#";
+    }
+    for (var i = 0; i < servers.length; i++) {
+        serverName = servers[i]["name"];
+        serverType = servers[i]["type"];
+        this._getLogEntries(logResult, serverType, serverName, maxLineCount, excludeLogPatterns);
+    }
+    if (servers.length > 1) {
+        logResult.sort(function(a, b) {
+            if (a.epoch < b.epoch) return -1;
+            else if (a.epoch > b.epoch) return 1;
+            else {
+                var s = a.server.localeCompare(b.server);
+                if (a != 0) return a;
+                else {
+                    if (a.index < b.index) return -1;
+                    else if (a.index > b.index) return 1;
+                    return 0;
+                }
+            }
+        });
+    }
+} else {
+    this._getLogEntries(logResult, serverType, serverName, maxLineCount, excludeLogPatterns);
+}
+return logResult;]]>
+        </CodeText>
+      </Service>
+      <Service name="setLogLevel" args="className,newLogLevel" private="false">
+        <CodeText>
+          <![CDATA[var LogManager = org.apache.log4j.LogManager;
+var LogLevel = org.apache.log4j.Level;
+
+var oldLogLevel = LogManager.getLogger(className).getLevel();
+newLogLevel = LogLevel.toLevel(newLogLevel);
+if (newLogLevel != null) {
+    print("set '" + className + "' log level to " + newLogLevel);
+    LogManager.getLogger(className).setLevel(newLogLevel);
+}
+
+//switch (newLogLevel) {
+//    case "OFF":
+//        LogManager.getLogger(className).setLevel(LogLevel.OFF)
+//        break;
+//    case "FATAL":
+//        LogManager.getLogger(className).setLevel(LogLevel.FATAL)
+//        break;
+//    case "ERROR":
+//        LogManager.getLogger(className).setLevel(LogLevel.ERROR)
+//        break;
+//    case "WARN":
+//        LogManager.getLogger(className).setLevel(LogLevel.WARN)
+//        break;
+//    case "INFO":
+//        LogManager.getLogger(className).setLevel(LogLevel.INFO)
+//        break;
+//    case "DEBUG":
+//        LogManager.getLogger(className).setLevel(LogLevel.DEBUG)
+//        break;
+//    case "TRACE":
+//        LogManager.getLogger(className).setLevel(LogLevel.TRACE)
+//        break;
+//    case "ALL":
+//        LogManager.getLogger(className).setLevel(LogLevel.ALL)
+//        break;
+//}
+return oldLogLevel.toString();
+]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+      <Resource uuid="518ff37a-aa75-4416-810f-d475cfd49349" name="QueryConfig" type="application/json" size="300" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>
