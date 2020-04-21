@@ -1,0 +1,21 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "lastDate": "1587447802660",
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/VIA Admin Modules/dbpm/Admin - Plugin,/app/dbp/space/VIA Admin Modules/dbpm/Admin - Data Source,/app/dbp/space/VIA Admin Modules/dbpm/Admin - Common Helper,/app/dbp/space/VIA Admin Modules/dbpm/Admin - Security Setting",
+    "modelStatus": "invalid",
+    "name": "module - Data Source v1"
+  }
+}
