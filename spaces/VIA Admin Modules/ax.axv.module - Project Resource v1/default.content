@@ -1,0 +1,208 @@
+<AnalyticsExplorerView description="" name="module - Project Resource v1" is_init="false">
+  <ModelInfo validated="false" nextPageId="2">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0.8"/>
+      <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"/>
+    <DWRSetting disable="false"/>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="projectResource">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div class="horizontal-flex" style="height: 100%; width: 100%;">
+    <div class="vertical-flex resource-list" style="width: 350px; height: 100%;">
+        <div data-vitria-type="tile" style="width: 100%; height: 100%" data-vitria-tile-name="ResourceList"></div>
+    </div>
+    <div class="vertical-flex resource-detail" style="width:calc(100% - 355px); height: 100%;">
+        <div data-vitria-type="tile" style="width: 100%; height: 100%" data-vitria-tile-name="ResourceDetail"></div>
+    </div> 
+</div>]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[.projectResource .resource-list {
+    border: 2px solid #d6d6d6;
+}
+
+.projectResource .resource-detail {
+    border: 2px solid #d6d6d6;
+    border-left: 0px solid #d6d6d6;
+    background-color: #D8D8D8;
+}]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="NaN" numCol="NaN" count="NaN" templateType="7" screenHeight="undefined" renderType="undefined" positions="[]" unitSize="undefined" viewRows="NaN" viewCols="NaN"/>
+      <frame_tile name="ResourceList" title="Resource List" desc="" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#ClientSideResource" id="axflow:localstore:node:6" name="axflow:localstore:node:6" label="Resource List" type="#ScriptDataStore">
+          <Param name="where" label="Where Clause" value="" binding="" type="string"/>
+          <Param name="sort" label="Sort Order" value="" binding="" type="string"/>
+          <Field name="name" label="Name" type="string" isDimension="false" isMeasure="false"/>
+          <Field name="groupField" label="Group" type="string" isDimension="false" isMeasure="false"/>
+        </DataSource>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="TreeListChart" label="Tree List Chart" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;runtimeConfiguration&quot;:&quot;False&quot;,&quot;showFilterControl&quot;:&quot;False&quot;,&quot;alphaDataSort&quot;:&quot;Ascending&quot;,&quot;displayMode&quot;:&quot;tree&quot;}"/>
+          <Property name="labelConfigProperties" value="{&quot;labelField&quot;:&quot;name&quot;,&quot;labelFieldType&quot;:&quot;string&quot;,&quot;cases&quot;:[{&quot;shape&quot;:&quot;fileImage&quot;,&quot;value&quot;:&quot;(default)&quot;,&quot;color&quot;:{&quot;fname&quot;:&quot;file_shape.png&quot;,&quot;height&quot;:30,&quot;imgdata&quot;:&quot;dojoclient/html/themes/hybrid/default/images/renderers/shapes/file_shape.png&quot;,&quot;uuid&quot;:&quot;e7a652b7-0fdb-4ebd-81d5-1a2e2be2ae35&quot;,&quot;width&quot;:30}}]}"/>
+          <Property name="groupConfigProperties" value="[{&quot;groupField&quot;:&quot;groupField&quot;,&quot;groupFieldType&quot;:&quot;string&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;defaultListId&quot;:1,&quot;seriesOpened&quot;:false,&quot;iconMapInputOpened&quot;:false,&quot;cases&quot;:[{&quot;shape&quot;:&quot;folderImage&quot;,&quot;value&quot;:&quot;(default)&quot;,&quot;color&quot;:{&quot;fname&quot;:&quot;folder_shape.png&quot;,&quot;height&quot;:30,&quot;imgdata&quot;:&quot;dojoclient/html/themes/hybrid/default/images/renderers/shapes/folder_shape.png&quot;,&quot;uuid&quot;:&quot;e7a652b7-0fdb-4ebd-81d5-1a232be2ac35&quot;,&quot;width&quot;:30}}]}]"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="ResourceDetail" title="Resource Detail" desc="" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/space/VIA Admin Modules/dbpm/Admin - Deployed Projects Plugin/ResourceDetail&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:1" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="117" width="130" height="177" x="40" y="29">
+        <dynOut id="dout:0" type="json" label="baseConfig" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="locale" propagate="always" _isArray="true"/>
+        <dynOut id="dout:2" type="any" label="detailModule" propagate="always" _isArray="true"/>
+        <dynOut id="dout:3" type="any" label="selection" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:2" type="UserScript" label="Resource Load" _undefined_title="" originHeight="117" width="160" height="177" x="253" y="49">
+        <dynIn id="din:0" type="json" label="baseConfig" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="locale" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any" label="selection" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Notify" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any[]" label="Resource List" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:6" type="LocalStore" label="Resource List" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="566" y="69"/>
+      <Item id="node:9" type="UserScript" label="Resource Select" _undefined_title="" originHeight="117" width="180" height="177" x="266" y="270">
+        <dynIn id="din:0" type="json" label="baseConfig" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="locale" evaluate="always" _isArray="true"/>
+        <dynIn id="din:2" type="any[]" label="Project Selection" evaluate="always" _isArray="true"/>
+        <dynIn id="din:3" type="any[]" label="Resouorce Selection" evaluate="always" _isArray="true"/>
+        <dynOut id="dout:0" type="any" label="Detail Notify" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:11" type="Tile" label="Detail Tile" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="533" y="270"/>
+      <Item id="node:13" type="Tile" label="Resource List Tile" _undefined_title="" _undefined_originHeight="" width="130" height="177" x="60" y="264"/>
+      <Link srcId="node:9" srcPort="dout:0" tgtId="node:11" tgtPort="in:0"/>
+      <Link srcId="node:1" srcPort="dout:3" tgtId="node:9" tgtPort="din:2"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:9" tgtPort="din:1"/>
+      <Link srcId="node:1" srcPort="dout:0" tgtId="node:9" tgtPort="din:0"/>
+      <Link srcId="node:2" srcPort="dout:1" tgtId="node:6" tgtPort="in:0"/>
+      <Link srcId="node:1" srcPort="dout:0" tgtId="node:2" tgtPort="din:0"/>
+      <Link srcId="node:1" srcPort="dout:1" tgtId="node:2" tgtPort="din:1"/>
+      <Link srcId="node:1" srcPort="dout:3" tgtId="node:2" tgtPort="din:2"/>
+      <Link srcId="node:13" srcPort="out:0" tgtId="node:9" tgtPort="din:3"/>
+      <Input key="node:1/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;json&quot;,&quot;portLabel&quot;:&quot;baseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;detailModule&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:3&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:2/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;json&quot;,&quot;portLabel&quot;:&quot;baseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:2/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Notify&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Resource List&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:2/cfg:model/default" value="&quot;if (!port) return;\n\nvar baseConfig = getInput(\&quot;din:0\&quot;);\nvar locale = getInput(\&quot;din:1\&quot;);\nvar selection = getInput(\&quot;din:2\&quot;);\nif (!baseConfig || !locale || !selection) return;\n\nvar projectPlugin = Plugin(baseConfig.projectPluginName);\nprojectPlugin.getProjectResource(selection[0], baseConfig, locale, function(result) {\n   setOutput(\&quot;dout:1\&quot;, result); \n});\n&quot;"/>
+      <Input key="node:2/cfg:schema/default" value="&quot;var schema = [];\r\nschema.push({\r\n    name:\&quot;name\&quot;,\r\n    label:\&quot;{i18n::Name}\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema.push({\r\n    name:\&quot;groupField\&quot;,\r\n    label:\&quot;{i18n::Group}\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\n\r\nvar plugin = Plugin(\&quot;Project\&quot;);\r\nsetOutputSchema(\&quot;dout:1\&quot;, plugin.localize(\&quot;/app/dbp/user/vtbaadmin/dbpm/Admin - Deployed Projects Locale\&quot;, window.vtLocaleParam, schema));&quot;"/>
+      <Input key="node:6/in:1/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:6/in:3/evaluate" value="&quot;always&quot;"/>
+      <Input key="node:9/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;json&quot;,&quot;portLabel&quot;:&quot;baseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:2&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Project Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:3&quot;,&quot;portType&quot;:&quot;any[]&quot;,&quot;portLabel&quot;:&quot;Resouorce Selection&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:9/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;Detail Notify&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:9/cfg:model/default" value="&quot;if (port != \&quot;din:3\&quot;) return;\n\nvar baseConfig = getInput(\&quot;din:0\&quot;);\nvar locale = getInput(\&quot;din:1\&quot;);\nvar prj = getInput(\&quot;din:2\&quot;)[0];\n\nvar resource = getInput(\&quot;din:3\&quot;);\nif (!resource || !resource[0]) return;\nresource = resource[0];\n\nsetOutput(\&quot;dout:0\&quot;, {\n    baseConfig: baseConfig,\n    locale: locale,\n    prj: prj,\n    resource: resource\n})&quot;"/>
+      <Input key="node:11/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#ResourceDetail&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;ResourceDetail&quot;}]"/>
+      <Input key="node:13/cfg:tile/default" value="[{&quot;id&quot;:&quot;ROOT#1#ResourceList&quot;,&quot;path&quot;:[&quot;Default&quot;],&quot;name&quot;:&quot;ResourceList&quot;}]"/>
+      <Schema id="node:6/in:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;groupField&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:6/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;groupField&quot;,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <Schema id="node:9/din:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;groupField&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:13/out:0">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;groupField&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:13/out:1">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;groupField&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:13/out:2">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;groupField&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <Schema id="node:13/out:3">
+        <JSON value="{&quot;name&quot;:&quot;name&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Name&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+        <JSON value="{&quot;name&quot;:&quot;groupField&quot;,&quot;path&quot;:null,&quot;label&quot;:&quot;Group&quot;,&quot;type&quot;:&quot;string&quot;,&quot;originalType&quot;:null,&quot;_isDimension&quot;:false,&quot;_isMeasure&quot;:false}"/>
+      </Schema>
+      <DynInput id="node:2">
+        <Port id="din:0" type="json" label="baseConfig" evaluate="always"/>
+        <Port id="din:1" type="any" label="locale" evaluate="always"/>
+        <Port id="din:2" type="any" label="selection" evaluate="always"/>
+      </DynInput>
+      <DynInput id="node:9">
+        <Port id="din:0" type="json" label="baseConfig" evaluate="always"/>
+        <Port id="din:1" type="any" label="locale" evaluate="always"/>
+        <Port id="din:2" type="any[]" label="Project Selection" evaluate="always"/>
+        <Port id="din:3" type="any[]" label="Resouorce Selection" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:1">
+        <Port id="dout:0" type="json" label="baseConfig" propagate="always"/>
+        <Port id="dout:1" type="any" label="locale" propagate="always"/>
+        <Port id="dout:2" type="any" label="detailModule" propagate="always"/>
+        <Port id="dout:3" type="any" label="selection" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:2">
+        <Port id="dout:0" type="any" label="Notify" propagate="always"/>
+        <Port id="dout:1" type="any[]" label="Resource List" propagate="always"/>
+      </DynOutput>
+      <DynOutput id="node:9">
+        <Port id="dout:0" type="any" label="Detail Notify" propagate="always" _isArray="true"/>
+      </DynOutput>
+      <Version id="node:1" version="1"/>
+      <Version id="node:2" version="2"/>
+      <Version id="node:6" version="2"/>
+      <Version id="node:9" version="2"/>
+      <Version id="node:11" version="1"/>
+      <Version id="node:13" version="1"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/space/VIA Admin Modules/dbpm/Admin - Common Helper" alias="Helper"/>
+      <DashboardPlugin uri="/app/dbp/space/VIA Admin Modules/dbpm/Admin - Deployed Projects Plugin" alias="Project"/>
+      <DashboardPlugin uri="/app/dbp/space/VIA Admin Modules/dbpm/Admin - Plugin" alias=""/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>
