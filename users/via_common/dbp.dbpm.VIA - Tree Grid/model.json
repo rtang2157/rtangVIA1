@@ -1,0 +1,34 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "cdebfa14-314f-41cf-85c3-e6c77286cba4"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "0250e244-b460-43aa-80b4-ff2b2666c5cc"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "58046a25-62e4-42a0-84cc-df04fa5b4acd"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "f5ab523b-0052-4c12-8b66-9a0096bba90f"
+    }
+  ],
+  "lastDate": "1587449592799",
+  "owner": "via_common",
+  "properties": {
+    "_RESOURCE_Description": "Description of New Model 1",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "0250e244-b460-43aa-80b4-ff2b2666c5cc,58046a25-62e4-42a0-84cc-df04fa5b4acd,f5ab523b-0052-4c12-8b66-9a0096bba90f,cdebfa14-314f-41cf-85c3-e6c77286cba4",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "VIA - Tree Grid"
+  }
+}
