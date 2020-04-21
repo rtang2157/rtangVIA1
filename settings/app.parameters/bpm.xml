@@ -1,0 +1,3 @@
+<parameters>
+  <parameter value="true" type="boolean" label="Enable migrate workbench model" id="import.workbench.enabled"/>
+</parameters>
