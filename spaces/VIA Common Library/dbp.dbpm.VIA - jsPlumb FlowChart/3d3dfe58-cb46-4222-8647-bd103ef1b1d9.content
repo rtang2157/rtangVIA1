@@ -1,0 +1,140 @@
+{
+	"nodes" : [{
+		"id" : "Start",
+		"type" : "Start",
+		"label" : "Start",
+		"top" : 50,
+		"left" : 520,
+		"outputs" : ["TopCenter", "BottomCenter", "LeftMiddle", "RightMiddle"],
+		"inputs" : []
+    }, {
+		"id" : "Stop",
+		"type" : "Stop",
+		"label" : "Stop",
+		"top" : 550,
+		"left" : 60,
+		"outputs" : [],
+		"inputs" : ["TopCenter", "BottomCenter", "LeftMiddle", "RightMiddle"]
+    }, {
+		"id" : "Window1",
+		"type" : "State",
+		"label" : "1",
+		"top" : 550,
+		"left" : 280,
+		"outputs" : ["LeftMiddle", "RightMiddle"],
+		"inputs" : ["TopCenter", "BottomCenter"]
+    }, {
+		"id" : "Window2",
+		"type" : "State",
+		"label" : "2",
+		"top" : 200,
+		"left" : 500,
+		"outputs" : ["LeftMiddle", "BottomCenter"],
+		"inputs" : ["TopCenter", "RightMiddle"]
+    }, {
+		"id" : "Window3",
+		"type" : "State",
+		"label" : "3",
+		"top" : 450,
+		"left" : 680,
+		"outputs" : ["RightMiddle", "BottomCenter"],
+		"inputs" : ["LeftMiddle", "TopCenter"]
+    }, {
+		"id" : "Window4",
+		"type" : "State",
+		"label" : "4",
+		"top" : 400,
+		"left" : 280,
+		"outputs" : ["TopCenter", "BottomCenter"],
+		"inputs" : ["LeftMiddle", "RightMiddle"]
+	}],
+	"links" : [{
+		"source" : {
+			"node" : "Start",
+			"port" : "BottomCenter"
+		},
+		"target" : {
+			"node" : "Window2",
+			"port" : "TopCenter"
+		},
+		"label" : "Doc",
+		"editable" : true
+	}, {
+		"source" : {
+			"node" : "Window1",
+			"port" : "LeftMiddle"
+		},
+		"target" : {
+			"node" : "Stop",
+			"port" : "RightMiddle"
+		},
+		"label" : "Doc",
+		"editable" : true
+	}, {
+		"source" : {
+			"node" : "Window2",
+			"port" : "BottomCenter"
+		},
+		"target" : {
+			"node" : "Window3",
+			"port" : "TopCenter"
+		},
+		"label" : "Dopey",
+		"editable" : true
+	}, {
+		"source" : {
+			"node" : "Window2",
+			"port" : "LeftMiddle"
+		},
+		"target" : {
+			"node" : "Window4",
+			"port" : "LeftMiddle"
+		},
+		"label" : "Happy",
+		"editable" : true
+	}, {
+		"source" : {
+			"node" : "Window4",
+			"port" : "TopCenter"
+		},
+		"target" : {
+			"node" : "Window4",
+			"port" : "RightMiddle"
+		},
+		"label" : "Sneezy",
+		"editable" : true
+	}, {
+		"source" : {
+			"node" : "Window3",
+			"port" : "RightMiddle"
+		},
+		"target" : {
+			"node" : "Window2",
+			"port" : "RightMiddle"
+		},
+		"label" : "Grumpy",
+		"editable" : true
+	}, {
+		"source" : {
+			"node" : "Window4",
+			"port" : "BottomCenter"
+		},
+		"target" : {
+			"node" : "Window1",
+			"port" : "TopCenter"
+		},
+		"label" : "Sleepy",
+		"editable" : true
+	}, {
+		"source" : {
+			"node" : "Window3",
+			"port" : "BottomCenter"
+		},
+		"target" : {
+			"node" : "Window1",
+			"port" : "BottomCenter"
+		},
+		"label" : "Bashful",
+		"editable" : true
+	}]
+}
