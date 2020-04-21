@@ -1,0 +1,151 @@
+<DashboardPluginModel description="Description of New Model 0" name="VIA - HDFS Interface" is_init="false">
+  <ModelInfo validated="true">
+    <Properties>
+    </Properties>
+    <Widgets>
+    </Widgets>
+    <Functions>
+    </Functions>
+    <Services>
+      <Service name="deleteFSDirectory" args="fsHostURI,directoryPath" private="false">
+        <CodeText>
+          <![CDATA[print("NotificationService:deleteFSDirectory()");
+
+if( fsHostURI == null || directoryPath == null ) return [];
+
+try{
+    var fs      = HDFS.getFileSystem(fsHostURI);
+    if( HDFS.isDirectory(fs, directoryPath) ){
+        var list    = HDFS.listFiles(fs,directoryPath,true,true) || [];
+        if( list.length > 0 ){
+            for( var l=0, len=list.length; l < len; l++ ){
+                var id = list[l]["name"];
+                if( id != null && id != "" ){
+                    if( HDFS.exists(fs, directoryPath+id) ){
+                        HDFS.deleteFile(fs, directoryPath+id);   
+                    }
+                }
+            }
+        }
+    }
+    return [ list.length + " files removed from: " + directoryPath ];
+} catch (err){
+    print("NotificationService:deleteFSDirectory() --> " + err);
+    return( "NotificationService:deleteFSDirectory(): init err: " + err.message );
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="getFileByName" args="fsHostURI,directoryPath,fileName" private="false">
+        <CodeText>
+          <![CDATA[print("NotificationService:getFileByName()");
+
+if( fsHostURI == null || directoryPath == null || fileName == null ) return [];
+
+try{
+    var fs      = HDFS.getFileSystem(fsHostURI);
+        if( HDFS.isFile(fs, directoryPath+fileName) ){
+            print("NotificationService:getFileByName(): " + directoryPath + fileName + " exists " );  
+            var content = HDFS.readFile(fs, directoryPath + fileName);
+            print(content);
+            return content;
+        } else {
+            print("NotificationService:getFileByName(): " + directoryPath + fileName + " cannot be located " );
+            return("NotificationService:getFileByName(): " + directoryPath + fileName + " cannot be located " );
+        }
+   
+        HDFS.closeFileSystem(fsHostURI, fs); 
+} catch(err){
+    print("NotificationService:getFileByName() --> " + err);
+    return( err.message ); 
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="getListOfFiles" args="fsHostURI,directoryPath" private="false">
+        <CodeText>
+          <![CDATA[print("NotificationService:getlistOfFiles()");
+
+if( fsHostURI == null || directoryPath == null ) return [];
+
+try{
+    
+    var fs      = HDFS.getFileSystem(fsHostURI);
+    var list    = HDFS.listFiles(fs,directoryPath,true,true);
+    print( "fs" );
+    print( fs );
+    if( list != null ){
+        print( "list" );
+        print( list );
+        return list;
+    } else {
+        print("getListOfFiles() returned null");   
+    }
+        HDFS.closeFileSystem(fsHostURI, fs);
+        
+} catch (err){
+    print("NotificationService:getlistOfFiles() --> " + err);
+    return( err.message );
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="guaranteeDirectory" args="fsHostURI,directoryPath" private="false">
+        <CodeText>
+          <![CDATA[print("NotificationService:guaranteeDirectory()");
+
+if( fsHostURI == null || directoryPath == null ) return [];
+
+try{
+    var fs      = HDFS.getFileSystem(fsHostURI);
+    if( HDFS.isDirectory(fs, directoryPath) ){
+        return( "NotificationService:guaranteeDirectory(): path exists: " + fsHostURI+directoryPath );   
+    } else {
+        try{
+            HDFS.createDirectory( fs, directoryPath );
+            return ( "NotificationService:guaranteeDirectory(): directory created: " + fsHostURI+directoryPath );
+        } catch ( dirErr ){
+            print( "NotificationService:guaranteeDirectory(): path error: " + fsHostURI+directoryPath );
+            return( "NotificationService:guaranteeDirectory(): path error message: " + dirErr.message );
+        }
+    }
+    HDFS.closeFileSystem(fsHostURI, fs);
+} catch (err){
+    print("NotificationService:guaranteeDirectory() --> " + err);
+    return( "NotificationService:guaranteeDirectory(): init err: " + err.message );
+}]]>
+        </CodeText>
+      </Service>
+      <Service name="writeDataToFS" args="fsHostURI,directoryPath,fileName,content" private="false">
+        <CodeText>
+          <![CDATA[print("NotificationService:writeDataToFS()");
+print( "hostURI: " + fsHostURI );
+print( "directoryPath: " + directoryPath );
+print( "fileName: " + fileName );
+
+if( fsHostURI == null || directoryPath == null || fileName == null ) return [];
+
+try{
+    var fs      = HDFS.getFileSystem(fsHostURI);
+        
+        HDFS.writeFile(fs, directoryPath+fileName, content);
+        
+        var fileRet = HDFS.readFile(fs, directoryPath+fileName);
+        
+        return fileRet;
+        
+        HDFS.closeFileSystem(fsHostURI, fs); 
+        
+} catch(err){
+    
+    print("NotificationService:writeDataToFS	() --> " + err);
+    return( err.message ); 
+
+
+}]]>
+        </CodeText>
+      </Service>
+    </Services>
+    <Resources>
+    </Resources>
+    <Plugins>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>
