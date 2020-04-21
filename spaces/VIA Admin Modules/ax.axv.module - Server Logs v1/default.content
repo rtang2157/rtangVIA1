@@ -1,0 +1,165 @@
+<AnalyticsExplorerView description="" name="module - Server Logs v1" is_init="false">
+  <ModelInfo validated="true" nextPageId="3">
+    <GlobalDSRSetting enabled="false"/>
+    <GlobalProperties/>
+    <GlobalThemeSetting>
+      <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+      <TileOpacity opacity="0.8"/>
+      <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+      <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="false"/>
+    <DWRSetting disable="false"/>
+    <CustomCSSSetting><![CDATA[.app .smallTile .tileContainer.actionbar {
+    margin-top: -7px;
+    margin-left: -3px;
+    padding: 0px;
+    height: 58px !important;
+}
+.app .smallTile .tileContainer.dimensionFilter {
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-bottom: 0px;
+}
+]]></CustomCSSSetting>
+    <Page id="2" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="right" panelstatus="closed" className="compTemplate serverLogs">
+      <HelpContent><![CDATA[]]></HelpContent>
+      <PageFrameContent><![CDATA[<div style="width:100%; height:100%; background-color:white;" class="security-log-frame vertical-flex">
+    <div class="horizontal-flex header" style="justify-content: space-between;">
+        <div class="horizontal-flex headerTitle" style="width:calc(100% - 200px); height: 50px; border: none; justify-content: flex-start; padding-left: 10px;">
+            <i class="fa fa-file-alt"></i>
+            <div class="server-log-title">Server Logs Management</div>
+        </div>
+        <div style="width: 200px;height: 50px;border: none;" class="horizontal-flex header" data-vitria-type="tile" data-vitria-tile-name="Tile0"></div>
+    </div>
+    <div class="horizontal-flex compContent" style="width: 100%; height: calc(100% - 50px);">
+        <div class="listPanel" style="position: absolute; top:50px; left: 0px; width: 0px; height: calc(100% - 50px);" data-vitria-type="tile" data-vitria-tile-name="ListTile"></div>
+        <div class="infoPanel" style="visibility: visible; position: absolute; top:50px; left: 0px; width: calc( 100% ); height: calc( 100% - 50px);">
+            <div style="height: 100%; width: 100%; display: block;">
+                <input id="tab_logs" type="radio" name="tabs" checked="checked">
+                <label for="tab_logs" style="display: flex; flex-direction: row; justify-content: center; width: 130px;" checked="checked">
+                    <i class="fa fa-file-alt"> </i>
+                    <div class="server-log-tab">Server Logs</div>
+                </label>
+                <div class="tabPanel" id="cont_logs" style="visibility: visible; position: absolute; top: 38px; left: 10px; height: calc(100% - 50px); width: calc(100% - 20px);" data-vitria-type="tile" data-vitria-tile-name="ServerLogs">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>]]></PageFrameContent>
+      <PageCustomCSS><![CDATA[.security-log-frame .tabPanel {
+    visibility: hidden;   
+}
+
+.compTemplate.serverLogs .tabPanel {
+    margin-top: -3px;
+    padding: 0;
+    border: 0px solid rgba(20, 138, 196, .6) !important;
+    background: white;
+}
+]]></PageCustomCSS>
+      <PageProperties/>
+      <Layout type="10" numRow="NaN" numCol="NaN" count="NaN" templateType="7" screenHeight="undefined" renderType="undefined" positions="[]" unitSize="undefined" viewRows="NaN" viewCols="NaN"/>
+      <frame_tile name="toolbar" title="toolbar" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="actionbar" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <TileThemeSetting><![CDATA[{"_tileOpacity":"0.1"}]]></TileThemeSetting>
+        <DataViewer name="dbp.Renderer" label="Dashboard Module" optional="false" minimode="false">
+          <Property name="generalProperties" value="{&quot;_model&quot;:&quot;/app/dbp/space/VIA Admin Modules/dbpm/Admin - Plugin/Action Bar&quot;}"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+      <frame_tile name="Main Tile1" title="Configured User Spaces" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="false" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"fontSize":"18px","display":"block","color":"#555555"}]]></LabelStyle>
+      </frame_tile>
+      <frame_tile name="ServerLogs" title="Tile1" desc="" hideEmptyTile="false" previewSize="15" type="Independent" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="true" allowFullscreen="false">
+        <DataSource category="#NONE" id="undefined" untyped="true" name="#NONE" label="(not configured)"/>
+        <LabelStyle><![CDATA[{"display":"none"}]]></LabelStyle>
+        <DataViewer name="ax.DashboardView" label="Dashboard View" optional="false" minimode="false">
+          <Property name="model" value="/app/ax/space/VIA Common Library/axv/VIA - Server Logs Comp"/>
+          <Ports/>
+        </DataViewer>
+      </frame_tile>
+    </Page>
+    <Script>
+      <Stores/>
+    </Script>
+    <DataFlow showFooter="true">
+      <Item id="node:28" type="PortIn" label="Port IN 0" _undefined_title="" originHeight="117" width="130" height="177" x="19" y="26">
+        <dynOut id="dout:0" type="json" label="baseConfig" propagate="always" _isArray="true"/>
+        <dynOut id="dout:1" type="any" label="locale" propagate="always" _isArray="true"/>
+      </Item>
+      <Item id="node:30" type="UserScript" label="Parse Config" _undefined_title="" originHeight="117" width="220" height="117" x="260" y="52">
+        <dynIn id="din:0" type="json" label="baseConfig" evaluate="always" _isArray="true"/>
+        <dynIn id="din:1" type="any" label="locale" evaluate="always" _isArray="true"/>
+      </Item>
+      <Link srcId="node:28" srcPort="dout:0" tgtId="node:30" tgtPort="din:0"/>
+      <Link srcId="node:28" srcPort="dout:1" tgtId="node:30" tgtPort="din:1"/>
+      <Input key="node:28/cfg:outPorts/default" value="[{&quot;portId&quot;:&quot;dout:0&quot;,&quot;portType&quot;:&quot;json&quot;,&quot;portLabel&quot;:&quot;baseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;dout:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:30/cfg:inPorts/default" value="[{&quot;portId&quot;:&quot;din:0&quot;,&quot;portType&quot;:&quot;json&quot;,&quot;portLabel&quot;:&quot;baseConfig&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;},{&quot;portId&quot;:&quot;din:1&quot;,&quot;portType&quot;:&quot;any&quot;,&quot;portLabel&quot;:&quot;locale&quot;,&quot;portValue&quot;:&quot;&quot;,&quot;portTrigger&quot;:&quot;always&quot;}]"/>
+      <Input key="node:30/cfg:outPorts/default" value="[]"/>
+      <Input key="node:30/cfg:model/default" value="&quot;/*\nvar plugin = null;\nvar config = null;\nvar debugging = true;\n\nif ( port != null ){\n    \n    var baseConfig = getInput(\&quot;din:0\&quot;);\n    var locale = getInput(\&quot;din:1\&quot;);\n    if( baseConfig == null || baseConfig == \&quot;\&quot; ) {\n        config = \&quot;\&quot;;\n    } else {\n        config = baseConfig;   \n    }\n    \n    setPlugin(\&quot;Helper\&quot;);\n    if (baseConfig != null &amp;&amp; locale != null) {\n        window.$(&apos;.server-log-frame .server-log-title&apos;).html(plugin.localize(baseConfig.locale.frame, locale, \&quot;{i18n::Server Log Management}\&quot;));\n        window.$(&apos;.server-log-frame .server-log-tab&apos;).html(plugin.localize(baseConfig.locale.frame, locale, \&quot;{i18n::Server Logs}\&quot;));\n    }\n}\n\nfunction setPlugin(piName){\n    if( piName != null ) {\n        plugin = Plugin(piName);\n    }\n}\n*/&quot;"/>
+      <Input key="node:30/cfg:schema/default" value="&quot;var schema0 = [];\r\nschema0.push({\r\n    name:\&quot;date\&quot;,\r\n    label:\&quot;Date\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema0.push({\r\n    name:\&quot;user\&quot;,\r\n    label:\&quot;User\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema0.push({\r\n    name:\&quot;type\&quot;,\r\n    label:\&quot;Type\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema0.push({\r\n    name:\&quot;status\&quot;,\r\n    label:\&quot;Status\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nschema0.push({\r\n    name:\&quot;message\&quot;,\r\n    label:\&quot;Message\&quot;,\r\n    type:\&quot;string\&quot;\r\n});\r\nsetOutputSchema(\&quot;dout:1\&quot;, schema0);&quot;"/>
+      <Schema id="node:30/dout:1">
+        <JSON value="{&quot;name&quot;:&quot;date&quot;,&quot;label&quot;:&quot;Date&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;user&quot;,&quot;label&quot;:&quot;User&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;type&quot;,&quot;label&quot;:&quot;Type&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;status&quot;,&quot;label&quot;:&quot;Status&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+        <JSON value="{&quot;name&quot;:&quot;message&quot;,&quot;label&quot;:&quot;Message&quot;,&quot;type&quot;:&quot;string&quot;}"/>
+      </Schema>
+      <DynInput id="node:30">
+        <Port id="din:0" type="json" label="baseConfig" evaluate="always"/>
+        <Port id="din:1" type="any" label="locale" evaluate="always"/>
+      </DynInput>
+      <DynOutput id="node:28">
+        <Port id="dout:0" type="json" label="baseConfig" propagate="always"/>
+        <Port id="dout:1" type="any" label="locale" propagate="always"/>
+      </DynOutput>
+      <Version id="node:28" version="1"/>
+      <Version id="node:30" version="2"/>
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+      <DashboardPlugin uri="/app/dbp/space/VIA Admin Modules/dbpm/Admin - Common Helper" alias="Helper"/>
+      <DashboardPlugin uri="/app/dbp/space/VIA Admin Frame/dbpm/Admin - Base Config" alias=""/>
+      <DashboardPlugin uri="/app/dbp/space/VIA Admin Modules/dbpm/Admin - Plugin" alias=""/>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>
