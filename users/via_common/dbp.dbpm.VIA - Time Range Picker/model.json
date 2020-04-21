@@ -1,0 +1,22 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "c8863b91-b5a9-4f16-8533-4a28b0f721bc"
+    }
+  ],
+  "lastDate": "1587449592806",
+  "owner": "via_common",
+  "properties": {
+    "_RESOURCE_Description": "Description of New Model 0",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "c8863b91-b5a9-4f16-8533-4a28b0f721bc",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "VIA - Time Range Picker"
+  }
+}
