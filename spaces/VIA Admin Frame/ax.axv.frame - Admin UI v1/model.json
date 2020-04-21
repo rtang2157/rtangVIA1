@@ -1,0 +1,21 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "locale"
+    }
+  ],
+  "lastDate": "1587447802630",
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "abc",
+    "_RESOURCE_Type": "axv",
+    "__references__": "/app/dbp/space/VIA Admin Modules/dbpm/Admin - Plugin,/app/dbp/space/VIA Admin Modules/dbpm/Admin - Common Helper,/app/ax/space/VIA Admin Modules/axv/module - Admin UI Summary v1",
+    "modelStatus": "invalid",
+    "name": "frame - Admin UI v1"
+  }
+}
