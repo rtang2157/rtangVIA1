@@ -1,0 +1,22 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "3b07cce4-e101-4613-8b05-dd84f097ca94"
+    }
+  ],
+  "lastDate": "1587447802646",
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Description of New Model 0",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "3b07cce4-e101-4613-8b05-dd84f097ca94",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "Admin - Installed Apps Plugin"
+  }
+}
