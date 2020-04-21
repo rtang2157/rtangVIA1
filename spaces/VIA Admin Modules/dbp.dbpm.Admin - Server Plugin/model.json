@@ -1,0 +1,22 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "a0a07129-65b2-4f41-8ab2-bf71e1c8bc7c"
+    }
+  ],
+  "lastDate": "1587447802634",
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Description of New Model 0",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "a0a07129-65b2-4f41-8ab2-bf71e1c8bc7c",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "Admin - Server Plugin"
+  }
+}
