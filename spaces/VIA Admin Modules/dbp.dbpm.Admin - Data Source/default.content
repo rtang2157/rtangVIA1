@@ -1,0 +1,3031 @@
+<DashboardPluginModel description="Description of New Model 0" name="Admin - Data Source" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets>
+      <Widget name="AddDataSource" private="false">
+        <PropertyText>
+          <![CDATA[[]]]>
+        </PropertyText>
+        <CodeText segment="#methods">
+          <![CDATA[        _localeHandler: function() {
+            var plugin = this.helperPlugin;
+            var baseConfig = this.baseConfig;
+            var locale = this.locale;
+            
+            this.connectionSuccessLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::ConnectionSuccess}");
+            this.connectionFailLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::ConnectionFail}");
+            this.connectionTitleLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Info}")
+            
+            
+            $(this._nameLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Name}"));
+            
+            $(this._headLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Data Source}"));
+            $(this._titleLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::addDataSource}"));
+            
+            
+            $(this._typeLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Type}"));
+            $(this._hostLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Host}"));
+            $(this._driverLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Driver class}"));
+            $(this._databaseNameLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Database Name}"));
+            $(this._portLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Port}"));
+            
+            
+            $(this._urlLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::url}"));
+            $(this._userNameLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Username}"));
+            $(this._passwordLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Password}"));
+            //debugger;
+            $(this._persistenceLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::persistence}"));
+            //this._persistenceLabel.title = (plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::persistence}"));
+            this._connection.title = (plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::connection}"));
+            //this._addIcon.title = (plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Add data source property}"));
+            //$(this._maxPoolSizeLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Max pool size}"));
+           // $(this._minPoolSizeLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Min pool size}"));
+            $(this._cancelBtn).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Cancel}"));
+            $(this._saveBtn).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Save}"));
+
+        },
+        
+        initialUI : function() {
+  
+            var a = location.href;
+
+            var h = AppUtil.getAddressFromURL(a);
+            h= h.substring(0, h.length-4) + "rest/app/dbp/space/VIA%20Admin%20Modules/dbpm/Admin%20-%20Data%20Source?op=vt:dbp:resource:connection";
+            domStyle.set(this._connection, {"background-image" : "url("+h+")"});
+            var me = this;
+            on(this._connection, "click", function(e){
+                 me._testConfiguration(e);
+                // console.info("closeBtn:click");
+            });
+
+
+        },
+        
+        
+        
+           _databaseTypeConnPrefix:{
+                "mysql": "jdbc:mysql://",
+                "oracle": "jdbc:oracle:thin:@",
+                "mssql": "jdbc:sqlserver://",
+                "vitriahive":"jdbc:vitriahive:///",
+                "hive":"jdbc:hive2://",
+                "sap": "jdbc:sap://"
+            },
+            
+         _message : function (title, message, callback) {
+            var buttonCount = 1;
+            require(["af/controls/AppMessageBox"], function (AppMessageBox) {
+                var alert = new AppMessageBox({
+                        title: title,
+                        message: message,
+                        buttons: buttonCount,
+                        okHandler: function() {
+                            if (callback != null) {
+                                try {
+                                    callback(true);
+                                }
+                                catch (x) {
+                                    console.error(x);
+                                }
+                            }
+                        },
+                        cancelHandler: function() {
+                            if (callback != null) {
+                                try {
+                                    callback(false);
+                                }
+                                catch (x) {
+                                    console.error(x);
+                                }
+                            }
+                        }
+                    });
+                    alert.show();
+                
+            });
+            
+        },
+
+        _testConfiguration: function (evt) {
+          var urlDBType = this._type.get("value");
+          var url = (urlDBType == "custom" || urlDBType ==  "OracleDG" || urlDBType == "OracleRAC") ? this._url.value : this._getConnURL() ;
+           var params = {
+                    url      : encodeURIComponent(url),//this._url.value),
+                    username : encodeURIComponent(this._userName.value),
+                    password : encodeURIComponent(this._password.value),
+                    op : "testConnection"
+                };
+                
+            var self = this;
+            
+            doREST( "post", "/app/dojoclient/user/*/*", params, null, function(t0) {
+                    var tables = null;
+                    //debugger;
+                    if (t0 != null && t0 != "") {
+                        tables = parseQueryResult(t0);
+                        for (var i=0; i<tables.length; i++) {
+                            var table = tables[i];
+                            var value = JSON.stringify(table);
+                            var label = table.name;
+                            if (table.schema != null && table.schema != "") {
+                                label = table.schema + "." + label;
+                            }
+                            else if (table.catalog != null && table.catalog != "") {
+                                label = table.catalog + "." + label;
+                            }
+                            table._value = value;
+                            table._label = label;
+                        }
+                    }
+                    if(tables && tables._meta.total >= 0){
+                        self._message(self.connectionTitleLabel, self.connectionSuccessLabel);
+                    } else {
+                        self._message(self.connectionTitleLabel, self.connectionFailLabel);
+                    }
+
+            });
+   
+        },
+        
+        _getConnURL: function(){
+            var url = "";
+            var urlDBType = this._type.get("value");
+            var host = this._host.value;
+            var port = this._port.value;
+            var databaseId = this._databaseName.value;
+            
+            var display = (urlDBType == "custom" || urlDBType ==  "OracleDG" || urlDBType == "OracleRAC")?   false : true;
+            var displayHost = display;//domStyle.get(this._host, "display");
+            var displayPort = display;//domStyle.get(this.port, "display");
+            var displayID = display;//domStyle.get(this._databaseName, "display");
+
+            switch(urlDBType){
+                case "MySQL":
+                    if(displayHost){
+                        url = url + this._databaseTypeConnPrefix.mysql + host;
+                    }
+                    if(displayPort){
+                        url = url + ":" + port;
+                    }
+                    if(displayID){
+                        url = url + "/" + databaseId;
+                    }
+                    break;
+                case "Oracle":
+                    if(displayHost){
+                        url = url + this._databaseTypeConnPrefix.oracle + host;
+                    }
+                    if(displayPort){
+                        url = url + ":" + port;
+                    }
+                    if(displayID){
+                        url = url + ":" + databaseId;
+                    }
+                    break;
+                case "MSSQL":
+                    if(displayHost){
+                        url = url + this._databaseTypeConnPrefix.mssql + host;
+                    }
+                    if(displayPort){
+                        url = url + ":" + port;
+                    }
+                    if(displayID){
+                        url = url + ";databaseName=" + databaseId;
+                    }
+                    break;
+                case "vitriahive":
+                    if(displayHost){
+                        url = url + host;
+                        //url = url + this._databaseTypeConnPrefix.vitriahive + host;
+                    }
+
+                    break;
+                case "hive":
+                    if(displayHost){
+                        //url = url + host;
+                        if(this._dsTypeSelect.value == "oda"){
+                            url = url + host;
+                        }else{
+                            url = url + this._databaseTypeConnPrefix.hive + host;
+                        }
+                    }
+                    if(displayPort){
+                        if(this._dsTypeSelect.value != "oda"){
+                            url = url + ":" + port;
+                        }
+                    }
+
+                    break;
+                case "sap":
+                    if(displayHost){
+                        //url = url + host;
+                        url = url + this._databaseTypeConnPrefix.sap + host;
+                    }
+                    if(displayPort){
+                        url = url + ":" + port;
+                    }
+                    if(displayID){
+                        url = url + "/?databaseName=" + databaseId;
+                    }
+                    break;
+                default :
+
+                    break;
+            }
+            return url;
+        },
+            
+
+        _setDriver: function () {
+            var type = "oracle.jdbc.OracleDriver";
+            switch(this._type.value) {
+                case "Oracle": 
+                    type = "oracle.jdbc.OracleDriver";
+                    break;
+                case "MySQL": 
+                    type = "com.mysql.jdbc.Driver";
+                    break;
+                case "MSSQL": 
+                    type = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+                    break;
+                case "OracleDG": 
+                    type = "oracle.jdbc.OracleDriver";
+                    break;
+                case "OracleRAC": 
+                    type = "oracle.jdbc.OracleDriver";
+                    break;
+                case "custom": 
+                    type = "";
+                    break;                    
+            }
+            this._driver.set('value', type);
+        },
+    
+                
+        _onChangeUrl: function (evt) {
+            this._urlChanged = true;
+        },
+        
+        _onChangeType: function (evt) {
+            
+            var result = [];
+            
+            if(this._type.value == "Oracle" || this._type.value == "MSSQL" || this._type.value == "MySQL"){
+                var defaultDatabase = "orcl";
+                var defaultPort = "1521";
+                if(this._type.value == "MSSQL"){
+                    defaultDatabase = "mydb";
+                    defaultPort = "1433";
+                } else if (this._type.value == "MySQL"){
+                    defaultDatabase = "test";
+                    defaultPort = "3306";
+                }
+                this._databaseName.set('value', defaultDatabase, false);
+                this._port.set('value', defaultPort, false);
+                domStyle.set(this._urlDiv, {display: "none"});
+                domStyle.set(this._urlLabel, {display: "none"});
+                domStyle.set(this._hostDiv, {display: ""});
+                domStyle.set(this._databaseNameDiv, {display: ""});
+                domStyle.set(this._portDiv, {display: ""});
+                domStyle.set(this._hostLabel, {display: ""});
+                domStyle.set(this._databaseNameLabel, {display: ""});
+                domStyle.set(this._portLabel, {display: ""});
+            } else {
+                domStyle.set(this._urlDiv, {display: ""});
+                domStyle.set(this._urlLabel, {display: ""});
+                domStyle.set(this._hostDiv, {display: "none"});
+                domStyle.set(this._databaseNameDiv, {display: "none"});
+                domStyle.set(this._portDiv, {display: "none"});
+                domStyle.set(this._hostLabel, {display: "none"});
+                domStyle.set(this._databaseNameLabel, {display: "none"});
+                domStyle.set(this._portLabel, {display: "none"});
+                
+                if(!this._urlChanged){
+                    var oracleUrl = "jdbc:oracle:thin:@(DESCRIPTION=(ADDRESS_LIST=(LOAD_BALANCE=OFF)(FAILOVER=ON)" +
+                                "(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.1.2)(PORT=1521))(ADDRESS=(PROTOCOL=TCP)(HOST=192.168.1.2)(PORT=1521)))"+
+                                "(CONNECT_DATA=(SERVICE_NAME=orcl_one.test.com)(SERVER=DEDICATED)))";
+                    if(this._type.value  == "OracleRAC" || this._type.value  == "OracleDG"){
+                        this._url.set('value', oracleUrl, false);
+                    } else if (this._type.value  == "custom"){
+                        this._url.set('value', "", false);
+                    }
+                }
+                
+            }
+            this._setDriver();
+
+            var aResult = {};
+            result.push(aResult);
+            aResult["type"] = this._type.value;
+            
+            var action = {
+                op: "type",
+                result: result
+            };
+            if (this.renderer) {
+                this.renderer.updateSelection(action);
+            }
+
+            
+        }, 
+        
+        _cancel: function (evt) {
+             var result = [];
+             var action = {
+                op: "cancel",
+                result: result
+            };
+            if (this.renderer) {
+                this.renderer.updateSelection(action);
+            }
+        },        
+        
+        _save: function (evt) {
+            
+            var result = [];
+            var aResult = {};
+            result.push(aResult);
+
+            aResult["name"] = this._name.value;
+            var urlDBType = this._type.get("value");
+            if(urlDBType == "custom" || urlDBType ==  "OracleDG" || urlDBType == "OracleRAC"){
+                aResult["url"] = this._url.value;
+            } else {
+                var url = this._getConnURL();
+                aResult["connectionUrl"] = url;
+                //aResult["url"]  = url;
+            }
+            aResult["behavior"] = this._type.value;
+            aResult["server"] = this._host.value ;
+            aResult["database"] = this._databaseName.value ;
+            aResult["port"] = this._port.value ;
+            
+            aResult["driver"] = this._driver.value;
+
+            aResult["user"] = this._userName.value;
+            aResult["pwd"] = this._password.value;
+            
+            aResult["noPersistence"] = this._usedForPersistence.get("value") == "on" ? "true" : "false";
+
+            
+            
+            var action = {
+                op: "save",
+                result: result
+            };
+            if (this.renderer) {
+                this.renderer.updateSelection(action);
+            }
+
+            
+        }, ]]>
+        </CodeText>
+        <CodeText segment="#postCreate">
+          <![CDATA[            //debugger;
+            this.initialUI();]]>
+        </CodeText>
+        <CodeText segment="#onNotify">
+          <![CDATA[        if (!evt.baseConfig || !evt.locale) return;
+                    
+        this.baseConfig = evt.baseConfig;
+        this.helperPlugin = Plugin(evt.baseConfig.helperPluginName);
+        this.adminPlugin = Plugin(evt.baseConfig.pluginName);
+        //debugger;
+        this.locale = evt.locale;
+        
+        if (!this._localed) {
+            this._localeHandler();
+            this._localed = true;
+        }]]>
+        </CodeText>
+        <CodeText segment="#functions">
+          <![CDATA[    function parseQueryResult(data, schema) {
+            var result = null;
+            if (data == "[]") {
+                result = [];
+            }
+            else if (data.indexOf("[{") == 0) {
+                result = JSON.parse(data);
+            }
+            else if (data.indexOf("[[") == 0) {
+                var rows = JSON.parse(data);
+                if (rows != null && rows.length > 0) {
+                    result = [];
+                    // value arrays.... modeled after CSV
+                    // first row is field names
+                    var fields = parseHeaders(rows[0]);
+                    if (schema != null && schema.length == 0) {
+                        for (var i=0; i<fields.length; i++) {
+                            schema.push(fields[i]);
+                        }
+                    }
+                    for (var i=1; i<rows.length; i++) {
+                        var row = rows[i];
+                        var item = {};
+                        result.push(item);
+                        for (var j=0; j<fields.length; j++) {
+                            var value = row[j];
+                            if (value != undefined && value != null) {
+                                item[fields[j].name] = value;
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                result = AppUtil.parseDataResult(data, schema);
+            }
+            return result;
+        }        ]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div class="DataForm"  data-dojo-attach-point="_container" style="width:100%;height:100%;">
+    <style>
+        .DataForm {
+            background-color: #FFF;
+            box-sizing: border-box;
+            color: #282E31;
+
+        }
+        
+        .DataForm div {
+            box-sizing: border-box;
+        }
+        
+        .DataFormFlex {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .DataForm .header {
+            box-sizing: border-box;
+            width: calc(100%); 
+            height: 35px; 
+            padding-left: 5px;
+            background-color:rgb(216, 216, 216);
+            color : rgb(85, 85, 85);
+        }
+        
+        .DataForm .header > div {
+            display: flex;
+        }
+        
+        .DataForm .header .headerIconDiv {
+            font-size: 20px;
+        }
+        
+        .DataForm .header .headerTitle {
+            padding-left: 5px;
+            font-size: 12px;
+        }
+        
+        .DataForm .header .headerSubTitle {
+            padding-left: 5px;
+            font-size: 14px;
+            color: #009FFF;
+        }
+
+        .DataForm .content {
+            box-sizing: border-box;
+            width: calc(100%); 
+            height: calc(100% - 73px);
+        }
+        
+        .DataForm .content .content-header {
+            justify-content: flex-start;
+            width: 100%;
+            height: 50px;
+            font-size: 16px;
+            padding-left:10px;
+        }
+        
+        .DataForm .content .main-content {
+            box-sizing: border-box;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            height: calc(100% - 60px );
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+        
+        .DataForm .content .main-content .main-content-item {
+            justify-content: space-between;
+            background-color: #FFF;
+            width: 100%;
+
+            padding-right: 25px;
+            border-top: thin solid #148ac4;
+        }
+        
+        .DataForm .content .main-content .main-content-item:nth-child(1) {
+            height: 100%;
+            flex-wrap:wrap;
+            overflow-y: auto;
+        }
+        
+        .DataForm .content .main-content .main-content-item:nth-child(2) {
+            height: 40%;
+        }
+        
+
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-label {
+            width: 30%;
+            padding-left: 10px;
+
+        }
+
+
+
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-content {
+            width: 70%;
+            height:28px;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item {
+            width: 50%;
+            flex-wrap:wrap;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item-label {
+            width: 30%;
+            padding-left: 10px;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item-content {
+            width: 70%;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item2 {
+            width: 30%;
+            height: 100%;
+            flex-wrap:wrap;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item2-label {
+            width: 50%;
+            padding-left: 10px;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item2-content {
+            width: 50%;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird {
+            width: 70%;
+            height: 100%;
+
+            flex-direction: column;
+            align-items: flex-end;
+            flex-wrap:wrap;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird .addIcon {
+            height: 30%;
+
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird .gridContent {
+            height: 70%;
+            width: calc(100% - 10px);
+
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird .bottom-button {
+            padding: 5px;
+            min-width: 60px;
+            background-color: rgba(34, 34, 34, 0.4);
+            cursor: pointer;
+            text-align: center;
+            color: #FFFFFF;
+
+
+        }
+
+        .DataForm .bottom {
+            justify-content: space-between;
+            box-sizing: border-box;
+            width: calc(100%); 
+            height: 38px;
+            line-height: 32px;
+            padding-left: 15px;
+
+            background-color: #FFF;
+            border-top: rgb(216, 216, 216) solid 3px;
+            border-bottom: rgb(216, 216, 216) solid 3px;
+        }
+        
+        .DataForm .bottom .bottom-button {
+            min-width: 60px;
+            padding: 0 8px;
+            border-left: 1px solid whitesmoke;
+            cursor: pointer;
+            text-align: center;
+            background-color: rgba(34, 34, 34, 0.4);
+            font-size: 12px;
+            color: #FFFFFF
+        }
+        
+        .DataForm .main-content-item-container {
+            justify-content: flex-start;
+            box-sizing: border-box;
+            width: calc(50%); 
+
+            padding-left: 15px;
+            padding-right: 15px;
+
+        }
+        
+        .DataForm .main-content-item-container .bottom-button {
+            padding: 5px;
+            min-width: 60px;
+            background-color: rgba(34, 34, 34, 0.4);
+            cursor: pointer;
+            text-align: center;
+            color: #FFFFFF;
+
+
+        }
+    </style>
+    <div class="header DataFormFlex">
+        <div data-dojo-attach-point="_headLabel" class="headerTitle">Data Source</div>
+    </div>
+    <div class="content">
+        <div data-dojo-attach-point="_titleLabel" class="content-header DataFormFlex">
+             Please provide information to add data source.
+        </div>
+        <div class="main-content DataFormFlex">
+            <div class="main-content-item DataFormFlex">
+                <div data-dojo-attach-point="_nameLabel" class="main-content-item-label DataFormFlex">
+                    Name
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <input class="itemInput"   data-dojo-type="dijit/form/TextBox" data-dojo-attach-point="_name">
+                </div>
+                 <div data-dojo-attach-point="_typeLabel"  class="main-content-item-label DataFormFlex">
+                    Type
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <select style="width: 290px; height:18px; padding-left: 2px; padding-bottom:0.5px;"  value='oracle'  data-dojo-type="dijit/form/Select" 
+                     data-dojo-attach-event='onChange: _onChangeType' data-dojo-attach-point="_type">
+                        <option value="Oracle">Oracle</option>
+                        <option value="MySQL">Mysql</option>
+                        <option value="MSSQL">MS Sql Server</option>
+                        <option value="OracleDG">Oracle Data Guard</option>
+                        <option value="OracleRAC">Oracle RAC</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+                <div data-dojo-attach-point="_driverLabel" class="main-content-item-label DataFormFlex">
+                    Driver class
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <input class="itemInput"  value='oracle.jdbc.OracleDriver'  data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_driver">
+                </div>
+                <div data-dojo-attach-point="_hostLabel" class="main-content-item-label DataFormFlex">
+                    Database host
+                </div>
+                <div data-dojo-attach-point="_hostDiv" class="main-content-item-content DataFormFlex">
+                    <input class="itemInput"   data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_host">
+                </div>
+                <div data-dojo-attach-point="_databaseNameLabel" class="main-content-item-label DataFormFlex">
+                    Database name
+                </div>
+                <div data-dojo-attach-point="_databaseNameDiv" class="main-content-item-content DataFormFlex">
+                    <input class="itemInput" value='orcl' data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_databaseName">
+                </div>
+                <div  data-dojo-attach-point="_portLabel" class="main-content-item-label DataFormFlex">
+                    Port
+                </div>
+                <div  data-dojo-attach-point="_portDiv" class="main-content-item-content DataFormFlex">
+                    <input class="itemInput" value='1521' data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_port">
+                </div>
+                <div style="display:none" class="main-content-item-label DataFormFlex" data-dojo-attach-point="_urlLabel">
+                    URL
+                </div>
+                <div style="display:none" data-dojo-attach-point="_urlDiv" class="main-content-item-content DataFormFlex">
+                    <input class="itemInput" data-dojo-attach-event='onChange: _onChangeUrl'   data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_url">
+                </div>
+
+
+                <div data-dojo-attach-point="_userNameLabel" class="main-content-item-label DataFormFlex">
+                    User name
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <input class="itemInput"  data-dojo-attach-point="_userName"  data-dojo-type="dijit/form/TextBox">
+                </div>
+                
+               
+                <div data-dojo-attach-point="_passwordLabel" class="main-content-item-label DataFormFlex">
+                    Password
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <input class="itemInput"  data-dojo-type="dijit/form/ValidationTextBox" type="password"  data-dojo-attach-point="_password">
+                </div>
+                
+
+
+                
+                <div style = "padding-left: 10px;" class="main-content-item-content DataFormFlex">
+                    <input data-dojo-type="dijit/form/CheckBox" data-dojo-attach-point="_usedForPersistence">
+                    <span data-dojo-attach-point="_persistenceLabel"  style="padding-left:10px;" >Not used for project persistence</span> 
+                    <span data-dojo-attach-point="_connection"  title = "Test data source configuration" style="padding-left:40px;height:29px;width:29px;cursor:pointer;background-position:center center;background-repeat:no-repeat">  </span>
+                    
+                    
+                </div>
+
+            </div>
+            
+
+        </div>
+
+    </div>
+    <div class="bottom DataFormFlex">
+        <div class="button-warp DataFormFlex">
+            
+        </div>
+        <div class="button-warp DataFormFlex">
+            <div class="bottom-button" data-dojo-attach-point="_cancelBtn"  style="padding-left: 10px; padding-right: 10px;" data-dojo-attach-event="click:_cancel"> Cancel </div>
+            <div class="bottom-button" data-dojo-attach-point="_saveBtn"   style="margin-right: 0px;background-color: #148AC4;" data-dojo-attach-event="click:_save"> Save </div>
+        </div>
+    </div>
+</div>]]>
+        </HtmlText>
+      </Widget>
+      <Widget name="SourceTab" private="false">
+        <PropertyText>
+          <![CDATA[[]]]>
+        </PropertyText>
+        <CodeText segment="#methods">
+          <![CDATA[        _localeHandler: function() {
+            var plugin = this.helperPlugin;
+            var baseConfig = this.baseConfig;
+            var locale = this.locale;
+            this.dataSourceLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Data Source}");
+            this.hdfsSourceLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::HDFS Source}");
+            this.hiveTabLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Hive Properties}");
+            $(this._dataSourceTabLabel).html(this.dataSourceLabel);
+            $(this._hdfsSourceTabLabel).html(this.hdfsSourceLabel);
+            $(this._hiveTabLabel).html(this.hiveTabLabel);
+        },
+        
+       _onChangeLoginDataSourceTab : function(evt) {
+            if (evt == true) {
+                this.tabName = "dataSource";
+                this._onSelect("dataSourceTab");
+                domClass.add(this._dataSourceTabLabel, "select");
+            } else {
+                domClass.remove(this._dataSourceTabLabel, "select");
+            }    
+        },
+ 
+       _onChangeHiveTab : function(evt) {
+            if (evt == true) {
+                this.tabName = "hiveProperties";
+                this._onSelect("hivePropertiesTab");
+                domClass.add(this._hiveTabLabel, "select");
+            } else {
+                domClass.remove(this._hiveTabLabel, "select");
+            }    
+        },
+        
+        _onChangePasswordHDFSTab : function(evt) {
+            if (evt == true) {
+                this.tabName = "hdfsSource";
+                this._onSelect("hdfsSourceTab");
+                domClass.add(this._hdfsSourceTabLabel, "select");
+            } else {
+                domClass.remove(this._hdfsSourceTabLabel, "select");
+            } 
+        },
+        
+        _onSelect : function(value) {
+            var selection = [];
+            selection.push({
+                "value" : value
+            });
+            this._updateSelection(selection);
+        },  
+        
+        _updateSelection : function(selection) {
+            if (this.renderer.tile != null) {
+                // use this.renderer.tile._onSelectionChange() to direct selection via Selection port
+                this.renderer.tile._onSelectionChange(selection);
+            }
+        }        ]]>
+        </CodeText>
+        <CodeText segment="#constructor">
+          <![CDATA[            this.tabName = "dataSource";]]>
+        </CodeText>
+        <CodeText segment="#onNotify">
+          <![CDATA[            if (!evt.baseConfig || !evt.locale) return;
+            
+            this.baseConfig = evt.baseConfig;
+            this.helperPlugin = Plugin(evt.baseConfig.helperPluginName);
+            this.adminPlugin = Plugin(evt.baseConfig.pluginName);
+            //debugger;
+            this.locale = evt.locale;
+            
+            if (!this._localed) {
+                this._localeHandler();
+                this._localed = true;
+            }]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div class="resource-tab">
+    <input id="${id}_tab_loginPolicy" type="radio" name="resourceTabs" checked="true" value="data" data-dojo-type="dijit/form/RadioButton" 
+        data-dojo-attach-event='onChange: _onChangeLoginDataSourceTab' data-dojo-attach-point="_loginPolicyTab">
+    <label for="${id}_tab_loginPolicy" class="select" data-dojo-attach-point="_dataSourceTabLabel">
+        <i class="fa fa-coins" > </i> Data Source
+    </label>
+    <input id="${id}_tab_pwdPolicy" type="radio" name="resourceTabs" value="hdfs" data-dojo-type="dijit/form/RadioButton"
+        data-dojo-attach-event='onChange: _onChangePasswordHDFSTab' data-dojo-attach-point="_passwordPolicyTab">
+    <label for="${id}_tab_pwdPolicy" data-dojo-attach-point="_hdfsSourceTabLabel">
+        <i class="fas fa-server" > </i> HDFS Source
+    </label>
+    <input id="${id}_tab_hive" type="radio" name="resourceTabs" value="hdfs" data-dojo-type="dijit/form/RadioButton"
+        data-dojo-attach-event='onChange: _onChangeHiveTab' data-dojo-attach-point="_hiveTab">
+    <label for="${id}_tab_hive" data-dojo-attach-point="_hiveTabLabel">
+        <i class="fas fa-stream" > </i> Hive Properties
+    </label>
+
+</div>]]>
+        </HtmlText>
+      </Widget>
+      <Widget name="UpdateDataSource" private="false">
+        <PropertyText>
+          <![CDATA[[]]]>
+        </PropertyText>
+        <CodeText segment="#postCreate">
+          <![CDATA[            this.initialUI();
+            if (this.renderer && this.renderer.result && this.renderer.result[0]) {
+                this.result = this.renderer.result;
+            }
+            
+            var name = this.result[0]["name"];
+            var url = this.result[0]["connectionUrl"];
+            var jndi = this.result[0]["jndi"];
+            var driver = this.result[0]["driver"];
+            var description = this.result[0]["desc"];
+            var username = this.result[0]["user"];
+            this._previousUsername = username;
+            var password = this.result[0]["pwd"];
+            this._firstLoadPassword = true;
+            this._firstLoadName = true;
+            this._passwordChanged = false;
+            
+            var usedForPersistence = this.result[0]["noPersistence"] == "true" ? true : false;
+            var maxPoolSize = this.result[0]["maxPoolSize"];
+            var minPoolSize = this.result[0]["minPoolSize"];
+            var properties =  this.result[0]["properties"];
+            var idleTimeoutMinutes = this.result[0]["idleTimeoutMinutes"];
+            
+            
+            if(this._gridResult == null){
+                this._gridResult = [];
+            }
+            var index = 0;
+            for(var property in properties){
+                var record = {name: property, value:properties[property], _vtid : index};
+                index++;
+                this._gridResult.push(record);
+            }
+            //debugger;
+            
+            //this._vtid = this.result[0]["_vtid"];
+            this._behavior =  this.result[0]["behavior"];
+            
+            
+            this._name.set('value', name || "");
+            this._url.set('value', url || "");
+            this._jndi.set('value',jndi || "");
+            this._driver.set('value',driver || "");
+            this._description.set('value',description || "");
+            this._userName.set('value', username || "", false);
+            this._password.set('value',password || "", false);
+
+            //debugger;
+            this._usedForPersistence.set("value", usedForPersistence);
+            this._maxPoolSize.set("value", maxPoolSize, false);
+            this._minPoolSize.set("value", minPoolSize, false);
+            this._connectionIdleTimeout.set("value", idleTimeoutMinutes, false);
+            ]]>
+        </CodeText>
+        <CodeText segment="#methods">
+          <![CDATA[        _localeHandler: function() {
+            var plugin = this.helperPlugin;
+            var baseConfig = this.baseConfig;
+            var locale = this.locale;
+            
+            this.connectionSuccessLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::ConnectionSuccess}");
+            this.connectionFailLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::ConnectionFail}");
+            this.connectionTitleLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Info}")
+            this.nameLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Name}");
+            this.valueLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Value}");
+            $(this._nameLabel).html(this.nameLabel);
+            
+            
+            
+            $(this._headLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Data Source}"));
+            $(this._titleLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::updateDataSource}"));
+            $(this._urlLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Conneciton URL}"));
+            $(this._jndiLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::JNDI}"));
+            $(this._driverLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Driver class}"));
+            $(this._descriptionLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Description}"));
+            $(this._userNameLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Username}"));
+            $(this._passwordLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Password}"));
+            //debugger;
+            this._persistenceLabel.title = (plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::persistence}"));
+            this._connection.title = (plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::connection}"));
+            this._addIcon.title = (plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Add data source property}"));
+            $(this._maxPoolSizeLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Max pool size}"));
+            $(this._minPoolSizeLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Min pool size}"));
+            $(this._connectionIdleTimeoutLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Connection idle timeout}"));
+            $(this._connectionIdleTimeoutUnitLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::minutes}"));
+            $(this._cancelBtn).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Cancel}"));
+            $(this._saveBtn).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Save}"));
+
+        },
+        
+        initialUI : function() {
+  
+            var a = location.href;
+
+            var h = AppUtil.getAddressFromURL(a);
+            h= h.substring(0, h.length-4) + "rest/app/dbp/space/VIA%20Admin%20Modules/dbpm/Admin%20-%20Data%20Source?op=vt:dbp:resource:connection";
+            domStyle.set(this._connection, {"background-image" : "url("+h+")"});
+            var me = this;
+            on(this._connection, "click", function(e){
+                 me._testConfiguration();
+                 //console.info("_testConfiguration");
+            });
+            
+            h = AppUtil.getAddressFromURL(a);
+            
+            h= h.substring(0, h.length-4) + "rest/app/dbp/space/VIA%20Admin%20Modules/dbpm/Admin%20-%20Data%20Source?op=vt:dbp:resource:add";
+            domStyle.set(this._addIcon, {"background-image" : "url("+h+")"});
+            var me = this;
+            on(this._addIcon, "click", function(e){
+                 me._addNewProperty(e);
+            });
+
+
+        },
+
+        _onChangeUserName: function (evt) {
+            if(this._previousUsername == evt) return;
+            this._passwordChanged = true;
+            this._previousUsername = evt;
+            this._password.set('value', "");
+        },
+        
+        _onChangePassword: function (evt) {
+            this._passwordChanged = true;
+        },
+
+       _message: function (title, message, callback) {
+                var buttonCount = 1;
+                require(["af/controls/AppMessageBox"], function (AppMessageBox) {
+                            var alert = new AppMessageBox({
+                                    title: title,
+                                    message: message,
+                                    buttons: buttonCount,
+                                    okHandler: function() {
+                                        if (callback != null) {
+                                            try {
+                                                callback(true);
+                                            }
+                                            catch (x) {
+                                                console.error(x);
+                                            }
+                                        }
+                                    },
+                                    cancelHandler: function() {
+                                        if (callback != null) {
+                                            try {
+                                                callback(false);
+                                            }
+                                            catch (x) {
+                                                console.error(x);
+                                            }
+                                        }
+                                    }
+                                });
+                                alert.show();
+                            
+                        });
+                
+            } ,
+            
+        _testConfigurationByJndi: function (evt) {
+            var url = this._url.value;
+            var jndi = this._jndi.value ;
+              
+             var params = {
+                    op : "'testDataSource'",
+                    jndi: jndi
+                };
+            var self = this;     
+            POST("/vitria-oi/rest/server.admin?op=testDataSource&jndi=" + jndi, params,null, function(t) {
+                if (t != null && t != "") {
+                        var status = "";
+                        var model = JSON.parse(t);
+                        if(model.status == "OK"){
+                            self._message(self.connectionTitleLabel, self.connectionSuccessLabel);
+                        } else {
+                            self._message(self.connectionTitleLabel, model.message);
+                        }
+                }
+                else {
+                    var info = self.connectionFailLabel;
+                    message( self.connectionTitleLabel, info);
+                }
+            
+            });
+            
+        },
+        
+        _testConfiguration: function (evt) {
+            if(!this._passwordChanged){
+                this._testConfigurationByJndi();
+                return;
+            }
+           var params = {
+                    url      : encodeURIComponent(this._url.value),
+                    username : encodeURIComponent(this._userName.value),
+                    password : encodeURIComponent(this._password.value),
+                    op : "testConnection"
+                };
+            
+            var self = this;
+            doREST( "post", "/app/dojoclient/user/*/*", params, null, function(t0) {
+                    var tables = null;
+                    //debugger;
+                    if (t0 != null && t0 != "") {
+                        tables = parseQueryResult(t0);
+                        for (var i=0; i<tables.length; i++) {
+                            var table = tables[i];
+                            var value = JSON.stringify(table);
+                            var label = table.name;
+                            if (table.schema != null && table.schema != "") {
+                                label = table.schema + "." + label;
+                            }
+                            else if (table.catalog != null && table.catalog != "") {
+                                label = table.catalog + "." + label;
+                            }
+                            table._value = value;
+                            table._label = label;
+                        }
+                    }
+                    if(tables && tables._meta.total > 0){
+                        self._message("Info", "Connect database successfully.");
+                    } else {
+                        self._message("Info", "Connect database failed");
+                    }
+
+            });
+            
+        },
+        
+       _setColumnWidth : function (){
+            var columns = this._grid.columns;
+
+            for (var key in columns) {
+                var column = columns[key];
+                var width = column.width;
+                var style = "width:" + width;
+                if(this._grid.resizeColumnWidth){
+                    this._grid.resizeColumnWidth(column.id,Number(parseFloat(width)));
+                } else {
+                    this._grid.styleColumn(column.id, style);
+                }
+            }
+        },
+            
+        _createDataGrid: function (td) {
+                var data = this._doParseData();
+                this._idProperty = data.identifier;
+                if (data != null) {
+                    var self = this;
+                    require(["dstore/Memory", "dstore/Trackable"], function (Memory, Trackable) {
+                        self._store = new declare([ Memory, Trackable ]) ({idProperty: data.identifier,data: data.items});
+                        
+                    });
+                    //this._store.idProperty = data.identifier;
+                    var div = domConstruct.create("div");
+                    this._grid = new this.DataGrid({
+                        //"class": "DataSamplePreview",
+                        "class": "DataSourcePropertiesGrid",
+                        collection: this._store,
+                        columns: data.layout.structure,
+                        selectionMode: "single",
+                        keepScrollPosition : true,
+                        showHeader : true
+                    }, div);
+                    td.appendChild(div);
+                    this._grid.addKeyHandler(46, function(evt) {
+                            var selection = self._grid.selection;
+                            var delKey;
+                            for (var key in selection) {
+                                if (selection[key] === true) {
+                                    self._store.remove(key);
+                                    delKey = key;
+                                    break;
+                                }
+                            }
+                            var delIndex = -1;
+          
+                            for (var i = 0; i < self. _gridResult.length; i++) {
+                                if ( self. _gridResult[i][self._idProperty] == delKey) {
+                                    delIndex = i;
+                                    break;
+                                }
+                            }
+                           if(delIndex >= 0){
+                               self. _gridResult.splice(delIndex, 1);
+                           }
+        
+                    });
+
+     
+                    this._grid.startup();
+                    div.style.width = "100%";
+                    /*if(sniff("msie")>=9) {
+                        div.style.height = "100%";
+                    } else {*/
+                        div.style.height = "100%";
+                    //}
+
+                    this._setColumnWidth();
+                    //this._addEventHandlers();
+                    this._grid.refresh();
+                    this._grid.resize();
+                }
+           /* }
+            else {
+                this._noSchema = construct.create("div", {});
+                this._noSchema.innerHTML = I18N.getString("af.controls", "no.schema.defined.message");
+                td.appendChild(this._noSchema);
+            }*/
+        },
+            
+        _doParseData : function() {
+            //debugger;
+            this.schema = [
+                  {name : "name", label : this.nameLabel, type : "string"},
+                  {name : "value", label : this.valueLabel, type : "string"}
+                ];
+            if (this.schema == null || this._gridResult == null) {
+                return null;
+            }
+
+            var schemas = [];
+            var me = this;
+            var labelLenSort = function(a, b) {
+                return a.length - b.length;
+            };
+            schemas = lang.clone(this.schema);
+            if (schemas && schemas[0] && schemas[0].length != null)
+                schemas = schemas.sort(labelLenSort); // why do sort?
+
+            var fieldswidth = {};
+            var box = domGeom.getContentBox(this._gridContainer);
+            var totalwidth = box.w;
+            var colPctWidth = Math.round(totalwidth / this.schema.length) ;
+            //var labelWidthList = TextUtil.getTextWidthList(schemas, "normal normal normal 12px/normal Geneva, Arial, Helvetica, sans-serif", function(obj) {return obj.label;});
+            var labelWidthList;
+            require(["af/utils/TextUtil"], function (TextUtil) {
+                        labelWidthList = TextUtil.getTextWidthList(schemas, "normal normal normal 12px/normal Geneva, Arial, Helvetica, sans-serif", function(obj) {return obj.label;});
+                    });
+
+            colPctWidth = colPctWidth - 10;
+            for(var i = 0; i < schemas.length; i++){
+                var field_width = labelWidthList[i] + 10;
+                if(field_width < colPctWidth){
+                    for(var j = i; j < schemas.length; j++){
+                        fieldswidth[schemas[j].name] = colPctWidth;
+                    }
+                    break;
+                } else {
+                    fieldswidth[schemas[i].name] = field_width;
+                    totalwidth -= field_width;
+                    colPctWidth = Math.round(totalwidth / (schemas.length - i - 1) - 10);
+                }
+            }
+
+            var layoutSignature = "#";
+            var layoutStructure = [];
+
+            array.forEach(this.schema, function(field, index) {
+                layoutSignature += field.name + "#";
+                var id = "column"+index;
+                var fieldName = field.name;
+                var column = {
+                    label: field.label,
+                    field: fieldName,
+                    autoSave: true,
+                    id: id,
+                    editor: "text", 
+                    editOn: "dblclick",
+                    /*canEdit: function(object){
+                        debugger;
+                        return true;
+                    },*/
+                    get: function(object){
+                        
+                        return object[fieldName];
+                    },
+                    width: fieldswidth[field.name] + "px",
+                    renderHeaderCell: renderHeaderCell};
+                if (column.field && column.field.indexOf(".") > 0){
+                    //workaround a bug that if field contain '.', the className will be wrong.
+                    //column.className = "field-" + column.field.substring(0, column.field.indexOf("."));
+                    column.className = "field-" + column.field.replace(/\./g, "");
+                }
+                if(column.className && column.className.indexOf("(")){
+                    column.className = column.className.replace(/\(/g, "");
+                }
+                if(column.className && column.className.indexOf(")")){
+                    column.className = column.className.replace(/\)/g, "");
+                }
+                layoutStructure.push(column);
+            });
+
+            // server has problem in that when no data is available, it returns a single dummy row of data
+            // we need to filter that out
+            var hasValidData = true;
+
+            /*if (this._gridResult.length == 1) {
+                hasValidData = false;
+                var record = this._gridResult[0];
+                for (var i=0; i<this.schema.length; i++) {
+                    if (record[this.schema[i].name] != null) {
+                        hasValidData = true;
+                        break;
+                    }
+                }
+            }*/
+            var items = [];
+            if (hasValidData) {
+                array.forEach(this._gridResult, function(record, index) {
+                    //if(record["_vtid"] == null) record["_vtid"] = index;
+                    items.push(record);
+                });
+            }
+
+            return {
+                layout: {
+                    signature: layoutSignature,
+                    structure: layoutStructure
+                },
+                identifier: "_vtid",
+                items: items
+            };
+        },
+            
+        _addNewProperty: function (evt) {
+            var index = this._gridResult ? this._gridResult.length  : 0;
+            var item = {name: "name" + index, value: "",  _vtid : index};
+            this._gridResult.push(item);
+            
+            this._store.put(item);
+            
+        },
+
+        _cancel: function (evt) {
+             var result = [];
+             var action = {
+                op: "cancel",
+                result: result
+            };
+            if (this.renderer) {
+                this.renderer.updateSelection(action);
+            }
+        },
+
+        
+        _save: function (evt) {
+            // debugger;
+            
+            var result = [];
+            var aResult = {};
+            result.push(aResult);
+            //aResult["name"] = this._name.value;
+            //aResult["connectionUrl"] = this._url.value;
+            aResult["jndi"] = this._jndi.value ;
+            //aResult["driver"] = this._driver.value;
+            aResult["desc"] = this._description.value;
+            aResult["user"] = this._userName.value;
+            if(this._passwordChanged) aResult["pwd"] = this._password.value;
+            
+            
+            aResult["noPersistence"] = this._usedForPersistence.get("value") == "on" ? "true" : "false";
+            //debugger;
+            aResult["maxPoolSize"] = "" + this._maxPoolSize.get("value");
+            aResult["minPoolSize"] = "" + this._minPoolSize.get("value");
+            aResult["idleTimeoutMinutes"] = "" + this._connectionIdleTimeout.get("value");
+            var properties = {};
+            for(var i = 0; i < this._store.data.length; i++){
+                var property = this._store.data[i];
+                properties[property.name] = property.value;
+            }
+            aResult["properties"] = properties;
+             //aResult["_vtid"] = this._vtid;
+             aResult["behavior"] = this._behavior;
+
+            
+            
+            var action = {
+                op: "save",
+                result: result
+            };
+            if (this.renderer) {
+                this.renderer.updateSelection(action);
+            }
+
+            
+        },
+        
+        ]]>
+        </CodeText>
+        <CodeText segment="#buildRendering">
+          <![CDATA[            var self = this;
+            require(["dgrid/OnDemandGrid",
+                        "dgrid/Selection",
+                        "dgrid/Keyboard",
+                        "dgrid/Editor",
+                        "dgrid/extensions/ColumnResizer"], function (DGrid,
+              DSelection,
+              Keyboard,
+              Editor,
+              DColumnResizer) {
+                self.DataGrid = declare([DGrid,DSelection,Keyboard,Editor, DColumnResizer]);
+            });]]>
+        </CodeText>
+        <CodeText segment="#functions">
+          <![CDATA[    function renderHeaderCell(node) {
+            var div = domConstruct.create("div", {style: "text-align:center;", 'class':"customCell"});
+            div.innerHTML = this.label;
+            node.appendChild(div);
+        }
+        
+    function parseQueryResult(data, schema) {
+            var result = null;
+            if (data == "[]") {
+                result = [];
+            }
+            else if (data.indexOf("[{") == 0) {
+                result = JSON.parse(data);
+            }
+            else if (data.indexOf("[[") == 0) {
+                var rows = JSON.parse(data);
+                if (rows != null && rows.length > 0) {
+                    result = [];
+                    // value arrays.... modeled after CSV
+                    // first row is field names
+                    var fields = parseHeaders(rows[0]);
+                    if (schema != null && schema.length == 0) {
+                        for (var i=0; i<fields.length; i++) {
+                            schema.push(fields[i]);
+                        }
+                    }
+                    for (var i=1; i<rows.length; i++) {
+                        var row = rows[i];
+                        var item = {};
+                        result.push(item);
+                        for (var j=0; j<fields.length; j++) {
+                            var value = row[j];
+                            if (value != undefined && value != null) {
+                                item[fields[j].name] = value;
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                result = AppUtil.parseDataResult(data, schema);
+            }
+            return result;
+        };        
+     ]]>
+        </CodeText>
+        <CodeText segment="#onNotify">
+          <![CDATA[                if (!evt.baseConfig || !evt.locale) return;
+                
+                this.baseConfig = evt.baseConfig;
+                this.helperPlugin = Plugin(evt.baseConfig.helperPluginName);
+                this.adminPlugin = Plugin(evt.baseConfig.pluginName);
+                //debugger;
+                this.locale = evt.locale;
+                
+                if (!this._localed) {
+                    this._localeHandler();
+                    this._localed = true;
+                }
+            this._createDataGrid(this._gridContent);
+]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div class="DataForm" style="width:100%;height:100%;">
+    <style>
+        .DataForm {
+            background-color: #FFF;
+            box-sizing: border-box;
+            color: #282E31;
+
+        }
+        
+        .DataForm div {
+            box-sizing: border-box;
+        }
+        
+        .DataFormFlex {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .DataForm .header {
+            box-sizing: border-box;
+            width: calc(100%); 
+            height: 35px; 
+            padding-left: 5px;
+            background-color:rgb(216, 216, 216);
+            color : rgb(85, 85, 85);
+        }
+        
+        .DataForm .header > div {
+            display: flex;
+        }
+        
+        .DataForm .header .headerIconDiv {
+            font-size: 20px;
+        }
+        
+        .DataForm .header .headerTitle {
+            padding-left: 5px;
+            font-size: 12px;
+        }
+        
+        .DataForm .header .headerSubTitle {
+            padding-left: 5px;
+            font-size: 14px;
+            color: #009FFF;
+        }
+
+        .DataForm .content {
+            box-sizing: border-box;
+            width: calc(100%); 
+            height: calc(100% - 73px);
+        }
+        
+        .DataForm .content .content-header {
+            justify-content: flex-start;
+            width: 100%;
+            height: 50px;
+            font-size: 16px;
+            padding-left:10px;
+        }
+        
+        .DataForm .content .main-content {
+            box-sizing: border-box;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            height: calc(100% - 50px);
+            padding-left: 25px;
+            padding-right: 25px;
+        }
+        
+        .DataForm .content .main-content .main-content-item {
+            justify-content: space-between;
+            background-color: #FFF;
+            width: 100%;
+
+            padding-right: 25px;
+            border-top: thin solid #148ac4;
+        }
+        
+        .DataForm .content .main-content .main-content-item:nth-child(1) {
+            height: 60%;
+            flex-wrap:wrap;
+            overflow-y: auto;
+        }
+        
+        .DataForm .content .main-content .main-content-item:nth-child(2) {
+            height: 40%;
+        }
+        
+
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-label {
+            width: 15%;
+            padding-left: 10px;
+
+        }
+
+
+
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-content {
+            width: 35%;
+            height:28px;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item {
+            width: 50%;
+            flex-wrap:wrap;
+            min-height: 100px;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item-label {
+            width: 30%;
+            padding-left: 10px;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item-content {
+            width: 70%;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item2 {
+            width: 30%;
+            height:calc(100% - 50px);
+            flex-wrap:wrap;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item2-label {
+            width: 60%;
+            padding-left: 10px;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item2-content {
+            width: 40%;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird {
+            width: 70%;
+            height: 100%;
+            padding-bottom: 10px;
+            flex-direction: column;
+            align-items: flex-end;
+            flex-wrap:wrap;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird .addIcon {
+            height: 30%;
+
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird .gridContent {
+            height: 70%;
+            width: calc(100% - 10px);
+
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird .bottom-button {
+            padding: 5px;
+            min-width: 60px;
+            background-color: rgba(34, 34, 34, 0.4);
+            cursor: pointer;
+            text-align: center;
+            color: #FFFFFF;
+
+
+        }
+
+        .DataForm .bottom {
+            justify-content: space-between;
+            box-sizing: border-box;
+            width: calc(100%); 
+            height: 38px;
+            line-height: 32px;
+            padding-left: 15px;
+
+            background-color: #FFF;
+            border-top: rgb(216, 216, 216) solid 3px;
+            border-bottom: rgb(216, 216, 216) solid 3px;
+        }
+        
+        .DataForm .bottom .bottom-button {
+            min-width: 60px;
+            padding: 0 8px;
+            border-left: 1px solid whitesmoke;
+            cursor: pointer;
+            text-align: center;
+            background-color: rgba(34, 34, 34, 0.4);
+            font-size: 12px;
+            color: #FFFFFF
+        }
+        
+        .DataForm .main-content-item-container {
+            justify-content: flex-start;
+            box-sizing: border-box;
+            width: calc(50%); 
+
+            padding-left: 15px;
+            padding-right: 15px;
+
+        }
+        
+        .DataForm .main-content-item-container .bottom-button {
+            padding: 5px;
+            min-width: 60px;
+            background-color: rgba(34, 34, 34, 0.4);
+            cursor: pointer;
+            text-align: center;
+            color: #FFFFFF;
+
+
+        }
+    </style>
+    <div class="header DataFormFlex">
+        <div data-dojo-attach-point="_headLabel" class="headerTitle">Data Source</div>
+    </div>
+    <div class="content">
+        <div data-dojo-attach-point="_titleLabel" class="content-header DataFormFlex">
+             Please provide information to update data source.
+        </div>
+        <div class="main-content DataFormFlex">
+            <div class="main-content-item DataFormFlex">
+                <div data-dojo-attach-point="_nameLabel" class="main-content-item-label DataFormFlex">
+                    Name
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <input class="itemInput" disabled='true'  data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_name">
+                </div>
+                <div  data-dojo-attach-point="_urlLabel"  class="main-content-item-label DataFormFlex">
+                    Conneciton URL
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <input class="itemInput" disabled='true' data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_url">
+                </div>
+                <div data-dojo-attach-point="_jndiLabel" class="main-content-item-label DataFormFlex">
+                    JNDI
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <input  class="itemInput" disabled='true'  data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_jndi">
+                </div>
+                <div  data-dojo-attach-point="_driverLabel" class="main-content-item-label DataFormFlex">
+                    Driver class
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <input class="itemInput" disabled='true' value='com.mysql.dirver'  data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_driver">
+                </div>
+                <div  data-dojo-attach-point="_descriptionLabel" style="min-height: 64px;align-items: flex-start;" class="main-content-item-label DataFormFlex">
+                    Description
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <textarea style="max-height:70px;min-height:70px;" data-dojo-type="dijit/form/Textarea" data-dojo-attach-point="_description"></textarea>
+                </div>
+                
+                <div class="main-content-item-item DataFormFlex">
+                    <div  data-dojo-attach-point="_userNameLabel" class="main-content-item-item-label DataFormFlex">
+                        User name
+                    </div>
+                    <div class="main-content-item-item-content DataFormFlex">
+                        <input class="itemInput"  data-dojo-attach-event='onChange: _onChangeUserName' data-dojo-attach-point="_userName"  data-dojo-type="dijit/form/TextBox">
+                        
+                    </div>
+                    <div  data-dojo-attach-point="_passwordLabel" class="main-content-item-item-label DataFormFlex" >
+                        Password
+                    </div>
+                    <div class="main-content-item-item-content DataFormFlex">
+                        <input class="itemInput"  data-dojo-attach-event='onChange: _onChangePassword' data-dojo-type="dijit/form/ValidationTextBox" type="password"  data-dojo-attach-point="_password">
+                    </div>
+                </div>
+                
+                <div style="width: 50%;padding-left: 10px;" class="main-content-item-content DataFormFlex">
+                    <input data-dojo-type="dijit/form/CheckBox" data-dojo-attach-point="_usedForPersistence">
+                    <span  data-dojo-attach-point="_persistenceLabel" style="padding-left:10px;" >Not used for project persistence</span> 
+                    
+                </div>
+                <div class="main-content-item-container DataFormFlex">
+                        <div >
+                            <div data-dojo-attach-point="_connection" title = "Test data source configuration" style="width:29px;height:29px;cursor:pointer;background-position:center center;background-repeat:no-repeat">  </div>
+                        </div>
+                </div>
+            </div>
+            
+            <div class="main-content-item DataFormFlex">
+
+                <div class="main-content-item-item2 DataFormFlex">
+                    <div  data-dojo-attach-point="_maxPoolSizeLabel" class="main-content-item-item2-label DataFormFlex">
+                        Max pool size
+                    </div>
+                    <div class="main-content-item-item2-content DataFormFlex">
+
+                        <input style="width:45px;" data-dojo-attach-point="_maxPoolSize" data-dojo-type="dijit/form/NumberSpinner" value="24"
+                            data-dojo-attach-event="" data-dojo-props="smallDelta:1, constraints:{min:0,max:24,places:0}"/>
+            
+                    </div>
+                    <div  data-dojo-attach-point="_minPoolSizeLabel"  class="main-content-item-item2-label DataFormFlex">
+                         Min pool size
+                    </div>
+                    <div class="main-content-item-item2-content DataFormFlex">
+
+                        <input  style="width:45px;" data-dojo-attach-point="_minPoolSize" data-dojo-type="dijit/form/NumberSpinner" value="24"
+                            data-dojo-attach-event="" data-dojo-props="smallDelta:1, constraints:{min:0,max:24,places:0}"/>
+                    </div>
+                                        <div  data-dojo-attach-point="_connectionIdleTimeoutLabel"  class="main-content-item-item2-label DataFormFlex">
+                         Connection idle timeout
+                    </div>
+                    <div class="main-content-item-item2-content DataFormFlex">
+
+                        <input  style="width:45px;" data-dojo-attach-point="_connectionIdleTimeout" data-dojo-type="dijit/form/NumberSpinner" value="0"
+                            data-dojo-attach-event="" data-dojo-props="smallDelta:1, constraints:{min:0,places:0}"/>
+                            <div  style="padding-left:5px;" data-dojo-attach-point="_connectionIdleTimeoutUnitLabel" >minutes</div>
+                    </div>
+                </div>
+
+
+                <div  class="main-content-item-gird DataFormFlex">
+                   <div class="addIcon DataFormFlex">
+
+                        <div class="button-warp DataFormFlex">
+                            
+                            <div >
+                                <div data-dojo-attach-point="_addIcon" title = "Add data source property" style="width:29px;height:29px;cursor:pointer;background-position:center center;background-repeat:no-repeat">  </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div  class="gridContent  DataFormFlex" data-dojo-attach-point="_gridContainer">
+                        <div style="height: 100%;width: 100%;" data-dojo-attach-point="_gridContent">
+                           
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="bottom DataFormFlex">
+        <div class="button-warp DataFormFlex">
+            
+        </div>
+        <div class="button-warp DataFormFlex">
+            <div  data-dojo-attach-point="_cancelBtn" class="bottom-button" style="padding-left: 10px; padding-right: 10px;" data-dojo-attach-event="click:_cancel"> Cancel </div>
+            <div  data-dojo-attach-point="_saveBtn" class="bottom-button" style="margin-right: 0px;background-color: #148AC4;" data-dojo-attach-event="click:_save"> Save </div>
+        </div>
+    </div>
+</div>]]>
+        </HtmlText>
+      </Widget>
+      <Widget name="UpdateHDFSSource" private="false">
+        <PropertyText>
+          <![CDATA[[]]]>
+        </PropertyText>
+        <CodeText segment="#methods">
+          <![CDATA[        _localeHandler: function() {
+            var plugin = this.helperPlugin;
+            var baseConfig = this.baseConfig;
+            var locale = this.locale;
+            
+            $(this._nameLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Name}"));
+            
+            $(this._headLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::HDFS Source}"));
+            $(this._titleLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::updateHDFSSource}"));
+            
+            $(this._urlLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Conneciton URL}"));
+            $(this._folderLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Folder}"));
+            
+            $(this._configureLabel).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::ConfigureDescription}"));
+            
+
+            this._help.title = (plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::help}"));
+
+            $(this._cancelBtn).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Cancel}"));
+            $(this._saveBtn).html(plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Save}"));
+
+        },
+        
+        initialUI : function() {
+            var me = this;
+            on(this._help, "click", function(){
+                var url = "http://hadoop.apache.org/docs/r2.4.1/hadoop-project-dist/hadoop-hdfs/hdfs-default.xml";
+                window.open(url, "HelpWindow");
+            });
+        },
+        
+        _cancel: function (evt) {
+             var result = [];
+             var action = {
+                op: "cancel",
+                result: result
+            };
+            if (this.renderer) {
+                this.renderer.updateSelection(action);
+            }
+        },
+        
+        _save: function (evt) {
+             //debugger;
+            
+            var result = [];
+            var aResult = {};
+            result.push(aResult);
+
+            
+            aResult["name"] = this._name.value;
+            aResult["url"] = this._url.value;
+            
+            aResult["configuration"] = this._configuration.value ;
+            aResult["folder"] = this._folder.value;
+
+            
+            
+            var action = {
+                op: "save",
+                result: result
+            };
+            if (this.renderer) {
+                this.renderer.updateSelection(action);
+            }
+
+            
+        }, ]]>
+        </CodeText>
+        <CodeText segment="#postCreate">
+          <![CDATA[            this.initialUI();
+            this.result = [];
+            if (this.renderer && this.renderer.result && this.renderer.result[0]) {
+                this.result = this.renderer.result;
+            }
+            
+            var name = this.result[0]["name"];
+            var url = this.result[0]["url"];
+            var folder = this.result[0]["folder"];
+            var configuration = this.result[0]["configuration"];
+
+            this._name.set('value', name || "");
+            this._url.set('value', url || "");
+            this._folder.set('value',folder || "");
+            this._configuration.set('value',configuration || "");
+         ]]>
+        </CodeText>
+        <CodeText segment="#onNotify">
+          <![CDATA[        if (!evt.baseConfig || !evt.locale) return;
+                    
+        this.baseConfig = evt.baseConfig;
+        this.helperPlugin = Plugin(evt.baseConfig.helperPluginName);
+        this.adminPlugin = Plugin(evt.baseConfig.pluginName);
+        //debugger;
+        this.locale = evt.locale;
+        
+        if (!this._localed) {
+            this._localeHandler();
+            this._localed = true;
+        }]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div class="DataForm" style="width:100%;height:100%;">
+    <style>
+        .DataForm {
+            background-color: #FFF;
+            box-sizing: border-box;
+            color: #282E31;
+
+        }
+        
+        .DataForm div {
+            box-sizing: border-box;
+        }
+        
+        .DataFormFlex {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .DataForm .header {
+            box-sizing: border-box;
+            width: calc(100%); 
+            height: 35px; 
+            padding-left: 5px;
+            background-color:rgb(216, 216, 216);
+            color : rgb(85, 85, 85);
+        }
+        
+        .DataForm .header > div {
+            display: flex;
+        }
+        
+        .DataForm .header .headerIconDiv {
+            font-size: 20px;
+        }
+        
+        .DataForm .header .headerTitle {
+            padding-left: 5px;
+            font-size: 12px;
+        }
+        
+        .DataForm .header .headerSubTitle {
+            padding-left: 5px;
+            font-size: 14px;
+            color: #009FFF;
+        }
+
+        .DataForm .content {
+            box-sizing: border-box;
+            width: calc(100%); 
+            height: calc(100% - 73px);
+        }
+        
+        .DataForm .content .content-header {
+            justify-content: flex-start;
+            width: 100%;
+            height: 50px;
+            font-size: 16px;
+            padding-left:10px;
+        }
+        
+        .DataForm .content .main-content {
+            box-sizing: border-box;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 100%;
+            height: calc(100% - 50px);
+            padding-left: 25px;
+
+            padding-right: 25px;
+        }
+        
+        .DataForm .content .main-content .main-content-item {
+            justify-content: space-between;
+            background-color: #FFF;
+            width: 100%;
+            
+            padding-right: 25px;
+            border-top: thin solid #148ac4;
+        }
+        
+        .DataForm .content .main-content .main-content-item:nth-child(1) {
+            height: 50%;
+            flex-wrap:wrap;
+            overflow-y: auto;
+        }
+        
+        .DataForm .content .main-content .main-content-item:nth-child(2) {
+            height: 50%;
+            flex-wrap:wrap;
+            overflow-y: auto;
+        }
+        
+
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-label {
+            width: 30%;
+            padding-left: 10px;
+
+        }
+
+
+
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-content {
+            width: 70%;
+            height: 28px;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item {
+            width: 50%;
+            flex-wrap:wrap;
+            min-height: 100px;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item-label {
+            width: 30%;
+            padding-left: 10px;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item-content {
+            width: 70%;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item2 {
+            width: 30%;
+            height:calc(100% - 50px);
+            flex-wrap:wrap;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item2-label {
+            width: 100%;
+            padding-left: 10px;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-item2-content {
+            width: 100%;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird {
+            width: 70%;
+            height: 100%;
+            padding-bottom: 10px;
+
+            flex-direction: column;
+            align-items: flex-end;
+            flex-wrap:wrap;
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird .addIcon {
+            height: 30%;
+
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird .gridContent {
+            height: 70%;
+            width: calc(100% - 10px);
+
+        }
+        
+        .DataForm .content .main-content .main-content-item .main-content-item-gird .bottom-button {
+            padding: 5px;
+            min-width: 60px;
+            background-color: rgba(34, 34, 34, 0.4);
+            cursor: pointer;
+            text-align: center;
+            color: #FFFFFF;
+
+
+        }
+
+        .DataForm .bottom {
+            justify-content: space-between;
+            box-sizing: border-box;
+            width: calc(100%); 
+            height: 38px;
+            line-height: 32px;
+            padding-left: 15px;
+
+            background-color: #FFF;
+            border-top: rgb(216, 216, 216) solid 3px;
+            border-bottom: rgb(216, 216, 216) solid 3px;
+        }
+        
+        .DataForm .bottom .bottom-button {
+            min-width: 60px;
+            padding: 0 8px;
+            border-left: 1px solid whitesmoke;
+            cursor: pointer;
+            text-align: center;
+            background-color: rgba(34, 34, 34, 0.4);
+            font-size: 12px;
+            color: #FFFFFF
+        }
+        
+        .DataForm .main-content-item-container {
+            justify-content: flex-start;
+            box-sizing: border-box;
+            width: calc(50%); 
+
+            padding-left: 15px;
+            padding-right: 15px;
+
+        }
+        
+        .DataForm .main-content-item-container .bottom-button {
+            padding: 5px;
+            min-width: 60px;
+            background-color: rgba(34, 34, 34, 0.4);
+            cursor: pointer;
+            text-align: center;
+            color: #FFFFFF;
+
+
+        }
+    </style>
+    <div data-dojo-attach-point="_headLabel" class="header DataFormFlex">
+        <div class="headerTitle">HDFS Source</div>
+    </div>
+    <div class="content">
+        <div data-dojo-attach-point="_titleLabel" class="content-header DataFormFlex">
+             Please provide information to update HDFS source.
+        </div>
+        <div class="main-content DataFormFlex">
+            <div class="main-content-item DataFormFlex">
+                <div data-dojo-attach-point="_nameLabel" class="main-content-item-label DataFormFlex">
+                    Name
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <input class="itemInput" disabled='true'  data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_name">
+                </div>
+                <div data-dojo-attach-point="_urlLabel"  class="main-content-item-label DataFormFlex">
+                    URL
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <input class="itemInput" data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_url">
+                </div>
+                <div data-dojo-attach-point="_folderLabel"  class="main-content-item-label DataFormFlex">
+                    Folder
+                </div>
+                <div class="main-content-item-content DataFormFlex">
+                    <input  class="itemInput"  data-dojo-type="dijit/form/TextBox"  data-dojo-attach-point="_folder">
+                </div>
+
+            </div>
+            
+            <div class="main-content-item DataFormFlex">
+            
+
+                <div style="align-items: flex-start; padding-top: 5px;" class=main-content-item-item2-label DataFormFlex">
+                    <span data-dojo-attach-point="_configureLabel" style="width: calc(100% - 30px);"> The content of hdfs.site.xml, please specify necessary properties. </span>
+                    <span>
+                        <i style="padding-left:25px;width:29px;cursor:pointer;background-position:center center;background-repeat:no-repeat" data-dojo-attach-point="_help" title = "Link to help document for configure hdfs.site.xml" class="fas fa-info-circle" > </i>
+                    </span>
+                </div>
+                <div class="main-content-item-item2-label DataFormFlex">
+                    <textarea style="max-height:70px;min-height:70px;" value = "this is xml" data-dojo-type="dijit/form/Textarea" data-dojo-attach-point="_configuration"></textarea>
+                </div>
+                
+
+
+            </div>
+        </div>
+
+    </div>
+    <div class="bottom DataFormFlex">
+        <div class="button-warp DataFormFlex">
+            
+        </div>
+        <div class="button-warp DataFormFlex">
+            <div class="bottom-button" data-dojo-attach-point="_cancelBtn" style="padding-left: 10px; padding-right: 10px;" data-dojo-attach-event="click:_cancel"> Cancel </div>
+            <div class="bottom-button" data-dojo-attach-point="_saveBtn" style="margin-right: 0px;background-color: #148AC4;" data-dojo-attach-event="click:_save"> Save </div>
+        </div>
+    </div>
+</div>]]>
+        </HtmlText>
+      </Widget>
+      <Widget name="UpdateHiveProperties" private="false">
+        <PropertyText>
+          <![CDATA[[]]]>
+        </PropertyText>
+        <CodeText segment="#methods">
+          <![CDATA[        _localeHandler: function() {
+            var plugin = this.helperPlugin;
+            var baseConfig = this.baseConfig;
+            var locale = this.locale;
+            this.hdfsTypeLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::HDFS Type}");
+            $(this._hdfsTypeLabel).html(this.hdfsTypeLabel); 
+            this.dataSourceTypeLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Data Source Type}");
+            $(this._dataSourceTypeLabel).html(this.dataSourceTypeLabel);
+            this.infoLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Info}");
+            this.failedToSaveLabel = plugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Failed to save HDFS}");
+        },
+        
+         _getHDFSList : function() {
+            var self = this;
+            self._hdfsType.addOption({label : "-Value-", value : ""});
+            require(["af/utils/XmlList"], function (XmlList) {
+                 GET("/vitria-oi/rest/app/event_store/pub/resource?op=listResources", null, function(t) {
+                    if (t != null && t != "") {
+                        var xl = new XmlList(t);
+                        xl.elements("resource").forEach(function(index) {
+                            self._hdfsType.addOption({label : this.getAttribute("name"), value :this.getAttribute("name")});
+                        });
+                    }
+                    self._getDataSourceList();
+                });
+            });
+         },
+         
+        _getDataSourceList : function() {
+            var self = this;
+            self._dataSourceType.addOption({label : "-Value-", value : ""});
+            GET("/vitria-oi/rest/server.admin?op=getDataSources", null, function(t) {
+                if (t != null && t != "") {
+                    var groups = [];
+                    var model = JSON.parse(t);
+                    if(model.result == "OK" && model.content &&  model.content.datasources &&  model.content.datasources.length > 0){
+                        var datasources = model.content.datasources;
+                        for(var i = 0; i < datasources.length; i++){
+                             //debugger;
+                            datasource = datasources[i].datasource;
+                            self._dataSourceType.addOption({label : datasource["name"], value :datasource["name"]});
+                        }
+                    }
+                }
+                self._setType();
+            });            
+        },
+        
+        _setType : function() {
+            
+            var self = this;
+
+            require(["af/utils/XmlList", "dojox/xml/parser"], function (XmlList, aXmlParser) {
+                 GET("/vitria-oi/rest/app/event_store/pub/resource?op=listHiveResources", null, function(t) {
+                    if (t != null && t != "") {
+                       
+                        var xl = new XmlList(t);
+                        xl.elements("resource").forEach(function(index) {
+                            if(this.getAttribute("name") == "hiveProperties" && this.getAttribute("type") == "hive"){
+                                var hdfsType = this.getAttribute("HDFSSource");
+                                if(!hasOption(self._hdfsType.getOptions(), hdfsType)){
+                                    self._missingHDFStype = hdfsType;
+                                    hdfsType = hdfsType + "(missing)";
+                                    self._hdfsType.textDirNode.children[0].innerText = hdfsType;
+                                    self._hdfsType.textDirNode.style.color = "red";
+                                } else {
+                                    self._hdfsType.set('value', hdfsType, false);
+                                }
+                                
+                                var dataSourceType = this.getAttribute("DataSource");
+                                if(!hasOption(self._dataSourceType.getOptions(), dataSourceType)){
+                                    self._missingDataSourceType = dataSourceType;
+                                    dataSourceType = dataSourceType + "(missing)";
+                                    self._dataSourceType.textDirNode.children[0].innerText = dataSourceType;
+                                    self._dataSourceType.textDirNode.style.color = "red";
+                                } else {
+                                    self._dataSourceType.set('value', dataSourceType, false);
+                                }
+                                self._configurationValue = aXmlParser.innerXML(this.childNodes[0]);
+                                self._hasHiveProperties = true;
+                            }
+                        });
+                    }
+                });
+            }); 
+           
+        },
+        
+        _onChangeHDFSType : function(evt) {
+            if(this._hdfsType.textDirNode.style.color == "red") {
+                this._hdfsType.textDirNode.style.color = "";
+            };
+            this.saveStatus = true;
+            this._setSaveIconStyle();
+            this._hdfsTypeValue = evt;
+        },  
+        
+        _onChangeDataSourceType : function(evt) {
+            if(this._dataSourceType.textDirNode.style.color == "red") {
+                this._dataSourceType.textDirNode.style.color = "";
+            };
+            this.saveStatus = true;
+            this._setSaveIconStyle();
+            this._dataSourceTypeValue = evt; 
+            
+        },  
+        
+
+        _setSaveIconStyle : function() {
+            if(this.saveStatus == false){
+                domStyle.set(this._saveIcon, {"color" : "grey"});
+            }else{
+                domStyle.set(this._saveIcon, {"color" : "#148ac4"});
+            } 
+        },    
+
+       _message: function (title, message, callback) {
+            var buttonCount = 1;
+            require(["af/controls/AppMessageBox"], function (AppMessageBox) {
+                        var alert = new AppMessageBox({
+                                title: title,
+                                message: message,
+                                buttons: buttonCount,
+                                okHandler: function() {
+                                    if (callback != null) {
+                                        try {
+                                            callback(true);
+                                        }
+                                        catch (x) {
+                                            console.error(x);
+                                        }
+                                    }
+                                },
+                                cancelHandler: function() {
+                                    if (callback != null) {
+                                        try {
+                                            callback(false);
+                                        }
+                                        catch (x) {
+                                            console.error(x);
+                                        }
+                                    }
+                                }
+                            });
+                            alert.show();
+                        
+                    });
+            
+        } ,
+                    
+        _onClickSaveButton : function(evt) {
+            var info = "";
+            
+            if(this._hdfsType.textDirNode.style.color == "red"){
+                info = "HDFS source '" + this._missingHDFStype +  "' is missing.";
+            }
+            
+            if(this._dataSourceType.textDirNode.style.color == "red"){
+                info = "Data source '" + this._missingDataSourceType +  "' is missing.";
+            }
+            if(info != ""){
+                this._message(this.infoLabel, info);
+                return;
+            }
+            var headers = {
+                DataSource : this._dataSourceType.value,
+                HDFSSource: this._hdfsType.value,
+                configuration: this._configurationValue
+            }; 
+            
+            var self = this;
+            
+            var api = "addHiveResource";
+            if(this._hasHiveProperties == true){
+                api = "updateHiveResource";
+            }
+            
+            var params = {
+                op : api,
+                name: "hiveProperties"
+            };
+            
+            POST("/vitria-oi/rest/app/event_store/pub/resource?op=" + api, params,headers, function(t) {
+                if (t != null && t != "") {
+                    require(["af/utils/XmlList"], function (XmlList){
+                            var status = "";
+                            var xl = new XmlList(t);
+                            var value = xl.elements_[0].getAttribute("value");
+                            if(value == "OK"){
+                                 self.saveStatus = false;
+                                 self._setSaveIconStyle();
+                            } else {
+                                self._message(self.infoLabel, self.failedToSaveLabel);
+                            }
+                        }
+                    );
+                }
+                else {
+                    self._message(self.infoLabel, self.failedToSaveLabel);
+                }
+            
+            });            
+        },
+        ]]>
+        </CodeText>
+        <CodeText segment="#buildRendering">
+          <![CDATA[            this.saveStatus = false;
+            this._configurationValue = "<configuration> </configuration>";
+            var hdfsList = [];
+]]>
+        </CodeText>
+        <CodeText segment="#constructor">
+          <![CDATA[            this.initialConfig = config;
+            if(config.renderer.result){
+                this.setting = config.renderer.result[0];
+            }else{
+                this.setting = null;
+            } ]]>
+        </CodeText>
+        <CodeText segment="#postCreate">
+          <![CDATA[            this._getHDFSList();
+            //this._getDataSourceList();
+           ]]>
+        </CodeText>
+        <CodeText segment="#functions">
+          <![CDATA[    function hasOption(options, value)
+    {
+        if(value == "") return true;
+        for(var i = 0; i < options.length; i++ ){
+            var option = options[i];
+            if(option.value == value) {
+                return true;
+            }
+        }
+        return false;
+    }]]>
+        </CodeText>
+        <CodeText segment="#onNotify">
+          <![CDATA[            if(evt === null || evt.widget === null){
+                return;
+            }
+            var widget = evt.widget;
+            if (!widget || widget.baseConfig == null || widget.locale == null) return;
+            
+            this.baseConfig = widget.baseConfig;
+            this.helperPlugin = Plugin(widget.baseConfig.helperPluginName);
+            this.adminPlugin = Plugin(widget.baseConfig.pluginName);
+            this.locale = widget.locale;
+            
+            if (!this._localed) {
+                this._localeHandler();
+                this._localed = true;
+            }
+            
+            
+            if(widget.action != null && widget.action[0] != null && widget.action[0].value == "datasource/refresh"){
+                this._hdfsType.removeOption(this._hdfsType.getOptions());
+                this._dataSourceType.removeOption(this._dataSourceType.getOptions());
+                this._getHDFSList();
+            }]]>
+        </CodeText>
+        <HtmlText>
+          <![CDATA[<div class="kerberosPolicy" style="width:100%;height:100%;">
+    <div style="width: 20px; height: 20px; float: right; padding-right: 40px;" data-dojo-attach-poin="_saveButton" 
+        data-dojo-attach-event="onClick: _onClickSaveButton">
+        <label style="width: 20px; height: 20px; padding: 0px; border: 0px;">
+            <i data-dojo-attach-point="_saveIcon" style="font-size: 18px; margin: 0px; color: grey;" class="fa fa-save"></i>
+        </label>
+    </div>
+    <div style="display: flex; flex-direction: row;height : 30px ">
+        <div data-dojo-attach-point="_hdfsTypeLabel" style="padding-right: 20px;width: 200px  " >HDFS Source for Hive Warehouse</div>
+        <div>
+                    <select style="width: 290px; height:18px; padding-bottom:0.5px;"  value='oracle'  data-dojo-type="dijit/form/Select" 
+                     data-dojo-attach-event='onChange: _onChangeHDFSType' data-dojo-attach-point="_hdfsType">
+                        
+                    </select>
+         </div>
+     </div>
+    <div style="display: flex; flex-direction: row; height : 30px ">
+        <div style="padding-right: 20px;width: 200px " data-dojo-attach-point="_dataSourceTypeLabel">Data Source for Hive Metastore</div>
+        <div>
+                    <select style="width: 290px; height:18px; padding-bottom:0.5px;"  value='oracle'  data-dojo-type="dijit/form/Select" 
+                     data-dojo-attach-event='onChange: _onChangeDataSourceType' data-dojo-attach-point="_dataSourceType">
+                    </select>
+         </div>
+     </div>     
+
+</div>]]>
+        </HtmlText>
+      </Widget>
+    </Widgets>
+    <Functions>
+      <Function name="doAddDataSource" args="record,callback" private="false">
+        <CodeText>
+          <![CDATA[
+var name = record["name"];
+var domainName = "DefaultDomain";
+var DS_JNDI_PREFIX = "/vitria/m3o/datasource";
+var SLASH_SEP = "/";
+
+function composeJndiName(dsName, domainName) {
+     var jndiName;
+     if (dsName) {
+         jndiName = DS_JNDI_PREFIX + SLASH_SEP + domainName + SLASH_SEP + dsName;
+     }
+     return jndiName;
+}
+//record["jndi"] = composeJndiName(name, domainName);
+
+var form = JSON.stringify(record);
+
+var content = {
+    'datasource' : form
+};
+            
+ var params = {
+        op : "addDataSource",
+        format: 'json'
+    };
+    
+POST("/vitria-oi/rest/server.admin?op=addDataSource", params,content, function(t) {
+    if (t != null && t != "") {
+        var status = "";
+        var model = JSON.parse(t);
+        //debugger;
+        if(model.status == "OK"){
+            callback({status: "OK"});
+        } else {
+            message("error", "", model.message);
+            callback({status: "Error", message: model.message});
+        }
+    }
+    else {
+        callback({status: "Error"});
+    }
+
+});]]>
+        </CodeText>
+      </Function>
+      <Function name="doAddHDFSSource" args="evt,success" private="false">
+        <CodeText>
+          <![CDATA[
+var self = this;
+
+var callbackWarpper = function(callbackHandler, value, record) {
+    if(value == true) {
+        //var name = info.name;
+        var name = record["name"];
+        var url = record["url"];
+        var folder = record["folder"];
+        var configuration = "<configuration>" +
+             "<!-- You can copy the following element and create more properties.\n"+
+             "<property>\n"+
+             "  <name>dfs.namenode.rpc-address</name>\n"+
+             "  <value>localhost:9000</value>\n"+
+             "  <description>No description</description>\n"+
+             "/property>\n"+
+             "-->\n"+
+            "</configuration>";
+        var params = {
+            op : "addResource",
+            name: name
+        };
+    
+        var headers = {
+            url : url,
+            folder:folder,
+            configuration:configuration
+        };    
+
+    
+        POST("/vitria-oi/rest/app/event_store/pub/resource?op=addResource", params,headers, function(t) {
+            //debugger;
+            if (t != null && t != "") {
+                var status = "";
+                var xl = new XmlList(t);
+                var value = xl.elements_[0].getAttribute("value");
+                //debugger;
+                callbackHandler({status: value});
+            }
+            else {
+                message("error", "", "Faied to create HDFS source");
+                callbackHandler({status: "Error"});
+            }
+        
+        });
+
+    //click yes
+    }
+    if(value == false) {
+        //click no
+        callbackHandler({status:"OK"});
+    }
+};
+
+
+var baseConfig = evt.baseConfig;
+var helperPlugin = Plugin(evt.baseConfig.helperPluginName);
+var adminPlugin = Plugin(evt.baseConfig.pluginName);
+var locale = evt.locale;
+
+
+    
+var titleLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::HDFS Source}");
+            
+var addLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::addHDFSSource}");  
+
+var nameLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Name}")      ;
+var urlLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::url}")      ;
+var folderLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Folder}")      ;
+
+var saveLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Save}")      ;
+var cancelLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Cancel}") ;
+            
+prompt(
+    titleLabel,
+    //"Please provide information to create HDFS source.",
+    addLabel,
+    [   // may be null, in which case, no form UI collected
+        {name: "name", label: nameLabel, type: "string", value: "", disabled: (name != ""), style: {
+            "width" : "291px",
+            "font-family": "Arial",
+            "border": "1px solid #f8f8f8",
+            "border-bottom-color": "#148ac4",
+            "height": "26px",
+            "line-height": "26px",
+
+        }},
+        {name: "url", label: urlLabel,  type: "string", value: "hdfs://localhost:8020", style: {
+            "width" : "291px",
+            "font-family": "Arial",
+            "border": "1px solid #f8f8f8",
+            "border-bottom-color": "#148ac4",
+            "height": "26px",
+            "line-height": "26px",
+        }},
+        {name: "folder", label: folderLabel, type: "string", value: "", style: {
+            "width" : "291px",
+            "font-family": "Arial",
+            "border": "1px solid #f8f8f8",
+            "border-bottom-color": "#148ac4",
+            "height": "26px",
+            "line-height": "26px",
+
+        }},
+
+    ],
+    [   // may be null, in which case, default OK/Cancel buttons used
+        {label: saveLabel, value: true, 'class':"appDialogSaveButton"},
+        {label: cancelLabel, value: false},
+    ],
+    {
+        width: "400px",
+        "container" : {
+            "background-color" : "white",
+        },
+        "form-label" : {
+            "width" : "10%",
+            "white-space" : "nowrap",
+        },
+        "form-value" : {
+            "width" : "90%",
+        },
+    },
+    lang.partial(callbackWarpper, success)
+);
+
+
+
+
+
+
+
+
+]]>
+        </CodeText>
+      </Function>
+      <Function name="doDeleteDataSource" args="evt,name,url,jndi,success" private="false">
+        <CodeText>
+          <![CDATA[// add custom code
+
+var self = this;
+var callbackWarpper = function(callbackHandler, jndi, value, info) {
+    if(value == true) {
+        var name = info.name;
+        var params = {
+            op : "deleteDataSource",
+            format: 'json',
+            jndi: jndi
+        };
+
+        POST("/vitria-oi/rest/server.admin?op=deleteDataSource&jndi=" + jndi, params,null, function(t) {
+            if (t != null && t != "") {
+                var model = JSON.parse(t);
+                //debugger;
+                if(model.status == "OK"){
+                    callbackHandler({status:"OK"});
+                } else {
+                    callbackHandler({error:"fail to delete data source " + model.message})
+                }
+                
+            } else {
+                callbackHandler({error:"fail to delete data source " + name});
+            }
+            
+        });
+            //click yes
+    }
+    if(value == false) {
+        //click no
+        callbackHandler({status:"OK"});
+    }
+};         
+
+
+var baseConfig = evt.baseConfig;
+var helperPlugin = Plugin(evt.baseConfig.helperPluginName);
+var adminPlugin = Plugin(evt.baseConfig.pluginName);
+var locale = evt.locale;
+
+var titleLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Data Source}");
+var removeLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::removeDataSource}");
+var nameLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Name}")      ;
+var urlLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::url}")      ;
+var yesLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::yes button}")      ;
+var noLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::no button}") ;
+
+
+prompt(
+    titleLabel,
+   // "Remove selected data source?",
+   removeLabel,
+    [   // may be null, in which case, no form UI collected
+        {name: "name", label: nameLabel, type: "string", value: name, disabled: true, style: {
+            "width" : "291px",
+            "font-family": "Arial",
+            "border": "1px solid #f8f8f8",
+            "border-bottom-color": "#148ac4",
+            "height": "26px",
+            "line-height": "26px",
+
+        }},
+        {name: "url", label: urlLabel, type: "string",  value: url, disabled: true, style: {
+            "width" : "291px",
+            "font-family": "Arial",
+            "border": "1px solid #f8f8f8",
+            "border-bottom-color": "#148ac4",
+            "height": "26px",
+            "line-height": "26px",
+        }},
+    ],
+    [   // may be null, in which case, default OK/Cancel buttons used
+        {label: yesLabel, value: true, 'class':"appDialogSaveButton"},
+        {label: noLabel, value: false},
+    ],
+    {
+        width: "400px",
+        "container" : {
+            "background-color" : "white",
+        },
+        "form-label" : {
+            "width" : "10%",
+            "white-space" : "nowrap",
+        },
+        "form-value" : {
+            "width" : "90%",
+        },
+    },
+    lang.partial(callbackWarpper, success, jndi)
+);
+
+]]>
+        </CodeText>
+      </Function>
+      <Function name="doDeleteHDFSSource" args="evt,name,url,success" private="false">
+        <CodeText>
+          <![CDATA[// add custom code
+
+var self = this;
+
+var callbackWarpper = function(callbackHandler, value, info) {
+    if(value == true) {
+        var name = info.name;
+        var params = {
+            op : "removeResource",
+            name: name
+        };
+
+        POST("/vitria-oi/rest/app/event_store/pub/resource?op=removeResource", params,null, function(t) {
+            if (t != null && t != "") {
+                //debugger;
+                var xl = new XmlList(t);
+                var value = xl.elements_[0].getAttribute("value");
+
+                if(value == "OK"){
+                    callbackHandler({status:"OK"});
+                } else { 
+                    callbackHandler({error:"fail to delete HDFS source " + name});
+                }
+            } else {
+                callbackHandler({error:"fail to delete HDFS source " + name});
+            }
+        });
+            //click yes
+    }
+    if(value == false) {
+        //click no
+        callbackHandler({status:"OK"});
+    }
+};         
+
+var baseConfig = evt.baseConfig;
+var helperPlugin = Plugin(evt.baseConfig.helperPluginName);
+var adminPlugin = Plugin(evt.baseConfig.pluginName);
+var locale = evt.locale;
+ var titleLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::HDFS Source}") ; 
+var removeLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::removeHDFSSource}") ; 
+
+var nameLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::Name}")      ;
+var urlLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::url}")      ;
+var yesLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::yes button}")      ;
+var noLabel = helperPlugin.localize(baseConfig.locale.dataSource, locale, "{i18n::no button}") ;
+            
+prompt(
+    titleLabel,
+    removeLabel,
+    [   // may be null, in which case, no form UI collected
+        {name: "name", label: nameLabel, type: "string", value: name, disabled: true, style: {
+            "width" : "291px",
+            "font-family": "Arial",
+            "border": "1px solid #f8f8f8",
+            "border-bottom-color": "#148ac4",
+            "height": "26px",
+            "line-height": "26px",
+
+        }},
+        {name: "url", label: urlLabel, type: "string",  value: url, disabled: true, style: {
+            "width" : "291px",
+            "font-family": "Arial",
+            "border": "1px solid #f8f8f8",
+            "border-bottom-color": "#148ac4",
+            "height": "26px",
+            "line-height": "26px",
+        }},
+    ],
+    [   // may be null, in which case, default OK/Cancel buttons used
+        {label: yesLabel, value: true, 'class':"appDialogSaveButton"},
+        {label: noLabel, value: false},
+    ],
+    {
+        width: "400px",
+        "container" : {
+            "background-color" : "white",
+        },
+        "form-label" : {
+            "width" : "10%",
+            "white-space" : "nowrap",
+        },
+        "form-value" : {
+            "width" : "90%",
+        },
+    },
+    lang.partial(callbackWarpper, success)
+);
+]]>
+        </CodeText>
+      </Function>
+      <Function name="doGetDataSource" args="name,jndiName,callback" private="false">
+        <CodeText>
+          <![CDATA[
+var params = {
+    op : "getDataSource",
+    jndi: jndiName
+};
+
+GET("/vitria-oi/rest/server.admin?op=getDataSource&jndi=" + jndiName, params, function(t) {
+    if (t != null && t != "") {
+        var model = JSON.parse(t);
+        if(model.result == "OK" && model.content && model.content.datasource){
+            var datasource = model.content.datasource;
+            var result = [];
+            result.push(datasource);
+        }
+        callback({value:result,status:"OK"});
+    }
+    else {
+        callback({error: "Fail to get data source " + name});
+    }
+});]]>
+        </CodeText>
+      </Function>
+      <Function name="doGetHDFSSource" args="name,callback" private="false">
+        <CodeText>
+          <![CDATA[//debugger;
+var params = {
+    op : "getResource",
+    name: name
+};
+
+GET("/vitria-oi/rest/app/event_store/pub/resource?op=getResource&name=" + name, params, function(t) {
+    if (t != null && t != "") {
+        var groups = [];
+        var xl = new XmlList(t);
+        var name = xl.elements_[0].getAttribute("name");
+        var url = xl.elements_[0].getAttribute("url");
+        var folder = xl.elements_[0].getAttribute("folder");
+        var configuration;// = xl.elements_[0].innerHTML;
+        require(["dojox/xml/parser"], function (aXmlParser) {
+            configuration = aXmlParser.innerXML(xl.elements_[0].childNodes[0]);
+        });
+        var record = {name:name, url:url, folder:folder, configuration:configuration};
+        var result = [];
+        result.push(record);
+        callback({value:result,status:"OK"});
+    }
+    else {
+        callback({error: "Fail to get HDFS resource " + name});
+    }
+});]]>
+        </CodeText>
+      </Function>
+      <Function name="doListDataSource" args="callback" private="false">
+        <CodeText>
+          <![CDATA[
+
+GET("/vitria-oi/rest/server.admin?op=getDataSources&detail=true", null, function(t) {
+    if (t != null && t != "") {
+        var groups = [];
+        var model = JSON.parse(t);
+       
+        if(model.result == "OK" && model.content &&  model.content.datasources &&  model.content.datasources.length > 0){
+            var datasources = model.content.datasources;
+            for(var i = 0; i < datasources.length; i++){
+                 //debugger;
+                datasource = datasources[i].datasource;
+                var attributes = datasource.attributes;
+                var readonly = attributes.readonly;
+                datasource.readonly = readonly;
+                groups.push(datasource);
+            }
+        }
+        callback({status:"OK",value: groups});
+    }
+    else {
+        callback({status:"OK",value: []} );
+    }
+});]]>
+        </CodeText>
+      </Function>
+      <Function name="doListHDFSSource" args="callback" private="false">
+        <CodeText>
+          <![CDATA[GET("/vitria-oi/rest/app/event_store/pub/resource?op=listResources", null, function(t) {
+    if (t != null && t != "") {
+        var groups = [];
+        var xl = new XmlList(t);
+        xl.elements("resource").forEach(function(index) {
+            groups.push({
+                hdfsName : this.getAttribute("name"),
+                hdfsUrl : this.getAttribute("url"),
+                folder : this.getAttribute("folder")
+
+            });
+        });
+        callback(groups);
+    }
+    else {
+        callback([]);
+    }
+});]]>
+        </CodeText>
+      </Function>
+      <Function name="doUpdateDataSource" args="record,callback" private="false">
+        <CodeText>
+          <![CDATA[
+var jndi = record["jndi"];
+
+var form = JSON.stringify(record);
+
+var content = {
+    'datasource' : form,
+    format: 'json'
+};
+            
+ var params = {
+    op : "updateDataSource"
+};
+
+    
+POST("/vitria-oi/rest/server.admin?op=updateDataSource&jndi=" + jndi, params,content, function(t) {
+    if (t != null && t != "") {
+        var status = "";
+        var model = JSON.parse(t);
+        //debugger;
+        if(model.status == "OK"){
+            callback({status: "OK"});
+        } else {
+            message("Info", "Error", model.message, function (){
+                callback({status: "Error"});
+            });
+        }
+    }
+    else {
+        message("Info", "Error", "fail to update data source", function (){
+            callback({status: "Error"});
+        });
+    }
+
+});]]>
+        </CodeText>
+      </Function>
+      <Function name="doUpdateHDFSSource" args="record,callback" private="false">
+        <CodeText>
+          <![CDATA[var name = record["name"];
+var url = record["url"];
+var folder = record["folder"];
+var configuration = record["configuration"];
+
+            
+ var params = {
+    op : "updateResource",
+    name: name
+};
+var headers = {
+    url : url,
+    folder:folder,
+    configuration:configuration
+};    
+
+    
+POST("/vitria-oi/rest/app/event_store/pub/resource?op=updateResource", params,headers, function(t) {
+    if (t != null && t != "") {
+            var status = "";
+            var xl = new XmlList(t);
+            var value = xl.elements_[0].getAttribute("value");
+            callback({status: value});
+    }
+    else {
+        message("error", "", "Faied to update HDFS source");
+        callback({status: "Error"});
+    }
+
+});]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services/>
+    <Resources>
+      <Resource uuid="f80e4cd3-b3fa-4118-8e7c-d03393436e52" name="add" type="image/png" size="1082" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="a6d3b41b-3d61-434b-8413-8a6c9cf0d258" name="connection" type="image/png" size="1244" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>

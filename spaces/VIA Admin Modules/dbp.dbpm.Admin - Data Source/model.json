@@ -1,0 +1,25 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "a6d3b41b-3d61-434b-8413-8a6c9cf0d258"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "f80e4cd3-b3fa-4118-8e7c-d03393436e52"
+    }
+  ],
+  "lastDate": "1587447802644",
+  "owner": "vtbaadmin",
+  "properties": {
+    "_RESOURCE_Description": "Description of New Model 0",
+    "_RESOURCE_Type": "dbpm",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "Admin - Data Source"
+  }
+}
