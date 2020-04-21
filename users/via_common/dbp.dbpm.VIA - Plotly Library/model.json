@@ -1,0 +1,34 @@
+{
+  "contents": [
+    {
+      "fileref": "ModelContentFile0",
+      "name": "default"
+    },
+    {
+      "fileref": "ModelContentFile1",
+      "name": "8b2978cc-36e5-48ba-87ea-8ebd40bd8f1e"
+    },
+    {
+      "fileref": "ModelContentFile2",
+      "name": "630c6b21-e2aa-4ea2-8767-8a77c9ec3a26"
+    },
+    {
+      "fileref": "ModelContentFile3",
+      "name": "d9655698-d546-4880-801a-5e12722ddb5e"
+    },
+    {
+      "fileref": "ModelContentFile4",
+      "name": "94d8c92c-f884-4507-8cb1-bc219dab5233"
+    }
+  ],
+  "lastDate": "1587449592789",
+  "owner": "via_common",
+  "properties": {
+    "_RESOURCE_Description": "",
+    "_RESOURCE_Type": "dbpm",
+    "__indexed_contents__": "8b2978cc-36e5-48ba-87ea-8ebd40bd8f1e,d9655698-d546-4880-801a-5e12722ddb5e,94d8c92c-f884-4507-8cb1-bc219dab5233",
+    "__references__": "",
+    "modelStatus": "valid",
+    "name": "VIA - Plotly Library"
+  }
+}

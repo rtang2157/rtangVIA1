@@ -1,0 +1,31 @@
+<DashboardPluginModel description="" name="VIA - Plotly Library" is_init="false">
+  <ModelInfo validated="true">
+    <Properties>
+    </Properties>
+    <Widgets>
+    </Widgets>
+    <Functions>
+    </Functions>
+    <Services>
+    </Services>
+    <Resources>
+      <Resource uuid="8b2978cc-36e5-48ba-87ea-8ebd40bd8f1e" name="v1.42.5" type="application/javascript" size="6210281" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="d9655698-d546-4880-801a-5e12722ddb5e" name="v1.47.4.diff" type="text/plain" size="1190" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="94d8c92c-f884-4507-8cb1-bc219dab5233" name="v1.47.4.modified" type="application/javascript" size="9309665" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>
