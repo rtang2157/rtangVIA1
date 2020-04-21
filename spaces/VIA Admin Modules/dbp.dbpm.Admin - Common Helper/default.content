@@ -1,0 +1,76 @@
+<DashboardPluginModel description="" name="Admin - Common Helper" is_init="false">
+  <ModelInfo validated="true">
+    <Properties/>
+    <Widgets/>
+    <Functions>
+      <Function name="loadLocaleResources" args="namespace,locales,callback" private="false">
+        <CodeText>
+          <![CDATA[if (locales.length == 0) {
+    callback();
+}
+else {
+    var locale = locales.shift();
+    var self = this;
+    this.__loadPluginLocale(locale.url, namespace, locale.code, function() {
+        self.loadLocaleResources(namespace, locales, callback);
+    });
+}
+]]>
+        </CodeText>
+      </Function>
+      <Function name="localize" args="i18n_namespace,languageCode,str" private="false">
+        <CodeText>
+          <![CDATA[var isNotString = false;
+if (typeof str != "string") {
+    isNotString = true;
+    str = JSON.stringify(str);
+}
+var start = str.indexOf("{i18n::");
+while (start != -1) {
+    var end = str.indexOf("}", start);
+    if (end != -1) {
+        var i18nKey = str.substring(start+"{i18n::".length, end);
+        str = str.substring(0, start) + this.__getLocaleString(i18n_namespace, languageCode, i18nKey, i18nKey) + str.substring(end+1);
+        start = str.indexOf("{i18n::", start);
+    }
+    else {
+        start = -1;
+    }
+}
+return isNotString ? JSON.parse(str) : str;]]>
+        </CodeText>
+      </Function>
+      <Function name="securityCheck" args="baseConfig,callback" private="false">
+        <CodeText>
+          <![CDATA[require(["af/utils/SecurityUtil"], function (SecurityUtil) {
+    var groups = [];
+    baseConfig.groups.forEach(function(group) {
+       if (group.group == "summary") {
+           groups.push(group);
+       } else if (group.group == "user") {
+           if (SecurityUtil.isSecurityAdmin()) {
+               groups.push(group);
+           }
+       } else if (group.group == "platform") {
+           if (SecurityUtil.isAdmin()) {
+               groups.push(group);
+           }
+       } else if (group.group == "security") {
+           if (SecurityUtil.isSecurityAdmin()) {
+               groups.push(group);
+           }
+       }
+    });
+    baseConfig.groups = groups;
+    if (callback) {
+        callback(baseConfig);
+    }
+});]]>
+        </CodeText>
+      </Function>
+    </Functions>
+    <Services/>
+    <Resources/>
+    <Plugins/>
+  </ModelInfo>
+</DashboardPluginModel>
