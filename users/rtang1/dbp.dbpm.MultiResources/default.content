@@ -1,0 +1,271 @@
+<DashboardPluginModel description="Description of New Model 0" name="MultiResources" is_init="false">
+  <ModelInfo validated="true">
+    <Properties>
+    </Properties>
+    <Widgets>
+    </Widgets>
+    <Functions>
+    </Functions>
+    <Services>
+    </Services>
+    <Resources>
+      <Resource uuid="0ce5d062-8f37-48a0-82dc-5a02ec0ea7c3" name="customResource" type="text/plain" size="860" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="912230e7-a347-4967-8259-7860d4e0c0eb" name="customResource1" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="3870513f-430f-4428-8525-831c17ba4f43" name="customResource2" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="e7ce1074-ec44-4ab2-8d4c-a10d0dea14d9" name="customResource3" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="79247d29-de9e-4f64-82a2-baca7d8574c3" name="customResource4" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="d19f581f-1fac-471e-8113-c63e125bcdb9" name="customResource5" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="2a3caf2c-315a-4539-82d5-a853ba09a573" name="customResource6" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="1f8740ab-7927-4a59-81df-b02e5da04caa" name="customResource7" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="dfe7db0a-5313-4749-8da9-4ac251ec71de" name="customResource8" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="4e941705-a8e8-4114-86d9-358195ecb437" name="customResource9" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="c53d6009-b3f6-401b-8c36-76b54ee8f5a2" name="customResource10" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="b021f17a-58bd-4bb8-8bd3-d326d83b7ff6" name="customResource11" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="49b98bec-a72b-4bf7-8e3b-15e1df446ecc" name="customResource12" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="0d4d33fb-b7a6-4edf-8970-64c70e3432c1" name="customResource13" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="79f31045-5eab-4ba1-8353-266894c899b2" name="customResource14" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="33f58510-ff67-463f-8e17-6e4561627ee0" name="customResource15" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="6ce59ed2-7f6b-4d18-8e0b-151bc7e9644d" name="customResource16" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="05423342-a0d6-4247-8875-265b21184213" name="customResource17" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="9bc330ef-7142-406a-8e9c-7068ab96b208" name="customResource18" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="f7a6a8f3-4a5a-400a-8f18-d8babc4ed0d2" name="customResource19" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ef750f1c-42af-403c-8713-e1f5c0330bab" name="customResource20" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ac78ee38-222e-48d0-8f60-96627bf065cd" name="customResource21" type="text/plain" size="0" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="bf320e00-0795-4cb6-8e6d-312dee240b8f" name="customResource22" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="0f7f45b6-dfe0-493a-89e0-9fd238869fbd" name="customResource23" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="1e15d278-aa15-40fc-8f43-8cb6e5939541" name="customResource24" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="dff940d9-f15f-474a-8228-6e19591f4914" name="customResource25" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="6f574d62-1d6b-428a-810c-b68665a69693" name="customResource26" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="5244cf39-dc90-4e96-8cc1-e19ab299cdc5" name="customResource27" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="e3a279ef-3f19-4aff-8c5a-f361441df42e" name="customResource28" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="d536d79e-1890-4ee7-8dd6-40a08aab161f" name="customResource29" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="7ec0abbc-bbf2-45bf-8fec-b69592abd34d" name="customResource30" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="8f427a46-ed95-4d1c-8560-47af45ffc43a" name="customResource31" type="text/plain" size="860" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="84a66350-ab21-48a4-82fd-239a8f37518d" name="customResource32" type="text/plain" size="860" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="928f9cc3-37a6-4deb-825d-4aae42dc9d0e" name="customResource33" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="2a230c8e-57fa-4669-8aa9-f8cedb99592d" name="customResource34" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="d5e331b9-3430-4f21-8535-67690201a2c6" name="customResource35" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="c1c9ef51-b8f7-48f4-890d-b3806b87e4d4" name="customResource36" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="51b21600-15c9-48cb-8a0b-82fce87cd58f" name="customResource37" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="aab50e4a-29b7-4893-8715-eba839a0a28e" name="customResource38" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="d901b322-980e-4253-8774-88cc2c48e526" name="customResource39" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="f03874de-6544-4875-812c-c3e87ccb2af1" name="customResource40" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="af39143e-9f3c-4f98-8dd8-58db7b497373" name="customResource41" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="862e2412-eb89-4c54-826f-95bf4ce37a2a" name="customResource42" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="be3fe968-4558-4225-8ad2-a6637164c234" name="customResource43" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="dce6c1ab-c2db-4577-8142-c19eddaa3f9c" name="customResource44" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="da489ef6-4843-4f7f-834e-0d027c662c4e" name="customResource45" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ed81876d-c75f-45d7-831c-f27340240928" name="customResource46" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="afa059f7-840f-4843-8c0b-214fc626679c" name="customResource47" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="d281c16b-b1dc-4d43-870a-3e681373f1eb" name="customResource48" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="79c59cd6-9f0e-49b9-8f2b-a7137f12a31e" name="customResource49" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+      <Resource uuid="ab9dc43e-903d-42be-8523-abfd7401aa42" name="customResource50" type="text/plain" size="3330" private="false">
+        <Description>
+          <![CDATA[]]>
+        </Description>
+      </Resource>
+    </Resources>
+    <Plugins>
+    </Plugins>
+  </ModelInfo>
+</DashboardPluginModel>
