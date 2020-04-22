@@ -2,7 +2,7 @@
   <parameter id="mail.smtp.host" label="Mail transport server host" value="" type="string" group="email" groupLabel="Email Settings" groupOrder="0"/>
   <parameter id="mail.smtp.port" label="Mail transport server port" value="" type="string" group="email"/>
   <parameter value="vtbaadmin" group="email" type="string" label="Mail transport server username" id="mail.smtp.username"/>
-  <parameter value="&lt;bIv3@jLrG1yd2ko!PApv&gt;" id="mail.smtp.password" label="Mail transport server password" type="password" group="email"/>
+  <parameter value="&lt;bNuAUI45ki7EXDpzaQcvbB&gt;" id="mail.smtp.password" label="Mail transport server password" type="password" group="email"/>
   <parameter id="mail.header.sender" label="Mail header sender" value="Vitria" type="string" group="email"/>
   <parameter id="mail.smtp.auth" label="Authentication required" value="true" type="boolean" group="email"/>
   <parameter id="proxySet" label="Enable Proxy" value="false" type="boolean" group="email"/>
