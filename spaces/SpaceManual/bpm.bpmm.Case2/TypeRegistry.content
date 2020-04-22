@@ -1127,4 +1127,26 @@
   &lt;ShreddedTypes kind=&quot;XSDTYPE&quot; name=&quot;AttachmentContext&quot; systemType=&quot;true&quot;/>
 &lt;/storage:ShreddedStorageTypes></StorageSettingContent>
   </SchemaModels>
+  <SchemaModels namespace="http://default/vtbaadmin/VITR00183564/DBQuery">
+    <SchemaContent>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>
+&lt;xsd:schema
+    targetNamespace=&quot;http://default/vtbaadmin/VITR00183564/DBQuery&quot;
+    xmlns:tns=&quot;http://default/vtbaadmin/VITR00183564/DBQuery&quot;
+    xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:ecore=&quot;http://www.eclipse.org/emf/2002/Ecore&quot;>
+    &lt;xsd:element name=&quot;ResultSet&quot; type=&quot;tns:ResultSetType&quot;/>
+    &lt;xsd:complexType name=&quot;ResultSetType&quot;>
+        &lt;xsd:sequence>
+            &lt;xsd:element name=&quot;Result&quot; maxOccurs=&quot;unbounded&quot; type=&quot;tns:ResultType&quot;/>
+        &lt;/xsd:sequence>
+    &lt;/xsd:complexType>
+    &lt;xsd:complexType name=&quot;ResultType&quot;>
+        &lt;xsd:sequence>
+            &lt;xsd:element name=&quot;ID&quot; type=&quot;xsd:string&quot;/>
+            &lt;xsd:element name=&quot;SEQ&quot; type=&quot;xsd:int&quot;/>
+            &lt;xsd:element name=&quot;STATUS&quot; type=&quot;xsd:string&quot;/>
+        &lt;/xsd:sequence>
+    &lt;/xsd:complexType>
+&lt;/xsd:schema>
+</SchemaContent>
+  </SchemaModels>
 </tr:TypeRegistryExport>
