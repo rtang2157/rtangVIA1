@@ -149,13 +149,13 @@ from
           <Property name="queryType" value="DB"/>
         </Properties>
       </Model>
-      <Model name="Event" id="44d6a751-4ae4-4b63-ac82-769a715690f7" type="event" version="4" path="">
+      <Model name="Event" id="44d6a751-4ae4-4b63-ac82-769a715690f7" type="event" version="5" path="">
         <Contents>
           <Content name="variables">
-            <Data><![CDATA[[{"name":"_EMFEventContext","attachmentAllowed":false,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventContext"},{"name":"id","attachmentAllowed":false,"type":"string"},{"name":"seq","attachmentAllowed":false,"type":"int"},{"name":"name","attachmentAllowed":false,"type":"string"},{"name":"NewVariable1","attachmentAllowed":false,"type":"string","label":""}]]]></Data>
+            <Data><![CDATA[[{"name":"_EMFEventContext","attachmentAllowed":false,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventContext"},{"name":"id","attachmentAllowed":false,"type":"string"},{"name":"seq","attachmentAllowed":false,"type":"int"},{"name":"name","attachmentAllowed":false,"type":"string"},{"name":"NewVariable1","attachmentAllowed":false,"type":"string","label":""},{"name":"NewVariable2","attachmentAllowed":false,"type":"boolean","label":""}]]]></Data>
           </Content>
           <Content name="groupfield">
-            <Data><![CDATA[[{"isFolder":false,"hasChildren":false,"name":"id","typeName":"string","uiName":"id","category":"built-inType","variableRef":"id","idx":0,"statePath":"Event/id","parent":null},{"isFolder":false,"hasChildren":false,"name":"seq","typeName":"int","uiName":"seq","category":"built-inType","variableRef":"seq","idx":1,"statePath":"Event/seq","parent":null},{"isFolder":false,"hasChildren":false,"name":"name","typeName":"string","uiName":"name","category":"built-inType","variableRef":"name","idx":2,"statePath":"Event/name","parent":null},{"name":"NewVariable1","label":"","isFolder":false,"parent":null,"category":"built-inType","idx":3,"uiName":"NewVariable1","hasChildren":false,"typeName":"string"}]]]></Data>
+            <Data><![CDATA[[{"isFolder":false,"hasChildren":false,"name":"id","typeName":"string","uiName":"id","category":"built-inType","variableRef":"id","idx":0,"statePath":"Event/id","parent":null},{"isFolder":false,"hasChildren":false,"name":"seq","typeName":"int","uiName":"seq","category":"built-inType","variableRef":"seq","idx":1,"statePath":"Event/seq","parent":null},{"isFolder":false,"hasChildren":false,"name":"name","typeName":"string","uiName":"name","category":"built-inType","variableRef":"name","idx":2,"statePath":"Event/name","parent":null},{"name":"NewVariable1","label":"","isFolder":false,"parent":null,"category":"built-inType","idx":3,"uiName":"NewVariable1","hasChildren":false,"typeName":"string"},{"name":"NewVariable2","label":"","isFolder":false,"parent":null,"category":"built-inType","idx":4,"uiName":"NewVariable2","hasChildren":false,"typeName":"boolean"}]]]></Data>
           </Content>
           <Content name="forms">
             <Data><![CDATA[<mf:steps selectedStep="Step_1" xmlns:mf="http://form.vitria.com">
