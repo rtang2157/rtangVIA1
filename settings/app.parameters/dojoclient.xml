@@ -2,7 +2,7 @@
   <parameter id="mail.smtp.host" label="Mail transport server host" value="" type="string" group="email" groupLabel="Email Settings" groupOrder="0"/>
   <parameter id="mail.smtp.port" label="Mail transport server port" value="" type="string" group="email"/>
   <parameter value="vtbaadmin" group="email" type="string" label="Mail transport server username" id="mail.smtp.username"/>
-  <parameter value="&lt;4O2xLE0lN3yhIa1vuWx5XKnA&gt;" group="email" type="password" label="Mail transport server password" id="mail.smtp.password"/>
+  <parameter value="&lt;bIv3@jLrG1yd2ko!PApv&gt;" id="mail.smtp.password" label="Mail transport server password" type="password" group="email"/>
   <parameter id="mail.header.sender" label="Mail header sender" value="Vitria" type="string" group="email"/>
   <parameter id="mail.smtp.auth" label="Authentication required" value="true" type="boolean" group="email"/>
   <parameter id="proxySet" label="Enable Proxy" value="false" type="boolean" group="email"/>
@@ -54,7 +54,7 @@
   <parameter id="model.import.size.limit" label="Max payload size at model import (MB)" value="10" type="int" unit="MB" group="others"/>
   <parameter id="mobile.space.only" label="Show only @mobile space on mobile devices" value="false" type="boolean" group="others"/>
   <parameter value="true" groupLabel="Version Setting" group="version" type="boolean" label="Enable Version Control" id="version.manager.enabled"/>
-  <parameter value="true" group="version" type="boolean" label="Auto-commit Model Change" id="version.repo.autocommit"/>
+  <parameter value="false" id="version.repo.autocommit" label="Auto-commit Model Change" type="boolean" group="version"/>
   <parameter id="version.repo.update.frequency" label="Auto-Refresh of Local Repository (s)" value="300" type="int" constraints="min=30" group="version"/>
   <parameter id="version.require.timeout" label="Require Lock Timout (s)" value="30" type="int" constraints="min=1" group="version"/>
   <parameter id="version.wait.refresh.timeout" label="Wait Refresh Timeout (s)" value="60" type="int" constraints="min=1" group="version"/>
