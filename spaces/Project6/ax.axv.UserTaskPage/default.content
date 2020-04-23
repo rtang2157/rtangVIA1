@@ -1,0 +1,115 @@
+<AnalyticsExplorerView description="" name="UserTaskPage" is_init="false">
+  <ModelInfo validated="true" nextPageId="2">
+    <GlobalDSRSetting enabled="false">
+    </GlobalDSRSetting>
+    <GlobalProperties>
+      <Property name='Category' label='Category' type='string' value='managed' constraints='managed,available,assigned,unassigned' runtimeControl='true' stringType='enumeration' enums='managed,available,assigned,unassigned' enableAll='false' enableOthers='false' withQuotes='false' defaultAll='false' >
+</Property>
+
+    </GlobalProperties>
+    <GlobalThemeSetting>
+        <SelectedTheme theme="{&quot;id&quot;:null,&quot;name&quot;:&quot;Vitria Default Theme&quot;,&quot;label&quot;:&quot;Vitria Default Theme&quot;}"/>
+        <TileOpacity opacity="0.8"/>
+        <NoTileSpacing value="false"/>
+    </GlobalThemeSetting>
+    <I18NTab>
+        <name value="default"/>
+    </I18NTab>
+    <TabNavSetting visible="true"></TabNavSetting>
+    <DWRSetting disable="false"></DWRSetting>
+    <Page id="1" name="Default" title="Default" desc="" tabNavVisible="true" panelposition="top" panelstatus="open" className="">
+    <HelpContent><![CDATA[]]></HelpContent>
+      <PageProperties>
+      </PageProperties>
+      <Layout type="10" numRow="16" numCol="1" count="2" templateType ="21" screenHeight ="800" renderType ="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:15,&quot;id&quot;:0,&quot;title&quot;:&quot;Main Tile&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:16,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:57,&quot;id&quot;:1,&quot;title&quot;:&quot;Tile1&quot;}]" unitSize= "{&quot;x&quot;:5.7,&quot;y&quot;:5.513888888888889}" viewRows="72" viewCols="120"/>
+      <Tile name="Main Tile" title="Main Tile" desc="" hideEmptyTile="false" previewSize="15" type="Master" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="null" advancedDisable="false" allowFullscreen="false">
+        <DataSource category="ProjectResource" id="/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment#Types/updateOrder" name="Types/updateOrder" label="Task/Tasklist" type="schema.task" project="/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment" untyped="false" modelURL="/prj/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment/Types/updateOrder">
+  <Param name="category" label="category*" value="" binding="${Category}" type="string" enums="managed, available, assigned, unassigned"/>
+  <Param name="taskType" label="taskType" value="" binding="" type="string" enumSource="rest:/workflow?op=gettypes&amp;project=${project}"/>
+  <Param name="priority" label="priority" value="" binding="" type="string" enums="all, low, media, high"/>
+  <Param name="workgroup" label="workgroup" value="" binding="" type="string" enumSource="rest:/workflow?op=getworkgroups&amp;project=${project}"/>
+  <Param name="performer" label="performer" value="" binding="" type="string" enums=""/>
+  <Param name="status" label="status" value="" binding="" type="string" enums=""/>
+  <Param name="dueDate" label="dueDate" value="" binding="" type="TimeInterval" formats="time/time"/>
+  <Param name="activity" label="activity" value="" binding="" type="string" enums=""/>
+  <Field name="id" label="ID" type="string" isDimension="true" isMeasure="false" interp="id/Event/ResultSet/Result/"/>
+  <Field name="state" label="Status" type="string" isDimension="true" isMeasure="false" interp="state/Event/ResultSet/Result/"/>
+  <Field name="caseID" label="Case ID" type="string" isDimension="true" isMeasure="false" interp="caseID/Event/ResultSet/Result/"/>
+  <Field name="activity" label="Activity" type="string" isDimension="true" isMeasure="false" interp="activity/Event/ResultSet/Result/"/>
+  <Field name="performer" label="Performer" type="string" isDimension="true" isMeasure="false" interp="performer/Event/ResultSet/Result/"/>
+  <Field name="description" label="Description" type="string" isDimension="true" isMeasure="false" interp="description/Event/ResultSet/Result/"/>
+  <Field name="priority" label="Priority" type="string" isDimension="true" isMeasure="false" interp="priority/Event/ResultSet/Result/"/>
+  <Field name="dueDate" label="Due Date" type="string" isDimension="true" isMeasure="false" interp="dueDate/Event/ResultSet/Result/"/>
+</DataSource>
+          <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="DataGrid" optional="false" minimode="false">
+          <Property name="showHeader" value="enable"/>
+          <Property name="borderType" value="all"/>
+          <Property name="rowSpacing" value="5"/>
+          <Property name="columnResize" value="enable"/>
+          <Property name="columnReorder" value="disable"/>
+          <Property name="columnSortable" value="enable"/>
+          <Property name="dataExport" value="enable"/>
+          <Property name="pagination" value="disable"/>
+          <Property name="lockedColumns" value="0"/>
+          <Property name="highlightColor" value="#148AC4"/>
+          <Property name="hoverColor" value="#148AC4"/>
+          <Property name="selectionMode" value="single"/>
+          <Property name="showSummary" value="disable"/>
+          <Property name="lineWrapping" value="disable"/>
+          <Property name="autoSelectFirst" value="disable"/>
+        </DataViewer>
+      </Tile>
+      <Tile name="Tile1" title="Tile1" desc="" hideEmptyTile="false" previewSize="15" type="Child" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="false" allowFullscreen="false">
+        <DataSource category="ProjectResource" id="/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment#Types/updateOrder/" name="Types/updateOrder/" label="Task/TaskDetail" type="schema.task" project="/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment" untyped="true" modelURL="/prj/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment/Types/updateOrder/">
+  <Param name="taskInstanceID" label="taskInstanceID*" value="" binding="$.{id}" type="int" enums=""/>
+</DataSource>
+          <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
+        <DataViewer name="TaskDetailRenderer" label="Task Detail" optional="false" minimode="false">
+          <Property name="input" value=""/>
+          <Ports>
+          </Ports>
+        </DataViewer>
+      </Tile>
+    </Page>
+    <DataFlow showFooter="true">
+      <Version type="Aggregate" version="1"/>
+      <Version type="Columns" version="1"/>
+      <Version type="DynPivot" version="1"/>
+      <Version type="Filter" version="1"/>
+      <Version type="Footer" version="1"/>
+      <Version type="GeoJsonOverlay" version="1"/>
+      <Version type="RestQuery" version="1"/>
+      <Version type="Group" version="1"/>
+      <Version type="Header" version="1"/>
+      <Version type="GeoHeatMapOverlay" version="1"/>
+      <Version type="Join" version="1"/>
+      <Version type="LocalStore" version="2"/>
+      <Version type="MenuBar" version="1"/>
+      <Version type="ModelMeta" version="1"/>
+      <Version type="ToolbarOverlay" version="3"/>
+      <Version type="WidgetOverlay" version="1"/>
+      <Version type="Pivot" version="1"/>
+      <Version type="Widget" version="1"/>
+      <Version type="PortIn" version="1"/>
+      <Version type="PortOut" version="1"/>
+      <Version type="GlobalProperty" version="3"/>
+      <Version type="PutData" version="1"/>
+      <Version type="ResourceMeta" version="1"/>
+      <Version type="Rows" version="1"/>
+      <Version type="UserScript" version="2"/>
+      <Version type="Sort" version="1"/>
+      <Version type="SQL" version="2"/>
+      <Version type="SQLConnect" version="1"/>
+      <Version type="DwrMessage" version="1"/>
+      <Version type="GeoEditableOverlay" version="1"/>
+      <Version type="GeoOverlay" version="2"/>
+      <Version type="TextAnnotations" version="1"/>
+      <Version type="Tile" version="1"/>
+      <Version type="Union" version="1"/>
+      <Version type="ScriptVariable" version="1"/>
+    </DataFlow>
+    <DashboardPlugins>
+    </DashboardPlugins>
+  </ModelInfo>
+</AnalyticsExplorerView>
