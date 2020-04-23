@@ -53,8 +53,8 @@
   <parameter id="remote.console.use.web.socket" label="Use WebSocket for Remote Console" value="false" type="boolean" group="others"/>
   <parameter id="model.import.size.limit" label="Max payload size at model import (MB)" value="10" type="int" unit="MB" group="others"/>
   <parameter id="mobile.space.only" label="Show only @mobile space on mobile devices" value="false" type="boolean" group="others"/>
-  <parameter value="false" id="version.manager.enabled" label="Enable Version Control" type="boolean" group="version" groupLabel="Version Setting"/>
-  <parameter value="true" group="version" type="boolean" label="Auto-commit Model Change" id="version.repo.autocommit"/>
+  <parameter value="true" groupLabel="Version Setting" group="version" type="boolean" label="Enable Version Control" id="version.manager.enabled"/>
+  <parameter value="false" id="version.repo.autocommit" label="Auto-commit Model Change" type="boolean" group="version"/>
   <parameter id="version.notification.disabled" label="Disable Version Notification" value="false" type="boolean" group="version"/>
   <parameter value="1800" group="version" constraints="min=30" type="int" label="Auto-Refresh of Local Repository (s)" id="version.repo.update.frequency"/>
   <parameter id="version.require.timeout" label="Require Lock Timout (s)" value="30" type="int" constraints="min=1" group="version"/>
