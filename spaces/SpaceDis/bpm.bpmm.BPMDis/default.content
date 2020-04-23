@@ -1,13 +1,13 @@
 <BpmAppModel description="Description of New Model 0" name="BPMDis" is_init="false">
   <ModelInfo validated="true">
     <Models>
-      <Model name="event1" id="cc36a9b4-586e-49f8-8840-f158ff29cf3e" type="event" version="3" path="">
+      <Model name="event1" id="cc36a9b4-586e-49f8-8840-f158ff29cf3e" type="event" version="4" path="">
         <Contents>
           <Content name="variables">
-            <Data><![CDATA[[{"name":"_EMFEventContext","attachmentAllowed":false,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventContext"},{"name":"NewVariable1","attachmentAllowed":false,"type":"boolean","label":""}]]]></Data>
+            <Data><![CDATA[[{"name":"_EMFEventContext","attachmentAllowed":false,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventContext"},{"name":"NewVariable1","attachmentAllowed":false,"type":"boolean","label":""},{"name":"NewVariable2","attachmentAllowed":false,"type":"byte","label":""}]]]></Data>
           </Content>
           <Content name="groupfield">
-            <Data><![CDATA[[{"name":"NewVariable1","label":"","isFolder":false,"parent":null,"category":"built-inType","idx":0,"uiName":"NewVariable1","hasChildren":false,"typeName":"boolean"}]]]></Data>
+            <Data><![CDATA[[{"name":"NewVariable1","label":"","isFolder":false,"parent":null,"category":"built-inType","idx":0,"uiName":"NewVariable1","hasChildren":false,"typeName":"boolean"},{"name":"NewVariable2","label":"","isFolder":false,"parent":null,"category":"built-inType","idx":1,"uiName":"NewVariable2","hasChildren":false,"typeName":"byte"}]]]></Data>
           </Content>
         </Contents>
         <References>
