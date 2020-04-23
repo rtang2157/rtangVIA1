@@ -1,0 +1,205 @@
+<BpmAppModel description="Description of New Model 0" name="RegFeed" is_init="false">
+  <ModelInfo validated="true">
+    <Models>
+      <Model name="WindowFeed" id="9e278a5b-8a1c-4b6c-aef4-5e630684e522" type="feed" version="1" path="">
+        <Contents>
+          <Content name="feed.definition">
+            <Data><![CDATA[{"eventArchive":{"type":"NONE"},"eventSchema":{"modelRef":"_mr____ESREF","name":"WindowEvent","content":"variables"},"kind":"ENTERPRISE","outboundSource":{"type":"NONE"},"persistence":"ON","auditLogging":"ON","maxSize":-1,"timestamp":{"path":"","type":"SYSTEM","variableRef":""},"feedState":{"isTimebound":false,"attributesInWb":[],"type":"NONE","tablename":"","isSnapshot":false}}]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr____ESREF" value="42be75d5-501b-4317-932a-2ae64ffb2014"/>
+        </References>
+        <Properties>
+          <Property name="vtui:kind" value="ENTERPRISE"/>
+          <Property name="vtui:historic" value="false"/>
+          <Property name="vtui:event" value="WindowEvent"/>
+          <Property name="vtui:feedState" value="NONE"/>
+          <Property name="useParameter" value="false"/>
+          <Property name="vtui:outbound" value="NONE"/>
+          <Property name="vtui:category" value="Feed"/>
+          <Property name="vt:lastUser" value="vtbaadmin"/>
+          <Property name="_modelType" value="feed"/>
+          <Property name="vtui:eventArchive" value="NONE"/>
+        </Properties>
+      </Model>
+      <Model name="WindowEvent" id="42be75d5-501b-4317-932a-2ae64ffb2014" type="event" version="1" path="">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"kind":"XSDELEMENT","attachmentAllowed":"false","name":"_EMFEventContext","type":"{http://schema.vitria.com/model}EMFEventContext"},{"attachmentAllowed":"false","name":"id","type":"string"},{"attachmentAllowed":"false","name":"name","type":"string"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"isFolder":false,"hasChildren":false,"name":"id","typeName":"string","uiName":"id","category":"built-inType","variableRef":"id","idx":0,"statePath":"WindowEvent/id"},{"isFolder":false,"hasChildren":false,"name":"name","typeName":"string","uiName":"name","category":"built-inType","variableRef":"name","idx":1,"statePath":"WindowEvent/name"}]]]></Data>
+          </Content>
+          <Content name="forms">
+            <Data><![CDATA[<mf:steps selectedStep="Step_1" xmlns:mf="http://form.vitria.com">
+  <mf:step id="Step_1" label="">
+    <mf:form id="Form_1398171098896" backgroundColor="16777215" backgroundAlpha="0" paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10"/>
+  </mf:step>
+</mf:steps>]]></Data>
+          </Content>
+        </Contents>
+        <References>
+        </References>
+        <Properties>
+          <Property name="schema.property.supportqualified" value="true"/>
+          <Property name="useParameter" value="false"/>
+          <Property name="_tr__variables" value="{http://schema.vitria.com/model}EMFEventContext{XSDELEMENT}"/>
+          <Property name="vtui:category" value="Event"/>
+          <Property name="vt:lastUser" value="vtbaadmin"/>
+          <Property name="_modelType" value="schema.event"/>
+        </Properties>
+      </Model>
+    </Models>
+    <BuiltInModels>
+      <Model name="EventSourceExceptionEvent" id="841eebc0-d37d-49f9-8a49-41ef7516b0ec" type="event" version="1" path="Vitria/Event">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"name":"_EMFEventContext","attachmentAllowed":false,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventContext"},{"name":"Header","attachmentAllowed":true,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventHeader"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"nodeType":"group","templateID":"http://schema.vitria.com/model?element=EMFEventHeader","uiIsExpanded":"true","typeKind":"XSDELEMENT","schemaRevision":"2","storageType":"SHREDDED","name":"Header","namespace":"http://schema.vitria.com/model","typeName":"EMFEventHeader","typeNamespace":"http://schema.vitria.com/model","children":[{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"EventSpace","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":2,"parent":1,"hasChildren":false},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"EventCode","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":3,"parent":1,"hasChildren":false},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"ExternalID","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":4,"parent":1,"hasChildren":false},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"Timestamp","typeName":"dateTime","xsdBuiltinType":"dateTime","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":5,"parent":1,"hasChildren":false}],"idx":1,"uiName":"Header","label":"Header","attachment":true,"parent":null,"hasChildren":true},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"EventSpace","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":2,"parent":1,"hasChildren":false,"variableRef":"Header","statePath":"EventSourceExceptionEvent/Header/EventSpace","spath":"declare namespace tns=&quot;http://schema.vitria.com/model&quot;;/tns:EMFEventHeader/EventSpace"},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"EventCode","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":3,"parent":1,"hasChildren":false,"variableRef":"Header","statePath":"EventSourceExceptionEvent/Header/EventCode","spath":"declare namespace tns=&quot;http://schema.vitria.com/model&quot;;/tns:EMFEventHeader/EventCode"},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"ExternalID","typeName":"string","xsdBuiltinType":"string","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":4,"parent":1,"hasChildren":false,"variableRef":"Header","statePath":"EventSourceExceptionEvent/Header/ExternalID","spath":"declare namespace tns=&quot;http://schema.vitria.com/model&quot;;/tns:EMFEventHeader/ExternalID"},{"nodeType":"field","uiIsExpanded":"true","typeKind":"XSDELEMENT","name":"Timestamp","typeName":"dateTime","xsdBuiltinType":"dateTime","typeNamespace":"http://www.w3.org/2001/XMLSchema","isSimpleType":"true","minOccurs":"0","idx":5,"parent":1,"hasChildren":false,"variableRef":"Header","statePath":"EventSourceExceptionEvent/Header/Timestamp","spath":"declare namespace tns=&quot;http://schema.vitria.com/model&quot;;/tns:EMFEventHeader/Timestamp"}]]]></Data>
+          </Content>
+        </Contents>
+        <References>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="Untyped" id="40e3c3ff-9712-4d45-8351-28c9d7193be6" type="event" version="1" path="Vitria/Event">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"name":"_EMFEventContext","attachmentAllowed":false,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventContext"},{"name":"anyType","attachmentAllowed":false,"type":"anyType"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"nodeType":"field","uiIsExpanded":"true","typeKind":"SIMPLE","name":"anyType","typeName":"anyType","xsdBuiltinType":"anyType","isSimpleType":"true","idx":0,"parent":null,"hasChildren":false,"statePath":"ev1/anyType","category":"built-inType"}]]]></Data>
+          </Content>
+        </Contents>
+        <References>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="EventSourceExceptionFeed" id="65828803-f18f-4286-8802-5c3896fb1bde" type="feed" version="1" path="Vitria/Feed">
+        <Contents>
+          <Content name="feed.definition">
+            <Data><![CDATA[{"kind":"NONE","auditLogging":"ON","maxSize":-1,"persistence":"ON","timestamp":{"type":"SYSTEM","variableRef":"","path":""},"eventArchive":{"type":"NONE"},"feedState":{"type":"NONE","isSnapshot":"false","tablename":""},"outboundSource":{"type":"NONE"},"eventSchema":{"content":"variables","name":"Vitria/Event/EventSourceExceptionEvent","modelRef":"_mr____ESREF"}}]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr____ESREF" value="841eebc0-d37d-49f9-8a49-41ef7516b0ec"/>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="Exception" id="806c213d-ca8e-47b8-813b-37379fd61108" type="exception" version="1" path="Vitria/Exception">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"name":"category","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"},{"name":"code","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"},{"name":"message","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"name":"category","label":"category","isFolder":false,"parent":null,"category":"built-inType","idx":0,"uiName":"category","hasChildren":false,"typeName":"string"},{"name":"code","label":"code","isFolder":false,"parent":null,"category":"built-inType","idx":1,"uiName":"code","hasChildren":false,"typeName":"string"},{"name":"message","label":"message","isFolder":false,"parent":null,"category":"built-inType","idx":2,"uiName":"message","hasChildren":false,"typeName":"string"}]]]></Data>
+          </Content>
+        </Contents>
+        <References>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="BusinessException" id="650e0057-0c0f-4bed-83b9-24d54b445889" type="exception" version="1" path="Vitria/Exception">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr__parent" value="806c213d-ca8e-47b8-813b-37379fd61108"/>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="SystemException" id="060e349d-2bbc-4ccd-80f7-693a0a607b22" type="exception" version="1" path="Vitria/Exception">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr__parent" value="806c213d-ca8e-47b8-813b-37379fd61108"/>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="SQLException" id="eec080a8-6dfb-4d12-8822-6bb6da79d5df" type="exception" version="1" path="Vitria/Exception">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"name":"errorCode","type":"int","typeName":"int","uri":"http://www.w3.org/2001/XMLSchema"},{"name":"sqlState","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"name":"errorCode","label":"errorCode","isFolder":false,"parent":null,"category":"built-inType","idx":0,"uiName":"errorCode","hasChildren":false,"typeName":"int"},{"name":"sqlState","label":"sqlState","isFolder":false,"parent":null,"category":"built-inType","idx":1,"uiName":"sqlState","hasChildren":false,"typeName":"string"}]]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr__parent" value="060e349d-2bbc-4ccd-80f7-693a0a607b22"/>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="FeedException" id="213c5746-abb0-48a1-8cca-a2cc14ec88a7" type="exception" version="1" path="Vitria/Exception">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[{}]]></Data>
+          </Content>
+        </Contents>
+        <References>
+          <Reference name="_mr__parent" value="060e349d-2bbc-4ccd-80f7-693a0a607b22"/>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+      <Model name="Compensation" id="7f1be10e-e582-451c-8f76-9a2b2408a89d" type="compensation" version="1" path="Vitria/Compensation">
+        <Contents>
+          <Content name="variables">
+            <Data><![CDATA[[{"name":"category","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"},{"name":"code","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"},{"name":"message","type":"string","typeName":"string","uri":"http://www.w3.org/2001/XMLSchema"}]]]></Data>
+          </Content>
+          <Content name="groupfield">
+            <Data><![CDATA[[{"name":"category","label":"category","isFolder":false,"parent":null,"category":"built-inType","idx":0,"uiName":"category","hasChildren":false,"typeName":"string"},{"name":"code","label":"code","isFolder":false,"parent":null,"category":"built-inType","idx":1,"uiName":"code","hasChildren":false,"typeName":"string"},{"name":"message","label":"message","isFolder":false,"parent":null,"category":"built-inType","idx":2,"uiName":"message","hasChildren":false,"typeName":"string"}]]]></Data>
+          </Content>
+        </Contents>
+        <References>
+        </References>
+        <Properties>
+        </Properties>
+      </Model>
+    </BuiltInModels>
+    <Deployments>
+        <Data><![CDATA[[{"timerConnectorSettings":{"pollrate":1,"batchSize":1,"concurrency":10},"defaultListId":1,"references":[],"resource":"<resourceSettings xmlns=\"http://schema.vitria.com\"/>\n","connectorSettings":{"pollrate":30,"batchSize":5,"concurrency":1},"label":"Deployment","workgroups":"<workgroupMapping xmlns:common=\"http://common.vitria.com/model\" xmlns=\"http://workflow.vitria.com/model\"/>","eventsource":"<resources xmlns=\"http://schema.vitria.com\"/>\n","serverSettings":{"newCorrelation":"false","auditLevel":"bpmnonly","retryCount":3,"runtimeValidation":"false","traceLevel":6,"persistLevel":"normal","autoPurge":"false","autoStart":"false","JMXMonitoring":"true"},"_serviceClientSettings":[{"serviceURI":"","localAddress":"http://kirkwood:8080","name":"","id":"9f11a261-dce0-4dd2-bcc4-c1bcbecae0b5"}],"threadPoolSettings":{"keepAliveTime":30,"coreSize":16,"maxSize":48},"projectResourceSettings":{"feedServerDSJNDI":"","HDFSSource":"","m3oServerDSJNDI":""},"name":"Deployment","id":"306fb83e-5877-461c-b2fb-230549c44823","sharedfeeds":[],"parameters":[]}]]]></Data>
+    </Deployments>
+    <Classpath>
+        <Data><![CDATA[{"libs":{"_jars":[]},"libs4Osgi":{"_jars":[]}}]]></Data>
+    </Classpath>
+    <Parameters>
+        <Data><![CDATA[[]]]></Data>
+    </Parameters>
+    <UserRole>
+        <Data><![CDATA[<?xml version="1.0" encoding="UTF-8"?><BusinessEnvironment product_version="6.1.0.0" name="/home/vtbaadmin/RegFeed" ID="b0465a3b-bf00-4c1c-9c83-d9b5d9a1f80c">
+<staticroles/>
+<repousersstatic/>
+<repogroupsstatic/>
+</BusinessEnvironment>
+]]></Data>
+    </UserRole>
+    <Notification>
+        <Data><![CDATA[{"schema":"","detail":""}]]></Data>
+    </Notification>
+  </ModelInfo>
+</BpmAppModel>
