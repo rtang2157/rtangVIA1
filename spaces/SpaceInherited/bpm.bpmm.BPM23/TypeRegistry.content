@@ -1127,4 +1127,63 @@
   &lt;ShreddedTypes kind=&quot;XSDTYPE&quot; name=&quot;AttachmentContext&quot; systemType=&quot;true&quot;/>
 &lt;/storage:ShreddedStorageTypes></StorageSettingContent>
   </SchemaModels>
+  <SchemaModels namespace="http://tutorials.schema.vitria.com/order">
+    <SchemaContent>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?>
+&lt;xsd:schema targetNamespace=&quot;http://tutorials.schema.vitria.com/order&quot;
+    xmlns:tns=&quot;http://tutorials.schema.vitria.com/order&quot;
+    xmlns:xsd=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:ecore=&quot;http://www.eclipse.org/emf/2002/Ecore&quot;>
+    &lt;xsd:element type=&quot;tns:order&quot; name=&quot;order&quot;/>
+    &lt;xsd:element name=&quot;Order&quot; type=&quot;tns:Order&quot;/>
+    &lt;xsd:complexType name=&quot;customer&quot;>
+        &lt;xsd:sequence>
+            &lt;xsd:element type=&quot;xsd:string&quot; name=&quot;customerId&quot;
+                nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:string&quot; name=&quot;name&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:string&quot; name=&quot;address&quot;
+                nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:string&quot; name=&quot;zip&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+        &lt;/xsd:sequence>
+    &lt;/xsd:complexType>
+    &lt;xsd:complexType name=&quot;items&quot;>
+        &lt;xsd:sequence>
+            &lt;xsd:element type=&quot;xsd:string&quot; name=&quot;itemId&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:string&quot; name=&quot;description&quot;
+                nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:int&quot; name=&quot;quantity&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:float&quot; name=&quot;price&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+        &lt;/xsd:sequence>
+    &lt;/xsd:complexType>
+    &lt;xsd:complexType name=&quot;order&quot;>
+        &lt;xsd:sequence>
+            &lt;xsd:element type=&quot;xsd:string&quot; name=&quot;orderId&quot;
+                nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;tns:customer&quot; name=&quot;customer&quot;
+                nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;tns:items&quot; name=&quot;items&quot; nillable=&quot;true&quot;
+                maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:float&quot; name=&quot;totalPrice&quot;
+                nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:string&quot; name=&quot;status&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:dateTime&quot; name=&quot;orderDate&quot;
+                nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+        &lt;/xsd:sequence>
+    &lt;/xsd:complexType>
+    &lt;xsd:complexType name=&quot;Order&quot;>
+        &lt;xsd:sequence>
+            &lt;xsd:element minOccurs=&quot;0&quot; nillable=&quot;true&quot; name=&quot;orderId&quot; type=&quot;xsd:string&quot;>
+                &lt;xsd:annotation>
+                    &lt;xsd:appinfo source=&quot;teneo.jpa&quot;>@Column(name=&quot;name0&quot; length=&quot;255&quot;)&lt;/xsd:appinfo>
+                &lt;/xsd:annotation>
+            &lt;/xsd:element>
+            &lt;xsd:element minOccurs=&quot;0&quot; nillable=&quot;true&quot; name=&quot;customer&quot; type=&quot;tns:customer&quot;/>
+            &lt;xsd:element minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;
+                nillable=&quot;true&quot; name=&quot;items&quot; type=&quot;tns:items&quot;/>
+            &lt;xsd:element minOccurs=&quot;0&quot; nillable=&quot;true&quot; name=&quot;totalPrice&quot; type=&quot;xsd:float&quot;/>
+            &lt;xsd:element minOccurs=&quot;0&quot; nillable=&quot;true&quot; name=&quot;status&quot; type=&quot;xsd:string&quot;/>
+            &lt;xsd:element minOccurs=&quot;0&quot; nillable=&quot;true&quot; name=&quot;orderDate&quot; type=&quot;xsd:dateTime&quot;/>
+        &lt;/xsd:sequence>
+    &lt;/xsd:complexType>
+&lt;/xsd:schema>
+</SchemaContent>
+  </SchemaModels>
 </tr:TypeRegistryExport>
