@@ -149,13 +149,13 @@ from
           <Property name="queryType" value="DB"/>
         </Properties>
       </Model>
-      <Model name="Event" id="1f90f338-cea0-48fd-854c-debd580d442a" type="event" version="1" path="">
+      <Model name="Event" id="1f90f338-cea0-48fd-854c-debd580d442a" type="event" version="2" path="">
         <Contents>
           <Content name="variables">
-            <Data><![CDATA[[{"kind":"XSDELEMENT","attachmentAllowed":"false","name":"_EMFEventContext","type":"{http://schema.vitria.com/model}EMFEventContext"},{"attachmentAllowed":"false","name":"id","type":"string"},{"attachmentAllowed":"false","name":"seq","type":"int"},{"attachmentAllowed":"false","name":"name","type":"string"}]]]></Data>
+            <Data><![CDATA[[{"name":"_EMFEventContext","attachmentAllowed":false,"kind":"XSDELEMENT","type":"{http://schema.vitria.com/model}EMFEventContext"},{"name":"id","attachmentAllowed":false,"type":"string"},{"name":"seq","attachmentAllowed":false,"type":"int"},{"name":"name","attachmentAllowed":false,"type":"string"},{"name":"NewVariable1","attachmentAllowed":false,"type":"date","label":""}]]]></Data>
           </Content>
           <Content name="groupfield">
-            <Data><![CDATA[[{"isFolder":false,"hasChildren":false,"name":"id","typeName":"string","uiName":"id","category":"built-inType","variableRef":"id","idx":0,"statePath":"Event/id","parent":null},{"isFolder":false,"hasChildren":false,"name":"seq","typeName":"int","uiName":"seq","category":"built-inType","variableRef":"seq","idx":1,"statePath":"Event/seq","parent":null},{"isFolder":false,"hasChildren":false,"name":"name","typeName":"string","uiName":"name","category":"built-inType","variableRef":"name","idx":2,"statePath":"Event/name","parent":null}]]]></Data>
+            <Data><![CDATA[[{"isFolder":false,"hasChildren":false,"name":"id","typeName":"string","uiName":"id","category":"built-inType","variableRef":"id","idx":0,"statePath":"Event/id","parent":null},{"isFolder":false,"hasChildren":false,"name":"seq","typeName":"int","uiName":"seq","category":"built-inType","variableRef":"seq","idx":1,"statePath":"Event/seq","parent":null},{"isFolder":false,"hasChildren":false,"name":"name","typeName":"string","uiName":"name","category":"built-inType","variableRef":"name","idx":2,"statePath":"Event/name","parent":null},{"name":"NewVariable1","label":"","isFolder":false,"parent":null,"category":"built-inType","idx":3,"uiName":"NewVariable1","hasChildren":false,"typeName":"date"}]]]></Data>
           </Content>
           <Content name="forms">
             <Data><![CDATA[<mf:steps selectedStep="Step_1" xmlns:mf="http://form.vitria.com">
@@ -168,12 +168,12 @@ from
         <References>
         </References>
         <Properties>
-          <Property name="schema.property.supportqualified" value="true"/>
-          <Property name="useParameter" value="false"/>
-          <Property name="_tr__variables" value="{http://schema.vitria.com/model}EMFEventContext{XSDELEMENT}"/>
           <Property name="vtui:category" value="Event"/>
-          <Property name="vt:lastUser" value="vtbaadmin"/>
+          <Property name="useParameter" value="false"/>
+          <Property name="schema.property.supportqualified" value="true"/>
           <Property name="_modelType" value="schema.event"/>
+          <Property name="_public" value="false"/>
+          <Property name="_tr__variables" value="{http://schema.vitria.com/model}EMFEventContext{XSDELEMENT}"/>
         </Properties>
       </Model>
       <Model name="Feed" id="a90edbaf-1548-4972-ac4e-a3ad3208695f" type="feed" version="1" path="">
