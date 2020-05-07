@@ -1,9 +1,0 @@
-[{ "id": "home", "label": "Home", "iconType": "fa", "icon": "fa-home", "tooltip": "", "selected": false, "statusColor":"red" },
-{ "id": "userManagement", "label": "User Management", "iconType": "fa", "icon": "fa-user", "tooltip": "", "selected": false, "statusColor":"gold" },
-{ "id": "performance", "label": "Performance Monitoring", "iconType": "far", "icon": "fa-chart-bar", "tooltip": "", "selected": false, "statusColor":"#ffb53e" },
-{ "id": "refuelReplenish", "label": "Replenish Resources", "iconType": "fa", "icon": "fa-beer", "tooltip": "", "selected": false, "statusColor":"rgba(0,128,0,1)" },
-{ "id": "userAgreement", "label": "User Agreement", "iconType": "fas", "icon": "fa-address-card", "tooltip": "", "selected": false},
-{ "id": "eliminateWaste", "label": "Trash Collection", "iconType": "far", "icon": "fa-trash-alt", "tooltip": "", "selected": false },
-{ "id": "murica", "label": "Murica!", "iconType": "img", "icon": "https://4vector.com/i/free-vector-independence-day-usa-icon_101870_Independence_Day_USA_Icon.png", "tooltip": "", "selected": false }]
-
-

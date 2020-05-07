@@ -1,9 +1,0 @@
-{
-    "server-type" : ["PresentationServer", "RuntimeServer"],
-    "#server-name" : "DefaultPool/eng-test-fast",
-    "max-line-count" : 1000,
-    "#excluded-log-pattern" : [
-        "[com.vitria.spark.resource.utils.IFunctionWrapper]",
-        "[com.vitria.spark.statemachine.codegen.StateMachineCodeGenerator]"
-    ]
-}
