@@ -1191,12 +1191,12 @@
     &lt;/xsd:complexType>
     &lt;xsd:complexType name=&quot;orderMaster&quot;>
         &lt;xsd:sequence>
-            &lt;xsd:element minOccurs=&quot;0&quot; nillable=&quot;true&quot; name=&quot;order&quot; type=&quot;tns:order&quot;/>
-            &lt;xsd:element minOccurs=&quot;0&quot; nillable=&quot;true&quot;
-                name=&quot;paymentMethod&quot; type=&quot;xsd:string&quot;/>
-            &lt;xsd:element minOccurs=&quot;0&quot; nillable=&quot;true&quot;
-                name=&quot;shippingTotal&quot; type=&quot;xsd:string&quot;/>
-            &lt;xsd:element minOccurs=&quot;0&quot; nillable=&quot;true&quot; name=&quot;tax&quot; type=&quot;xsd:string&quot;/>
+            &lt;xsd:element type=&quot;tns:order&quot; name=&quot;order&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:string&quot; name=&quot;paymentMethod&quot;
+                nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:string&quot; name=&quot;shippingTotal&quot;
+                nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
+            &lt;xsd:element type=&quot;xsd:string&quot; name=&quot;tax&quot; nillable=&quot;true&quot; minOccurs=&quot;0&quot;/>
         &lt;/xsd:sequence>
     &lt;/xsd:complexType>
     &lt;xsd:complexType name=&quot;orderStatus&quot;>
