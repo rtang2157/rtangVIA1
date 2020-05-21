@@ -23,7 +23,7 @@
       </PageProperties>
       <Layout type="10" numRow="16" numCol="1" count="2" templateType ="21" screenHeight ="800" renderType ="null" positions="[{&quot;data_col&quot;:1,&quot;data_row&quot;:1,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:15,&quot;id&quot;:0,&quot;title&quot;:&quot;Main Tile&quot;},{&quot;data_col&quot;:1,&quot;data_row&quot;:16,&quot;data_sizex&quot;:120,&quot;data_sizey&quot;:57,&quot;id&quot;:1,&quot;title&quot;:&quot;Tile1&quot;}]" unitSize= "{&quot;x&quot;:5.7,&quot;y&quot;:5.513888888888889}" viewRows="72" viewCols="120"/>
       <Tile name="Main Tile" title="Main Tile" desc="" hideEmptyTile="false" previewSize="15" type="Master" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="null" advancedDisable="false" allowFullscreen="false">
-        <DataSource category="ProjectResource" id="/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment#Types/updateOrder" name="Types/updateOrder" label="Task/Tasklist" type="schema.task" project="/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment" untyped="false" modelURL="/prj/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment/Types/updateOrder">
+        <DataSource category="ProjectResource" id="/appdata/bpm/_prj/vtbf500dd3-f25a-4677-b660-6136226a01f9$Deployment#Types/updateOrder" name="Types/updateOrder" label="Task/Tasklist" type="schema.task" project="/appdata/bpm/_prj/vtbf500dd3-f25a-4677-b660-6136226a01f9$Deployment" untyped="false" modelURL="/prj/appdata/bpm/_prj/vtbf500dd3-f25a-4677-b660-6136226a01f9$Deployment/Types/updateOrder">
   <Param name="category" label="category*" value="" binding="${Category}" type="string" enums="managed, available, assigned, unassigned"/>
   <Param name="taskType" label="taskType" value="" binding="" type="string" enumSource="rest:/workflow?op=gettypes&amp;project=${project}"/>
   <Param name="priority" label="priority" value="" binding="" type="string" enums="all, low, media, high"/>
@@ -61,7 +61,7 @@
         </DataViewer>
       </Tile>
       <Tile name="Tile1" title="Tile1" desc="" hideEmptyTile="false" previewSize="15" type="Child" style="small" sampleData="false" className="" parentSelect="false" advancedConfig="false" advancedDisable="false" allowFullscreen="false">
-        <DataSource category="ProjectResource" id="/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment#Types/updateOrder/" name="Types/updateOrder/" label="Task/TaskDetail" type="schema.task" project="/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment" untyped="true" modelURL="/prj/appdata/bpm/_prj/vt6c64224c-ef00-4f73-946c-7f7a718de702$Deployment/Types/updateOrder/">
+        <DataSource category="ProjectResource" id="/appdata/bpm/_prj/vtbf500dd3-f25a-4677-b660-6136226a01f9$Deployment#Types/updateOrder/" name="Types/updateOrder/" label="Task/TaskDetail" type="schema.task" project="/appdata/bpm/_prj/vtbf500dd3-f25a-4677-b660-6136226a01f9$Deployment" untyped="true" modelURL="/prj/appdata/bpm/_prj/vtbf500dd3-f25a-4677-b660-6136226a01f9$Deployment/Types/updateOrder/">
   <Param name="taskInstanceID" label="taskInstanceID*" value="" binding="$.{id}" type="int" enums=""/>
 </DataSource>
           <TileThemeSetting><![CDATA[{}]]></TileThemeSetting>
