@@ -1,8 +1,8 @@
 <parameters>
   <parameter id="mail.smtp.host" label="Mail transport server host" value="" type="string" group="email" groupLabel="Email Settings" groupOrder="0"/>
   <parameter id="mail.smtp.port" label="Mail transport server port" value="" type="string" group="email"/>
-  <parameter value="vtbaadmin" group="email" type="string" label="Mail transport server username" id="mail.smtp.username"/>
-  <parameter value="&lt;bNuAUI45ki7EXDpzaQcvbB&gt;" group="email" type="password" label="Mail transport server password" id="mail.smtp.password"/>
+  <parameter id="mail.smtp.username" label="Mail transport server username" value="" type="string" group="email"/>
+  <parameter id="mail.smtp.password" label="Mail transport server password" value="" type="password" group="email"/>
   <parameter id="mail.header.sender" label="Mail header sender" value="Vitria" type="string" group="email"/>
   <parameter id="mail.smtp.auth" label="Authentication required" value="true" type="boolean" group="email"/>
   <parameter id="proxySet" label="Enable Proxy" value="false" type="boolean" group="email"/>
@@ -35,6 +35,7 @@
   <parameter id="sso.saml.keystore.alias.name" label="Alias name" value="" type="string" group="sso_saml"/>
   <parameter id="sso.saml.keystore.alias.password" label="Alias password" value="" type="password" group="sso_saml"/>
   <parameter id="sso.saml.strip.email.dimain" label="Strip email domains in username" value="" type="string" group="sso_saml"/>
+  <parameter id="sso.saml.other.props" label="Other SSO Properties" type="string" editorType="textArea" value="" group="sso_saml"/>
   <parameter id="recover.password.url" label="URL of recovering password" value="resetpwd/validateuser.html" type="string" group="others" groupLabel="Others" groupOrder="5"/>
   <parameter id="default.browser.title" label="Browser title in Launchpad" value="Vitria VIA Home" type="string" group="others"/>
   <parameter id="model.name.as.browser.title" label="Show model name as browser title" value="true" type="boolean" group="others"/>
@@ -53,8 +54,8 @@
   <parameter id="remote.console.use.web.socket" label="Use WebSocket for Remote Console" value="false" type="boolean" group="others"/>
   <parameter id="model.import.size.limit" label="Max payload size at model import (MB)" value="10" type="int" unit="MB" group="others"/>
   <parameter id="mobile.space.only" label="Show only @mobile space on mobile devices" value="false" type="boolean" group="others"/>
-  <parameter value="true" groupLabel="Version Setting" group="version" type="boolean" label="Enable Version Control" id="version.manager.enabled"/>
-  <parameter value="false" id="version.repo.autocommit" label="Auto-commit Model Change" type="boolean" group="version"/>
+  <parameter value="false" id="version.manager.enabled" label="Enable Version Control" type="boolean" group="version" groupLabel="Version Setting"/>
+  <parameter value="true" group="version" type="boolean" label="Auto-commit Model Change" id="version.repo.autocommit"/>
   <parameter id="version.notification.disabled" label="Disable Version Notification" value="false" type="boolean" group="version"/>
   <parameter id="version.repo.update.frequency" label="Auto-Refresh of Local Repository (s)" value="300" type="int" constraints="min=30" group="version"/>
   <parameter id="version.require.timeout" label="Require Lock Timout (s)" value="30" type="int" constraints="min=1" group="version"/>
@@ -63,7 +64,8 @@
   <parameter value="https://github.com/rtang2157/rtangVIA1.git" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Repository URL" id="version.repo.url"/>
   <parameter value="master" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Working branch" id="version.repo.working.branch"/>
   <parameter value="rtang2157" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="string" label="Repository Username" id="version.repo.user"/>
-  <parameter value="&lt;VaCUXxIhdAwxqIr@Kr5Z3EExOPIDD6&gt;" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="password" label="Repository Password" id="version.repo.password"/>
+  <parameter value="trr19820906" desc="Please go to &apos;Version Manager&apos; UI to configure it." disabled="true" group="version" type="password" label="Repository Password" id="version.repo.password"/>
   <parameter id="deprecate.hamburger.navigator" label="Deprecate hamburger model navigator" value="true" type="boolean" group="deprecated" groupLabel="Deprecated Features"/>
+  <parameter id="deprecate.flash" label="Deprecate Flash page" value="true" type="boolean" group="deprecated"/>
   <parameter id="launchpad.plugin.key" label="URL key for landing page" value="s" type="string" group="landing" groupLabel="Landing Page"/>
 </parameters>
