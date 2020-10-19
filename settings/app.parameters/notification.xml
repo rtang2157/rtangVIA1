@@ -17,6 +17,6 @@
   <parameter id="notification.alert.hdfs.url" label="HDFS server URL" value="" type="string" group="hivePersist" groupLabel="Alert Hive Persistence"/>
   <parameter id="notification.alert.hive.url" label="Hive server URL" value="" type="string" group="hivePersist" groupLabel="Alert Hive Persistence"/>
   <parameter id="notification.alert.hive.driver" label="Hive driver" value="org.apache.hive.jdbc.HiveDriver" type="string" group="hivePersist" groupLabel="Alert Hive Persistence"/>
-  <parameter id="notification.alert.hive.user" label="Hive server user" value="" type="string" group="hivePersist" groupLabel="Alert Hive Persistence"/>
+  <parameter value="rtang" groupLabel="Alert Hive Persistence" group="hivePersist" type="string" label="Hive server user" id="notification.alert.hive.user"/>
   <parameter id="notification.alert.hive.pwd" label="Hive server password" value="" type="password" group="hivePersist" groupLabel="Alert Hive Persistence"/>
 </parameters>
