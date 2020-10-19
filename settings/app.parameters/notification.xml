@@ -1,0 +1,22 @@
+<parameters>
+  <parameter id="notification.server.storage.thread.count" label="Storage thread count" value="5" type="integer" group="server" groupLabel="Notification Server" groupOrder="0"/>
+  <parameter id="notification.server.storage.batch.size" label="Storage batch size" value="100" type="integer" group="server" groupLabel="Notification Server"/>
+  <parameter id="notification.server.storage.buffer.size" label="Storage buffer size" value="2000" type="integer" group="server" groupLabel="Notification Server"/>
+  <parameter id="notification.server.delivery.input.size" label="Delivery input buffer size" value="5000" type="integer" group="server" groupLabel="Notification Server"/>
+  <parameter id="notification.server.delivery.dwr.size" label="Delivery DWR buffer size" value="1000" type="integer" group="server" groupLabel="Notification Server"/>
+  <parameter id="notification.server.delivery.email.size" label="Delivery email buffer size" value="500" type="integer" group="server" groupLabel="Notification Server"/>
+  <parameter id="notification.server.delivery.batch.size" label="Delivery batch size" value="500" type="integer" group="server" groupLabel="Notification Server"/>
+  <parameter id="notification.server.delivery.threadpool.size" label="Delivery thread pool size" value="10" type="integer" group="server" groupLabel="Notification Server"/>
+  <parameter id="notification.client.receive.buffer.size" label="Receive buffer size" value="200" type="integer" group="client" groupLabel="Notification Client" groupOrder="1"/>
+  <parameter id="notification.client.receive.batch.size" label="Receive batch size" value="200" type="integer" group="client" groupLabel="Notification Client"/>
+  <parameter id="notification.client.receive.threadpool.size" label="Receive thread pool size" value="5" type="integer" group="client" groupLabel="Notification Client"/>
+  <parameter id="notification.client.send.buffer.size" label="Send buffer size" value="20000" type="integer" group="client" groupLabel="Notification Client"/>
+  <parameter id="notification.client.send.batch.size" label="Send batch size" value="50" type="integer" group="client" groupLabel="Notification Client"/>
+  <parameter id="notification.alert.submit.duration" label="Submit rate (Minute)" value="5" type="integer" group="hivePersist" groupLabel="Alert Hive Persistence" groupOrder="2"/>
+  <parameter id="notification.alert.max.alerts" label="Max alerts in memory" value="10000" type="integer" group="hivePersist" groupLabel="Alert Hive Persistence"/>
+  <parameter id="notification.alert.hdfs.url" label="HDFS server URL" value="" type="string" group="hivePersist" groupLabel="Alert Hive Persistence"/>
+  <parameter id="notification.alert.hive.url" label="Hive server URL" value="" type="string" group="hivePersist" groupLabel="Alert Hive Persistence"/>
+  <parameter id="notification.alert.hive.driver" label="Hive driver" value="org.apache.hive.jdbc.HiveDriver" type="string" group="hivePersist" groupLabel="Alert Hive Persistence"/>
+  <parameter id="notification.alert.hive.user" label="Hive server user" value="" type="string" group="hivePersist" groupLabel="Alert Hive Persistence"/>
+  <parameter id="notification.alert.hive.pwd" label="Hive server password" value="" type="password" group="hivePersist" groupLabel="Alert Hive Persistence"/>
+</parameters>
