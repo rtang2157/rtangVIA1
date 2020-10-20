@@ -1,4 +1,4 @@
-<QueryRuntimeServer category="" sparkMasterHost="local[*]" deployMode="" sparkWebUiPort="" autoStart="false" is_init="false">
+<QueryRuntimeServer category="" sparkMasterHost="local[*]" deployMode="" sparkWebUiPort="" autoStart="true" is_init="false">
   <HiveConfig>
     <Properties>
       <Property name="hive.server2.thrift.port" value="0" />
@@ -15,8 +15,8 @@
     </Properties>
   </SparkConfig>
   <Capacity>
-    <MaxResultSize>200m</MaxResultSize>
-    <MaxConnection>20</MaxConnection>
+    <MaxResultSize>100m</MaxResultSize>
+    <MaxConnection>15</MaxConnection>
     <MinConnection>5</MinConnection>
     <IncrementalCollect>false</IncrementalCollect>
     <JavaHeap>1g</JavaHeap>
