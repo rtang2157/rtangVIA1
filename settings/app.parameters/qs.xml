@@ -11,5 +11,5 @@
   <parameter id="vitria.spark.driver.classpath" label="Spark Driver Classpath" value="${VTBA_HOME}/wildfly/modules/com/vitria/driver/main/mysql-connector-java-*-bin.jar" type="string" group="spark"/>
   <parameter value="spark.port.maxRetries=20&#10;spark.driver.port=31100" group="spark" editorType="textArea" type="string" label="Spark Properties" id="spark.config"/>
   <parameter id="hive.warehouse.hdfs.source" label="HDFS Source for Hive Warehouse" value="" type="string" group="hive" groupLabel="Hive Properties" hintMissing="true" enumSource="rest:/app/event_store/pub/resource?op=listResourceNames&amp;rc=true" needPlaceholder="true"/>
-  <parameter id="hive.metastore.data.source" label="Data Source for Hive Metastore" value="" type="string" group="hive" hintMissing="true" enumSource="rest:/domain?op=listDatasource&amp;all=true&amp;rc=true" needPlaceholder="true"/>
+  <parameter value="Default_ODA_QS_default" needPlaceholder="true" enumSource="rest:/domain?op=listDatasource&amp;all=true&amp;rc=true" hintMissing="true" group="hive" type="string" label="Data Source for Hive Metastore" id="hive.metastore.data.source"/>
 </parameters>
