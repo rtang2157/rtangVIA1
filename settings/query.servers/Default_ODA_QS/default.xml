@@ -1,0 +1,35 @@
+<QueryRuntimeServer category="" description="" name="DefaultServer" sparkMasterHost="local[*]" deployMode="" sparkWebUiPort="" autoStart="true" is_init="false">
+	<HiveConfig>
+		<Properties>
+			<Property name="hive.server2.thrift.port" value="0"/>
+            <Property name="datanucleus.connectionPoolingType" value="DBCP"/>
+		</Properties>
+	</HiveConfig>
+	<SparkConfig>
+		<Properties>
+            <Property name="spark.sql.shuffle.partitions" value="4"/>
+            <Property name="spark.hadoop.cloneConf" value="true"/>
+            <Property name="spark.blockManager.port" value="31000"/>
+            <Property name="spark.driver.port" value="31100"/>
+            <Property name="spark.port.maxRetries" value="20"/>
+		</Properties>
+	</SparkConfig>
+	<Capacity>
+		<MaxResultSize>200m</MaxResultSize>
+		<MaxConnection>20</MaxConnection>
+		<MinConnection>5</MinConnection>
+		<IncrementalCollect>false</IncrementalCollect>
+		<JavaHeap>1g</JavaHeap>
+		<ExecutorMemory>1g</ExecutorMemory>
+	</Capacity>
+	<SchedulerPool>
+		<pool name='default' schedulingMode='FAIR' weight='1' minShare='0' maxQueryTime='0' />
+	</SchedulerPool>
+	<DynamicResourceAllocation>
+		<MaxExecutor>5</MaxExecutor>
+		<MinExecutor>1</MinExecutor>
+		<ExecutorIdelTimeOut>60s</ExecutorIdelTimeOut>
+		<BacklogTimeOut>1s</BacklogTimeOut>
+	</DynamicResourceAllocation>
+	<log4j></log4j>
+</QueryRuntimeServer>
