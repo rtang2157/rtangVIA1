@@ -1,0 +1,15 @@
+<parameters>
+  <!--<parameter id="m2.boot.class" label="Maven Boot Class" value="${VTBA_HOME}/maven/boot/plexus-classworlds-2.5.1.jar" type="string" group="spark" groupLabel="Spark configuration"/>-->
+  <parameter id="spark.master" label="Spark Master" value="local[*]" type="string" group="spark"/>
+  <parameter id="spark.deploy.mode" label="Deploy Mode" value="" type="string" enums="default=Default,client=Client,cluster=Cluster" group="spark"/>
+  <parameter id="vitria.hdfs.home" label="Spark Driver Storage Folder" value="" type="string" group="spark"/>
+  <parameter id="spark.executor.memory" label="Spark Executor Memory" value="4g" type="string" group="spark"/>
+  <parameter id="spark.cores.max" label="Spark Max Cores" value="4" type="string" group="spark"/>
+  <parameter id="spark.executor.instances" label="Spark Executor Instances" value="" type="string" group="spark"/>
+  <parameter id="spark.executor.cores" label="Spark Executor Cores" value="" type="string" group="spark"/>
+  <parameter id="spark.ext.libs" label="Spark Ext Lib Directory" value="" type="string" group="spark"/>
+  <parameter id="vitria.spark.driver.classpath" label="Spark Driver Classpath" value="${VTBA_HOME}/wildfly/modules/com/vitria/driver/main/mysql-connector-java-*-bin.jar" type="string" group="spark"/>
+  <parameter id="spark.config" label="Spark Properties" value="spark.port.maxRetries=20&#10;&#13;spark.driver.port=31100" type="string" editorType="textArea" group="spark"/>
+  <parameter id="hive.warehouse.hdfs.source" label="HDFS Source for Hive Warehouse" value="" type="string" group="hive" groupLabel="Hive Properties" hintMissing="true" enumSource="rest:/app/event_store/pub/resource?op=listResourceNames&amp;rc=true" needPlaceholder="true"/>
+  <parameter id="hive.metastore.data.source" label="Data Source for Hive Metastore" value="" type="string" group="hive" hintMissing="true" enumSource="rest:/domain?op=listDatasource&amp;all=true&amp;rc=true" needPlaceholder="true"/>
+</parameters>
